@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:myapp="http://schemas.android.com/apk/res/jp.gaomar.magicofgreeting"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+	<com.e3roid.opengl.RenderSurfaceView android:id="@+id/layout_po"
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_weight="1"/>
+	<com.admob.android.ads.AdView
+		android:id="@+id/ad"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		myapp:backgroundColor="#000000"
+		myapp:primaryTextColor="#FFFFFF"
+		myapp:secondaryTextColor="#CCCCCC">
+	</com.admob.android.ads.AdView>
+     <jp.co.nobot.libAdMaker.libAdMaker
+      android:id="@+id/admakerview"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:scrollbars="none"
+      android:visibility="gone"
+     />
+</LinearLayout>
