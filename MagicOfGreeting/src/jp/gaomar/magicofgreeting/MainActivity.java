@@ -25,8 +25,6 @@ import com.e3roid.drawable.texture.AssetTexture;
 import com.e3roid.drawable.texture.TiledTexture;
 import com.e3roid.physics.PhysicsShape;
 import com.e3roid.physics.PhysicsWorld;
-import com.e3roid.util.Debug;
-import com.e3roid.util.FPSListener;
 import com.e3roid.util.MathUtil;
 
 /*
@@ -38,10 +36,13 @@ public class MainActivity extends E3Activity {
 	private final static int WIDTH  = 320;
 	private final static int HEIGHT = 480;
 
-	private PhysicsWorld world;
+	private final static int PREF_FORM = 1;
 
+	private PhysicsWorld world;
+	private float mGravity;
 	private SoundPool sp;
     int[] seID = new int[15];
+    int MAX = 0;
     int cnt = 0;
 
 	@Override
@@ -92,7 +93,13 @@ public class MainActivity extends E3Activity {
 
 	@Override
 	public void onLoadResources() {
-		world = new PhysicsWorld(new Vector2(0, SensorManager.GRAVITY_EARTH), false);
+        // 重力取得
+        getGravity();
+
+        // 出現設定取得
+        getDisp();
+
+		world = new PhysicsWorld(new Vector2(0, mGravity), false);
         //リソースファイルからSE
         sp = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
@@ -114,6 +121,69 @@ public class MainActivity extends E3Activity {
 	}
 
 
+	/**
+	 * 重力取得
+	 */
+	private void getGravity() {
+		switch (Integer.parseInt(PreferenceActivity.getGravity(this))) {
+		case 0:
+			mGravity = SensorManager.GRAVITY_SUN;
+			break;
+		case 1:
+			mGravity = SensorManager.GRAVITY_MERCURY;
+			break;
+		case 2:
+			mGravity = SensorManager.GRAVITY_VENUS;
+			break;
+		case 3:
+			mGravity = SensorManager.GRAVITY_EARTH;
+			break;
+		case 4:
+			mGravity = SensorManager.GRAVITY_MOON;
+			break;
+		case 5:
+			mGravity = SensorManager.GRAVITY_MARS;
+			break;
+		case 6:
+			mGravity = SensorManager.GRAVITY_JUPITER;
+			break;
+		case 7:
+			mGravity = SensorManager.GRAVITY_SATURN;
+			break;
+		case 8:
+			mGravity = SensorManager.GRAVITY_URANUS;
+			break;
+		case 9:
+			mGravity = SensorManager.GRAVITY_NEPTUNE;
+			break;
+		case 10:
+			mGravity = SensorManager.GRAVITY_PLUTO;
+			break;
+		}
+	}
+
+	/**
+	 * 出現設定取得
+	 */
+	private void getDisp() {
+		if (PreferenceActivity.isDisp(this)) {
+			MAX = 15;
+		} else {
+			MAX = 13;
+		}
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PREF_FORM) {
+			if (resultCode == RESULT_CANCELED) {
+				Intent intent = new Intent(this, LayoutActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		}
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,6 +194,14 @@ public class MainActivity extends E3Activity {
     			Menu.NONE,
     			R.string.menu_reset);
     	menu1.setIcon(android.R.drawable.ic_menu_delete);
+
+    	MenuItem menu2 = menu.add(
+    			1,
+    			2,
+    			Menu.NONE,
+    			R.string.menu_setting);
+    	menu2.setIcon(android.R.drawable.ic_menu_preferences);
+
     	return true;
 	}
 
@@ -131,11 +209,16 @@ public class MainActivity extends E3Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 		super.onOptionsItemSelected(menuItem);
+		Intent intent = new Intent();
 		switch(menuItem.getItemId()){
 			case 1 :
-	    		Intent intent = new Intent(this, LayoutActivity.class);
+	    		intent = new Intent(this, LayoutActivity.class);
 	    		startActivity(intent);
 	    		finish();
+				break;
+			case 2 :
+	    		intent = new Intent(this, PreferenceActivity.class);
+	    		startActivityForResult(intent, PREF_FORM);
 				break;
 		}
 		return true;
@@ -161,7 +244,7 @@ public class MainActivity extends E3Activity {
 			int x = getTouchEventX(scene, motionEvent);
 			int y = getTouchEventY(scene, motionEvent);
 			if (scene.findDrawableAt(x, y) == null) {
-				int id = (int)(Math.random()*15);
+				int id = (int)(Math.random()*MAX);
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, 1.0F);
 				// every event in the world must be handled by the update thread.
 				postUpdate(new AddShapeImpl(scene, x, y, id));
@@ -231,7 +314,7 @@ public class MainActivity extends E3Activity {
 						@Override
 						public void run() {
 							PhysicsShape pShape = world.findShape(shape);
-							pShape.getBody().setLinearVelocity(new Vector2(0, -SensorManager.GRAVITY_EARTH));
+							pShape.getBody().setLinearVelocity(new Vector2(0, -mGravity));
 							int id = Integer.valueOf(pShape.getBody().getUserData().toString());
 							sp.play(seID[id], 1.0F, 1.0F, 0, 0, 1.0F);
 						}
