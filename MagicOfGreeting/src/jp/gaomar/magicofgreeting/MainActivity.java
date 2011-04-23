@@ -159,6 +159,9 @@ public class MainActivity extends E3Activity {
 		case 10:
 			mGravity = SensorManager.GRAVITY_PLUTO;
 			break;
+		case 11:
+			mGravity = SensorManager.GRAVITY_DEATH_STAR_I;
+			break;
 		}
 	}
 
@@ -245,7 +248,8 @@ public class MainActivity extends E3Activity {
 			int y = getTouchEventY(scene, motionEvent);
 			if (scene.findDrawableAt(x, y) == null) {
 				int id = (int)(Math.random()*MAX);
-				sp.play(seID[id], 1.0F, 1.0F, 0, 0, 1.0F);
+				float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 				// every event in the world must be handled by the update thread.
 				postUpdate(new AddShapeImpl(scene, x, y, id));
 			}
@@ -316,7 +320,8 @@ public class MainActivity extends E3Activity {
 							PhysicsShape pShape = world.findShape(shape);
 							pShape.getBody().setLinearVelocity(new Vector2(0, -mGravity));
 							int id = Integer.valueOf(pShape.getBody().getUserData().toString());
-							sp.play(seID[id], 1.0F, 1.0F, 0, 0, 1.0F);
+							float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+							sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 						}
 					});
 					return true;

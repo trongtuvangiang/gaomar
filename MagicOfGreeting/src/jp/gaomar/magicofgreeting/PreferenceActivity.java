@@ -20,4 +20,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity{
         return PreferenceManager.getDefaultSharedPreferences(con).getString("opt_gravity", "3");
     }
 
+    public static float getSoundSpeed(Context con) {
+    	float ret = PreferenceManager.getDefaultSharedPreferences(con).getInt("soundseek", 5) / 10F;
+    	ret = ret+0.5F;
+    	return ret;
+    }
+
 }

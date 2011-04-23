@@ -14,21 +14,21 @@ public class LayoutActivity extends MainActivity{
     // AdmobÇÃçLçêópView
     protected AdView adView;
     // AdMakerÇ≥ÇÒÇ©ÇÁì`Ç¶ÇÁÇÍÇΩURL
-    private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/30h5rg638kdm.html";
+    private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/t9hrrx9sv97a.html";
     // AdMakerÇ©ÇÁì`Ç¶ÇÁÇÍÇΩsiteID
     private static final String ADMAKER_SITEID = "881";
     // AdMakerÇ©ÇÁì`Ç¶ÇÁÇÍÇΩsiteID
-    private static final String ADMAKER_ZONEID = "2506";
+    private static final String ADMAKER_ZONEID = "1835";
 
 	@Override
 	protected void onSetContentView() {
 		this.setContentView(R.layout.main);
 		this.surfaceView = (RenderSurfaceView)this.findViewById(R.id.layout_po);
-		this.surfaceView.setRenderer(this.engine);	
-		
+		this.surfaceView.setRenderer(this.engine);
+
 		setAdView();
 	}
-	
+
 	@Override
 	public E3Engine onLoadEngine() {
 		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT, E3Engine.RESOLUTION_FIXED_RATIO);

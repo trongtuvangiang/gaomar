@@ -16,5 +16,10 @@
   		android:entryValues="@array/list_entries_values"
 		android:defaultValue="3"
   		/>
+  	<jp.gaomar.magicofgreeting.PrefSoundSeek
+  		android:selectable="true"
+  		android:enabled="true"
+  		android:title="@string/pref_seek_title"
+  		android:key="seeksound" />
   </PreferenceCategory>
 </PreferenceScreen>

@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     >
 	<com.e3roid.opengl.RenderSurfaceView android:id="@+id/layout_po"
-		android:layout_width="fill_parent" 
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"/>
 	<com.admob.android.ads.AdView

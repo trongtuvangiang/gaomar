@@ -12,6 +12,7 @@
 		<item>天王星</item>
 		<item>海王星</item>
 		<item>冥王星</item>
+		<item>デス・スター</item>
 	</string-array>
 	<string-array name="list_entries_values">
 		<item>0</item>
@@ -25,5 +26,6 @@
 		<item>8</item>
 		<item>9</item>
 		<item>10</item>
+		<item>11</item>
 	</string-array>
 </resources>
