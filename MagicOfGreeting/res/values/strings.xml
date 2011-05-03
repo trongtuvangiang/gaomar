@@ -4,6 +4,7 @@
     <string name="app_name">跳ねるあいさつの魔法</string>
 	<string name="menu_reset">クリア</string>
 	<string name="menu_setting">設定</string>
+	<string name="menu_barcode">バーコード</string>
 	<string name="pref_title">環境設定</string>
 	<string name="pref_check_title">出現設定</string>
 	<string name="pref_check_summary">グレート～キング達を出現させます</string>
@@ -15,4 +16,7 @@
 	<string name="pref_seek_slow">遅い</string>
 	<string name="pref_seek_fast">速い</string>
 	<string name="pref_seek_default">初期値</string>
+
+	<string name="dialog_barcode_title">バーコードインストール</string>
+	<string name="dialog_barcode_message">マーケットからバーコードをインストールしますか？</string>
 </resources>
