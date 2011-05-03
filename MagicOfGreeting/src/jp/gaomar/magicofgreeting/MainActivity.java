@@ -1,10 +1,17 @@
 package jp.gaomar.magicofgreeting;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -23,6 +30,7 @@ import com.e3roid.drawable.Shape;
 import com.e3roid.drawable.Sprite;
 import com.e3roid.drawable.texture.AssetTexture;
 import com.e3roid.drawable.texture.TiledTexture;
+import com.e3roid.event.SceneUpdateListener;
 import com.e3roid.physics.PhysicsShape;
 import com.e3roid.physics.PhysicsWorld;
 import com.e3roid.util.MathUtil;
@@ -31,12 +39,14 @@ import com.e3roid.util.MathUtil;
  *  This class shows the example of applying velocity using physics.
  *  Some of the functionality was inspired by the code by Nicolas Gramlich from AndEngine(www.andengine.org).
  */
-public class MainActivity extends E3Activity {
+public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	private final static int WIDTH  = 320;
 	private final static int HEIGHT = 480;
 
 	private final static int PREF_FORM = 1;
+	private final static int BARCODE_FORM = 2;
+	private String m_Code = "";
 
 	private PhysicsWorld world;
 	private float mGravity;
@@ -58,7 +68,9 @@ public class MainActivity extends E3Activity {
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
 		E3Scene scene = new E3Scene();
+
 		scene.addEventListener(this);
+		scene.registerUpdateListener(60, this);
 		scene.registerUpdateListener(60, world);
 
 		// create physics box
@@ -185,6 +197,12 @@ public class MainActivity extends E3Activity {
 				startActivity(intent);
 				finish();
 			}
+		} else if (requestCode == BARCODE_FORM) {
+			// バーコード取得
+			if (resultCode == Activity.RESULT_OK) {
+	            m_Code = data.getStringExtra("SCAN_RESULT");
+
+			}
 		}
 	}
 
@@ -202,12 +220,28 @@ public class MainActivity extends E3Activity {
     			1,
     			2,
     			Menu.NONE,
+    			R.string.menu_barcode);
+    	menu2.setIcon(R.drawable.ic_menu_barcode);
+
+    	MenuItem menu3 = menu.add(
+    			1,
+    			3,
+    			Menu.NONE,
     			R.string.menu_setting);
-    	menu2.setIcon(android.R.drawable.ic_menu_preferences);
+    	menu3.setIcon(android.R.drawable.ic_menu_preferences);
 
     	return true;
 	}
 
+
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event) {
+		if (event.getAction() == KeyEvent.ACTION_UP && event.getKeyCode() == KeyEvent.KEYCODE_FOCUS) {
+			exeBarcode();
+		}
+		return super.dispatchKeyEvent(event);
+	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
@@ -220,11 +254,45 @@ public class MainActivity extends E3Activity {
 	    		finish();
 				break;
 			case 2 :
+				exeBarcode();
+				break;
+			case 3 :
 	    		intent = new Intent(this, PreferenceActivity.class);
 	    		startActivityForResult(intent, PREF_FORM);
 				break;
 		}
 		return true;
+	}
+
+	private void exeBarcode() {
+		Intent intent = new Intent("com.google.zxing.client.android.SCAN");
+		try {
+			startActivityForResult(intent, BARCODE_FORM);
+		} catch (ActivityNotFoundException e) {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setTitle(getString(R.string.dialog_barcode_title));
+			alertDialogBuilder.setMessage(getString(R.string.dialog_barcode_message));
+			alertDialogBuilder.setPositiveButton("インストール", new OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					Uri uri=Uri.parse("market://details?id=com.google.zxing.client.android");
+					Intent intent=new Intent(Intent.ACTION_VIEW,uri);
+					startActivity(intent);
+				}
+			});
+
+			alertDialogBuilder.setNegativeButton("キャンセル", new OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+				}
+			});
+
+			alertDialogBuilder.setCancelable(true);
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+
 	}
 
 	@Override
@@ -393,5 +461,37 @@ public class MainActivity extends E3Activity {
 		boxBody.setTransform(boxBody.getWorldCenter(), MathUtil.degToRad(shape.getAngle()));
 
 		return boxBody;
+	}
+
+	@Override
+	public void onUpdateScene(E3Scene scene, long arg1) {
+		if (m_Code.length() > 0) {
+			int code = 0;
+			int code_9 = 0;
+
+			try {
+				switch (Integer.valueOf(m_Code.substring(8, 9))) {
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+				case 9:
+					code_9 = 1;
+					break;
+				}
+				int code_11 = Integer.valueOf(m_Code.substring(10, 11));
+				code = code_9*10 + code_11;
+				if (code >= 13) {
+					code = code_11;
+				}
+
+			} catch (NumberFormatException e) {
+			}
+			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+			sp.play(seID[code], 1.0F, 1.0F, 0, 0, speed);
+			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, code));
+			m_Code = "";
+		}
+
 	}
 }
