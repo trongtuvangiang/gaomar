@@ -39,31 +39,44 @@ public class LayoutActivity extends MainActivity{
 
 	protected void setAdView() {
         adView = (AdView) findViewById(R.id.ad);
-        adView.setAdListener(new AdListener() {
 
-            public void onReceiveRefreshedAd(AdView adView) {
-            }
+        // AdMakerの広告を表示するのでAdViewの更新を行わせない
+        adView.setRequestInterval(0);
+        adView.setVisibility(AdView.GONE);
+        // AdMakerの広告を表示させる
+        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+        ad.setActivity(LayoutActivity.this);
+        ad.siteId = ADMAKER_SITEID;
+        ad.zoneId = ADMAKER_ZONEID;
+        ad.setUrl(ADMAKER_URL);
+        ad.setVisibility(libAdMaker.VISIBLE);
+        ad.start();
 
-            public void onReceiveAd(AdView adView) {
-            }
-
-            public void onFailedToReceiveRefreshedAd(AdView adView) {
-            }
-
-            public void onFailedToReceiveAd(AdView adView) {
-                // AdMakerの広告を表示するのでAdViewの更新を行わせない
-                adView.setRequestInterval(0);
-                adView.setVisibility(AdView.GONE);
-                // AdMakerの広告を表示させる
-                libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
-                ad.setActivity(LayoutActivity.this);
-                ad.siteId = ADMAKER_SITEID;
-                ad.zoneId = ADMAKER_ZONEID;
-                ad.setUrl(ADMAKER_URL);
-                ad.setVisibility(libAdMaker.VISIBLE);
-                ad.start();
-            }
-        });
+//        adView.setAdListener(new AdListener() {
+//
+//            public void onReceiveRefreshedAd(AdView adView) {
+//            }
+//
+//            public void onReceiveAd(AdView adView) {
+//            }
+//
+//            public void onFailedToReceiveRefreshedAd(AdView adView) {
+//            }
+//
+//            public void onFailedToReceiveAd(AdView adView) {
+//                // AdMakerの広告を表示するのでAdViewの更新を行わせない
+//                adView.setRequestInterval(0);
+//                adView.setVisibility(AdView.GONE);
+//                // AdMakerの広告を表示させる
+//                libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+//                ad.setActivity(LayoutActivity.this);
+//                ad.siteId = ADMAKER_SITEID;
+//                ad.zoneId = ADMAKER_ZONEID;
+//                ad.setUrl(ADMAKER_URL);
+//                ad.setVisibility(libAdMaker.VISIBLE);
+//                ad.start();
+//            }
+//        });
     }
 
 }

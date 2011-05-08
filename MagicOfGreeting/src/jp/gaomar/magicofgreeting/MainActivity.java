@@ -1,6 +1,7 @@
 package jp.gaomar.magicofgreeting;
 
 
+import jp.gaomar.magicofgreeting.ShakeListener.OnShakeListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -11,10 +12,13 @@ import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -54,6 +58,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
     int[] seID = new int[15];
     int MAX = 0;
     int cnt = 0;
+
+	private ShakeListener mShakeListener;
+    private boolean mShakeFlg;
 
 	@Override
 	public E3Engine onLoadEngine() {
@@ -132,6 +139,40 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	}
 
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mShakeListener.onResume();
+	}
+
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		// スリープ禁止
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // ShakeListenerのインスタンスを作って
+        mShakeListener = new ShakeListener(this);
+        // リスナーをセット
+        mShakeListener.setOnShakeListener(new OnShakeListener() {
+            // シェイクを検知すると
+            // 以下のonShakeメソッドが呼び出されます。
+            public void onShake() {
+            	mShakeFlg = true;
+            }
+        });
+
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO 自動生成されたメソッド・スタブ
+		super.onPause();
+        mShakeListener.onPause();
+	}
 
 	/**
 	 * 重力取得
@@ -470,7 +511,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			int code_9 = 0;
 
 			try {
-				switch (Integer.valueOf(m_Code.substring(8, 9))) {
+				switch (Integer.valueOf(m_Code.substring(m_Code.length() -5, m_Code.length() - 4))) {
 				case 1:
 				case 3:
 				case 5:
@@ -479,7 +520,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 					code_9 = 1;
 					break;
 				}
-				int code_11 = Integer.valueOf(m_Code.substring(10, 11));
+				int code_11 = Integer.valueOf(m_Code.substring(m_Code.length() - 3, m_Code.length() - 2));
 				code = code_9*10 + code_11;
 				if (code >= 13) {
 					code = code_11;
@@ -491,6 +532,18 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			sp.play(seID[code], 1.0F, 1.0F, 0, 0, speed);
 			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, code));
 			m_Code = "";
+		}
+
+		// シェイクで降ってくる
+		if (mShakeFlg) {
+			mShakeFlg = false;
+
+			int id = (int)(Math.random()*MAX);
+			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+			// every event in the world must be handled by the update thread.
+			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
+
 		}
 
 	}
