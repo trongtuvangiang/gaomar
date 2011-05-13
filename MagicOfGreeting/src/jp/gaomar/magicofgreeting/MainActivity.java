@@ -427,7 +427,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 						@Override
 						public void run() {
 							PhysicsShape pShape = world.findShape(shape);
-							pShape.getBody().setLinearVelocity(new Vector2(0, -mGravity));
+							int pop = PreferenceActivity.getPopValue(MainActivity.this);
+							pShape.getBody().setLinearVelocity(new Vector2(0, -mGravity * pop));
 							int id = Integer.valueOf(pShape.getBody().getUserData().toString());
 							float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
 							sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);

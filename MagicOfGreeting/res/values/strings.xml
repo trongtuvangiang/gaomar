@@ -12,9 +12,13 @@
 	<string name="pref_opt_summary">様々な星の重力に切り替えます</string>
 	<string name="pref_seek_title">音声スピード</string>
 	<string name="pref_seek_summary">音声のスピードを変更出来ます</string>
+	<string name="pref_pop_seek_title">跳ね具合</string>
+	<string name="pref_pop_seek_summary">最大にすればするほどキャラが勢い良く跳ねます</string>
 
 	<string name="pref_seek_slow">遅い</string>
 	<string name="pref_seek_fast">速い</string>
+	<string name="pref_seek_min">通常</string>
+	<string name="pref_seek_max">最大</string>
 	<string name="pref_seek_default">初期値</string>
 
 	<string name="dialog_barcode_title">バーコードインストール</string>

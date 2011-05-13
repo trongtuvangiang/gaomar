@@ -20,6 +20,13 @@
   		android:selectable="true"
   		android:enabled="true"
   		android:title="@string/pref_seek_title"
+  		android:summary="@string/pref_seek_summary"
   		android:key="seeksound" />
-  </PreferenceCategory>
+  	<jp.gaomar.magicofgreeting.PrefPopSeek
+  		android:selectable="true"
+  		android:enabled="true"
+  		android:title="@string/pref_pop_seek_title"
+  		android:summary="@string/pref_pop_seek_summary"
+  		android:key="seekpop" />
+   </PreferenceCategory>
 </PreferenceScreen>

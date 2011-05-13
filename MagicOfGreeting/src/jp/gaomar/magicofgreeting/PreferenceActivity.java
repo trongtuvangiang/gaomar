@@ -26,4 +26,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity{
     	return ret;
     }
 
+    public static int getPopValue(Context con) {
+    	int ret = PreferenceManager.getDefaultSharedPreferences(con).getInt("popseek", 0);
+    	ret = ret+1;
+    	return ret;
+    }
+
 }
