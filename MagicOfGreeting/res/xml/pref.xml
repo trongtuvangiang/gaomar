@@ -7,6 +7,11 @@
   		android:title="@string/pref_check_title"
   		android:summary="@string/pref_check_summary"
   		/>
+  	<CheckBoxPreference
+  		android:key="chk_sound"
+  		android:title="@string/pref_sound_check_title"
+  		android:summary="@string/pref_sound_check_summary"
+  		/>
   	<ListPreference
   		android:key="opt_gravity"
   		android:title="@string/pref_opt_title"

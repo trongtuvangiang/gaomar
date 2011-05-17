@@ -2,6 +2,7 @@ package jp.gaomar.magicofgreeting;
 
 
 import jp.gaomar.magicofgreeting.ShakeListener.OnShakeListener;
+import jp.gaomar.magicofgreeting.SoundSwitch.OnReachedVolumeListener;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
@@ -13,12 +14,12 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -61,6 +62,12 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	private ShakeListener mShakeListener;
     private boolean mShakeFlg;
+
+	Handler mSoundHandler = new Handler();
+
+	// マイクからの入力
+	public boolean mSoundFlg;
+	private SoundSwitch mSoundSwitch;
 
 	@Override
 	public E3Engine onLoadEngine() {
@@ -107,6 +114,26 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 				new TiledTexture("background.png", getWidth(), getHeight(), this));
 		scene.getTopLayer().setBackground(background);
 
+		if (PreferenceActivity.isSound(this)) {
+			if (mSoundSwitch == null) {
+		        mSoundSwitch = new SoundSwitch();
+		        mSoundSwitch.setOnVolumeReachedListener(new OnReachedVolumeListener() {
+					@Override
+					public void OnReachedVolum(final short volume) {
+						mSoundHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								if (volume != 0) {
+									mSoundFlg = true;
+								}
+							}
+						});
+					}
+				});
+		        new Thread(mSoundSwitch).start();
+			}
+		}
+
 		return scene;
 	}
 
@@ -144,6 +171,28 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	protected void onResume() {
 		super.onResume();
 		mShakeListener.onResume();
+
+		if (PreferenceActivity.isSound(this)) {
+			if (mSoundSwitch != null) {
+				mSoundSwitch.stop();
+		        mSoundSwitch = new SoundSwitch();
+		        mSoundSwitch.setOnVolumeReachedListener(new OnReachedVolumeListener() {
+					@Override
+					public void OnReachedVolum(final short volume) {
+						mSoundHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								if (volume != 0) {
+									mSoundFlg = true;
+								}
+							}
+						});
+					}
+				});
+		        new Thread(mSoundSwitch).start();
+			}
+		}
+
 	}
 
 
@@ -171,7 +220,16 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	protected void onPause() {
 		// TODO 自動生成されたメソッド・スタブ
 		super.onPause();
+		if (PreferenceActivity.isSound(this))
+			mSoundSwitch.stop();
         mShakeListener.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		if (PreferenceActivity.isSound(this))
+			mSoundSwitch.stop();
 	}
 
 	/**
@@ -244,7 +302,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	            m_Code = data.getStringExtra("SCAN_RESULT");
 
 			}
+
 		}
+
 	}
 
 	@Override
@@ -547,5 +607,14 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 		}
 
+		// 音感センサー
+		if (mSoundFlg) {
+			mSoundFlg = false;
+			int id = (int)(Math.random()*MAX);
+			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+			// every event in the world must be handled by the update thread.
+			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
+		}
 	}
 }
