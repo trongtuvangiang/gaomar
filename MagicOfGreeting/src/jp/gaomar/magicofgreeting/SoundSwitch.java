@@ -1,5 +1,6 @@
 package jp.gaomar.magicofgreeting;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -10,6 +11,11 @@ public class SoundSwitch implements Runnable{
 	private boolean isRecording = true;
 
 	private static final int SAMPLE_RATE = 8000;
+	private int mEarRate;
+
+	public SoundSwitch(Context con) {
+		mEarRate = PreferenceActivity.getEarValue(con);
+	}
 
 	public void stop(){
 		isRecording = false;
@@ -42,7 +48,7 @@ public class SoundSwitch implements Runnable{
 			for ( int i=0; i<bufferSize; i++){
 				max = (short)Math.max(max, buffer[i]);
 				if( mListener != null){
-					if( max > 10000 ){
+					if( max > mEarRate ){
 						mListener.OnReachedVolum(max);
 						break;
 					}

@@ -116,7 +116,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 		if (PreferenceActivity.isSound(this)) {
 			if (mSoundSwitch == null) {
-		        mSoundSwitch = new SoundSwitch();
+		        mSoundSwitch = new SoundSwitch(this);
 		        mSoundSwitch.setOnVolumeReachedListener(new OnReachedVolumeListener() {
 					@Override
 					public void OnReachedVolum(final short volume) {
@@ -175,7 +175,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		if (PreferenceActivity.isSound(this)) {
 			if (mSoundSwitch != null) {
 				mSoundSwitch.stop();
-		        mSoundSwitch = new SoundSwitch();
+		        mSoundSwitch = new SoundSwitch(this);
 		        mSoundSwitch.setOnVolumeReachedListener(new OnReachedVolumeListener() {
 					@Override
 					public void OnReachedVolum(final short volume) {

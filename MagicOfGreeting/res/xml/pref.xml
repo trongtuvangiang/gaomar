@@ -7,11 +7,6 @@
   		android:title="@string/pref_check_title"
   		android:summary="@string/pref_check_summary"
   		/>
-  	<CheckBoxPreference
-  		android:key="chk_sound"
-  		android:title="@string/pref_sound_check_title"
-  		android:summary="@string/pref_sound_check_summary"
-  		/>
   	<ListPreference
   		android:key="opt_gravity"
   		android:title="@string/pref_opt_title"
@@ -33,5 +28,19 @@
   		android:title="@string/pref_pop_seek_title"
   		android:summary="@string/pref_pop_seek_summary"
   		android:key="seekpop" />
-   </PreferenceCategory>
+  </PreferenceCategory>
+
+  <PreferenceCategory android:title="@string/pref_sensor_title">
+  	<CheckBoxPreference
+  		android:key="chk_sound"
+  		android:title="@string/pref_sound_check_title"
+  		android:summary="@string/pref_sound_check_summary"
+  		android:disableDependentsState="false"
+  		/>
+  	<jp.gaomar.magicofgreeting.PrefEarSeek
+  		android:title="@string/pref_sound_seek_title"
+  		android:summary="@string/pref_sound_seek_summary"
+  		android:key="seekear"
+  		android:dependency="chk_sound" />
+  </PreferenceCategory>
 </PreferenceScreen>
