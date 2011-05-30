@@ -35,6 +35,13 @@ import android.widget.Toast;
 
 public class CreateHistoryActivity extends Activity {
 
+    // AdMakerさんから伝えられたURL
+    private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/3cxim1xrurk9.html";
+    // AdMakerから伝えられたsiteID
+    private static final String ADMAKER_SITEID = "881";
+    // AdMakerから伝えられたsiteID
+    private static final String ADMAKER_ZONEID = "3452";
+
 	// 商品情報(MytemMaster)のキー
 	private static final String KEY_MYTEM_MASTER = "MYTEM_MASTER";
 
@@ -114,7 +121,21 @@ public class CreateHistoryActivity extends Activity {
 		mMonth = c.get(Calendar.MONTH);
 		mDay = c.get(Calendar.DAY_OF_MONTH);
 		
+//        adView();
+
 	}
+
+//    public void adView() {
+//        // AdMakerの広告を表示させる
+//        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+//        ad.setActivity(CreateHistoryActivity.this);
+//        ad.siteId = ADMAKER_SITEID;
+//        ad.zoneId = ADMAKER_ZONEID;
+//        ad.setUrl(ADMAKER_URL);
+//        ad.setVisibility(libAdMaker.VISIBLE);
+//        ad.start();	
+//    }
+
 	/**
 	 * ボタンとかエディットボックスとかのUIを取ってくる
 	 */
@@ -356,6 +377,7 @@ public class CreateHistoryActivity extends Activity {
 	 */
 	public void onLogoClick(View v) {
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
 	}

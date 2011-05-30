@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +37,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CreateActivity extends Activity {
+	
+    // AdMakerさんから伝えられたURL
+    private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/3cxim1xrurk9.html";
+    // AdMakerから伝えられたsiteID
+    private static final String ADMAKER_SITEID = "881";
+    // AdMakerから伝えられたsiteID
+    private static final String ADMAKER_ZONEID = "3452";
+    
 	// RequestCode
 	private static final int REQUEST_GALLERY = 1;
 	private static final int REQUEST_CAMERA = 2;
@@ -105,6 +114,7 @@ public class CreateActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		this.getWindow().setSoftInputMode(LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		setContentView(R.layout.activity_create);
 
 		// リクエストコードを取得
@@ -141,7 +151,23 @@ public class CreateActivity extends Activity {
 		// QuickAction用のItemを初期化
 		initActionItem();
 
+//        adView();
+
 	}
+
+	
+//    public void adView() {
+//        // AdMakerの広告を表示させる
+//        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+//        ad.setActivity(CreateActivity.this);
+//        ad.siteId = ADMAKER_SITEID;
+//        ad.zoneId = ADMAKER_ZONEID;
+//        ad.setUrl(ADMAKER_URL);
+//        ad.setVisibility(libAdMaker.VISIBLE);
+//        ad.start();	
+//    }
+
+    
 	/**
 	 * ボタンとかエディットボックスとかのUIを取ってくる
 	 */

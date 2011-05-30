@@ -112,6 +112,7 @@ public class ItemActivity extends Activity{
 	 */
 	public void onLogoClick(View v) {
 		Intent intent = new Intent(this, MainActivity.class);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 		finish();
 	}

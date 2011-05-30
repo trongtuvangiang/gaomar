@@ -2,7 +2,6 @@ package jp.gaomar.mytem;
 
 
 
-import jp.co.nobot.libAdMaker.libAdMaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,19 +23,19 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        adView();
+        //adView();
     }
     
-    public void adView() {
-        // AdMakerの広告を表示させる
-        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
-        ad.setActivity(MainActivity.this);
-        ad.siteId = ADMAKER_SITEID;
-        ad.zoneId = ADMAKER_ZONEID;
-        ad.setUrl(ADMAKER_URL);
-        ad.setVisibility(libAdMaker.VISIBLE);
-        ad.start();	
-    }
+//    public void adView() {
+//        // AdMakerの広告を表示させる
+//        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+//        ad.setActivity(MainActivity.this);
+//        ad.siteId = ADMAKER_SITEID;
+//        ad.zoneId = ADMAKER_ZONEID;
+//        ad.setUrl(ADMAKER_URL);
+//        ad.setVisibility(libAdMaker.VISIBLE);
+//        ad.start();	
+//    }
     
 	/**
 	 * 読込ボタンが押されたとき

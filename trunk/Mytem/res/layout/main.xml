@@ -44,10 +44,19 @@
 	            android:drawableTop="@drawable/home_btn_history"/>
         </LinearLayout>
     </LinearLayout>
+<com.ngigroup.adsta.AdView
+    android:id="@+id/adView"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"	
+    />
+    
+<!--  
 	<jp.co.nobot.libAdMaker.libAdMaker
 		android:id="@+id/admakerview"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:scrollbars="none"
 		android:layout_gravity="bottom"/>
+-->
 </LinearLayout>
