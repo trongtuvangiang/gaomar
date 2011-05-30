@@ -26,7 +26,10 @@
 			android:screenOrientation="portrait"/>			
 		<activity 
 			android:name=".CreateHistoryActivity" 
-			android:screenOrientation="portrait"/>			
+			android:screenOrientation="portrait"/>
+			
+	    <meta-data android:name="ADSTA_MEDIA_ID" android:value="popopo" />
+	    <meta-data android:name="ADSTA_SLOT_ID" android:value="2" />
     </application>
     <uses-sdk android:minSdkVersion="7" />
 	<uses-permission 
