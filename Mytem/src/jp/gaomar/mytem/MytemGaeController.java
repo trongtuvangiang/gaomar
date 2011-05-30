@@ -340,7 +340,6 @@ public class MytemGaeController {
 			while ((line = reader.readLine()) != null) {
 				builder.append(line);
 			}
-			System.out.println(builder.toString());
 		} catch (UnsupportedEncodingException exception) {
 			throw new GaeException(exception);
 		} catch (ClientProtocolException e) {
@@ -432,7 +431,6 @@ public class MytemGaeController {
 			while ((line = reader.readLine()) != null) {
 				builder.append(line);
 			}
-			System.out.println(builder.toString());
 		} catch (UnsupportedEncodingException exception) {
 			throw new GaeException(exception);
 		} catch (ClientProtocolException e) {
