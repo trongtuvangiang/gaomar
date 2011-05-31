@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/form_background_shelf"
+	android:orientation="vertical">
+	<!-- ActionBar -->
+	<LinearLayout style="@style/TitleBar">
+        <ImageButton
+            style="@style/TitleBarAction"
+            android:onClick="onLogoClick"
+            android:src="@drawable/ic_title_home"/>
+        <TextView
+        	style="@style/TitleBarText"
+        	android:text="@string/create_history"/>
+		<ImageButton
+			style="@style/TitleBarAction"
+			android:onClick="onReaderButtonClick"
+			android:src="@drawable/home_btn_barcode" />
+		<requestFocus />
+	</LinearLayout>
+	<!-- ActionBar End -->
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_weight="1">
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center">
+			<LinearLayout
+				android:layout_height="wrap_content"
+				android:layout_width="fill_parent"
+				android:orientation="vertical">
+
+		  		<LinearLayout
+		  			android:orientation="vertical"
+		  			android:padding="10.0dip"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="fill_parent">
+		  			<LinearLayout
+		  				android:orientation="vertical"
+		  				android:background="@drawable/roundrect_top_background"
+		  				android:padding="10.0dip"
+		  				android:layout_width="fill_parent"
+		  				android:layout_height="wrap_content">
+		  				<LinearLayout
+		  					android:orientation="vertical"
+		  					android:layout_width="fill_parent"
+		  					android:layout_height="wrap_content">
+							<TextView
+								android:textSize="15.0dip"
+								android:textColor="@color/green"
+								android:gravity="center_vertical"
+								android:layout_width="fill_parent"
+								android:layout_height="wrap_content"
+								android:text="@string/item_name"/>
+							<TextView
+								android:textSize="15.0dip"
+								android:textColor="@color/black"
+								android:gravity="center_vertical"
+								android:id="@+id/NameText"
+								android:layout_width="fill_parent"
+								android:layout_height="wrap_content" />
+						</LinearLayout>
+					</LinearLayout>
+					<LinearLayout
+						android:orientation="vertical"
+						android:background="@drawable/roundrect_bottom_background"
+						android:padding="10.0dip"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="-2.0dip">
+						<TextView
+							android:textSize="15.0dip"
+							android:textColor="@color/green"
+							android:gravity="center_vertical"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content"
+							android:text="@string/jan_code"/>
+						<TextView
+							android:textSize="11.0dip"
+							android:textColor="@color/black"
+							android:gravity="center_vertical"
+							android:id="@+id/JanText"
+							android:layout_width="fill_parent"
+							android:layout_height="wrap_content" />
+					</LinearLayout>
+
+					<LinearLayout
+						android:orientation="vertical"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:layout_marginTop="10.0dip">
+						<ImageView
+							android:layout_gravity="center"
+							android:id="@+id/MytemImageView"
+							android:layout_width="144.0dip"
+							android:layout_height="144.0dip"
+							android:src="@drawable/nophoto_144x144"/>
+					</LinearLayout>
+		  		</LinearLayout>
+			</LinearLayout>
+			<LinearLayout
+				android:orientation="vertical"
+				android:padding="10.0dip"
+				android:layout_width="fill_parent"
+				android:layout_height="fill_parent">
+
+				<LinearLayout
+					android:orientation="vertical"
+					android:background="@drawable/roundrect_top_background"
+					android:padding="10.0dip"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content">
+	 				<LinearLayout android:orientation="vertical" android:background="@drawable/roundrect_detail_title_background" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+	 					<TextView android:textSize="15.0dip" android:textColor="@color/white" android:gravity="center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_products" />
+					</LinearLayout>
+					<TextView android:textSize="15.0dip" android:textColor="@color/green" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_shopname" android:layout_marginTop="5.0dip"/>
+					<EditText android:id="@+id/NameEdit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="text" android:maxLength="60" android:imeOptions="actionDone"/>
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical" android:background="@drawable/roundrect_center_background" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="-2.0dip">
+					<TextView android:textSize="15.0dip" android:textColor="@color/green" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_price" />
+					<EditText android:id="@+id/PriceEdit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="number" android:maxLength="7" android:imeOptions="actionDone"/>
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical" android:background="@drawable/roundrect_center_background" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="-2.0dip">
+					<TextView android:textSize="15.0dip" android:textColor="@color/green" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_date_title" />
+					<Button android:id="@+id/PostDate" android:textColor="@color/white" android:background="@drawable/btn_black_small" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_date_message" android:onClick="onDatePicker"/>
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical" android:background="@drawable/roundrect_center_background" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="-2.0dip">
+					<TextView android:textSize="15.0dip" android:textColor="@color/green" android:gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/history_note"/>
+					<EditText android:id="@+id/NoteEdit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="textMultiLine" android:lines="3" android:maxLength="140"/>
+				</LinearLayout>
+				<LinearLayout android:orientation="vertical" android:background="@drawable/roundrect_bottom_background" android:padding="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="-2.0dip">
+					<Button
+						android:text="@string/create_create"
+						android:id="@+id/CreateButton"
+						android:background="@drawable/btn_orange"
+						android:layout_width="fill_parent"
+						android:layout_height="wrap_content"
+						android:onClick="onCreateClick"/>
+				</LinearLayout>
+
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+  	<LinearLayout
+  		android:orientation="vertical"
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content" >
+			<jp.co.nobot.libAdMaker.libAdMaker
+				android:id="@+id/admakerview"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:scrollbars="none"
+				android:layout_gravity="bottom"/>
+	</LinearLayout>
+</LinearLayout>
