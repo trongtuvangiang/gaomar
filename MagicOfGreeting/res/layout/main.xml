@@ -9,12 +9,14 @@
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:layout_weight="1"/>
+<!--
 	<com.ngigroup.adsta.AdView
 	    android:id="@+id/adView"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    />
-<!-- 
+ -->
+<!--
 	<com.admob.android.ads.AdView
 		android:id="@+id/ad"
 		android:layout_width="fill_parent"
@@ -23,6 +25,7 @@
 		myapp:primaryTextColor="#FFFFFF"
 		myapp:secondaryTextColor="#CCCCCC">
 	</com.admob.android.ads.AdView>
+-->
      <jp.co.nobot.libAdMaker.libAdMaker
       android:id="@+id/admakerview"
       android:layout_width="fill_parent"
@@ -30,5 +33,5 @@
       android:scrollbars="none"
       android:visibility="gone"
      />
--->
+
 </LinearLayout>

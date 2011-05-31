@@ -62,7 +62,7 @@ containing a value of this type.
         public static final int icon=0x7f020001;
     }
     public static final class id {
-        public static final int adView=0x7f080003;
+        public static final int admakerview=0x7f080003;
         public static final int btn_default=0x7f080000;
         public static final int earseek=0x7f080001;
         public static final int layout_po=0x7f080002;

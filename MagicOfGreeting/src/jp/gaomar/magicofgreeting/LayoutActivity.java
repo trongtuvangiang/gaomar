@@ -26,7 +26,7 @@ public class LayoutActivity extends MainActivity{
 		this.surfaceView = (RenderSurfaceView)this.findViewById(R.id.layout_po);
 		this.surfaceView.setRenderer(this.engine);
 
-		//setAdView();
+		setAdView();
 	}
 
 	@Override
@@ -37,20 +37,20 @@ public class LayoutActivity extends MainActivity{
 		return engine;
 	}
 
-//	protected void setAdView() {
+	protected void setAdView() {
 //        adView = (AdView) findViewById(R.id.ad);
 //
 //        // AdMakerの広告を表示するのでAdViewの更新を行わせない
 //        adView.setRequestInterval(0);
 //        adView.setVisibility(AdView.GONE);
-//        // AdMakerの広告を表示させる
-//        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
-//        ad.setActivity(LayoutActivity.this);
-//        ad.siteId = ADMAKER_SITEID;
-//        ad.zoneId = ADMAKER_ZONEID;
-//        ad.setUrl(ADMAKER_URL);
-//        ad.setVisibility(libAdMaker.VISIBLE);
-//        ad.start();
+        // AdMakerの広告を表示させる
+        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
+        ad.setActivity(LayoutActivity.this);
+        ad.siteId = ADMAKER_SITEID;
+        ad.zoneId = ADMAKER_ZONEID;
+        ad.setUrl(ADMAKER_URL);
+        ad.setVisibility(libAdMaker.VISIBLE);
+        ad.start();
 //
 //        adView.setAdListener(new AdListener() {
 //
@@ -77,6 +77,6 @@ public class LayoutActivity extends MainActivity{
 //                ad.start();
 //            }
 //        });
-//    }
+    }
 
 }
