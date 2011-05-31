@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="libs/e3roid.jar"/>
 	<classpathentry kind="lib" path="libs/admob-sdk-android.jar"/>
 	<classpathentry kind="lib" path="libs/libAdMaker.jar"/>
+	<classpathentry kind="lib" path="libs/adsta.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
