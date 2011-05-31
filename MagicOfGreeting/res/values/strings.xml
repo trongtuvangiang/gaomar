@@ -9,6 +9,8 @@
 	<string name="pref_sensor_title">センサー設定</string>
 	<string name="pref_check_title">出現設定</string>
 	<string name="pref_check_summary">グレート～キング達を出現させます</string>
+	<string name="pref_proximity_check_title">近接センサー</string>
+	<string name="pref_proximity_check_summary">画面を手で隠したり離したりするとキャラが出てきます</string>
 	<string name="pref_sound_check_title">音感センサー</string>
 	<string name="pref_sound_check_summary">拍手など音に反応するとキャラが出てきます</string>
 	<string name="pref_sound_seek_title">音感センサー感度調整</string>

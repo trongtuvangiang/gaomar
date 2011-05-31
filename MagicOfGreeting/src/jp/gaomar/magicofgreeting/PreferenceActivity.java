@@ -20,6 +20,10 @@ public class PreferenceActivity extends android.preference.PreferenceActivity{
         return PreferenceManager.getDefaultSharedPreferences(con).getBoolean("chk_sound", false);
     }
 
+    public static boolean isProximity(Context con){
+        return PreferenceManager.getDefaultSharedPreferences(con).getBoolean("chk_proximity", false);
+    }
+
     public static String getGravity(Context con){
         return PreferenceManager.getDefaultSharedPreferences(con).getString("opt_gravity", "3");
     }

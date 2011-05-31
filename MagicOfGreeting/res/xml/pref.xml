@@ -32,6 +32,12 @@
 
   <PreferenceCategory android:title="@string/pref_sensor_title">
   	<CheckBoxPreference
+  		android:key="chk_proximity"
+  		android:title="@string/pref_proximity_check_title"
+  		android:summary="@string/pref_proximity_check_summary"
+  		android:disableDependentsState="false"
+  		/>  
+  	<CheckBoxPreference
   		android:key="chk_sound"
   		android:title="@string/pref_sound_check_title"
   		android:summary="@string/pref_sound_check_summary"

@@ -1,6 +1,7 @@
 package jp.gaomar.magicofgreeting;
 
 
+import jp.gaomar.magicofgreeting.ProximityManager.OnProximityListener;
 import jp.gaomar.magicofgreeting.ShakeListener.OnShakeListener;
 import jp.gaomar.magicofgreeting.SoundSwitch.OnReachedVolumeListener;
 import android.app.Activity;
@@ -9,6 +10,7 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -61,6 +63,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
     int cnt = 0;
 
 	private ShakeListener mShakeListener;
+	private ProximityManager mProximityManager;
     private boolean mShakeFlg;
 
 	Handler mSoundHandler = new Handler();
@@ -69,6 +72,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	public boolean mSoundFlg;
 	private SoundSwitch mSoundSwitch;
 
+	// 近接センサー反応
+	public boolean mProximityFlg;
+	
 	@Override
 	public E3Engine onLoadEngine() {
 		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT);
@@ -171,7 +177,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	protected void onResume() {
 		super.onResume();
 		mShakeListener.onResume();
-
+        // センサーの準備などをします。
+		mProximityManager.onResume();
+        
 		if (PreferenceActivity.isSound(this)) {
 			if (mSoundSwitch != null) {
 				mSoundSwitch.stop();
@@ -214,6 +222,25 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
             }
         });
 
+		mProximityManager = new ProximityManager(this);
+		if (PreferenceActivity.isProximity(this)) {
+			mProximityManager.setOnProximityListener(new OnProximityListener() {
+	
+	            // 近接センサーの値が変わる度に呼び出されます。
+	            public void onSensorChanged(SensorEvent event) {
+	            }
+	
+	            // 近接センサーに近づいたら呼び出されます。
+	            public void onNear(float value) {
+	            	mProximityFlg = true;
+	            }
+	
+	            // 近接センサーから遠ざかったら呼び出されます。
+	            public void onFar(float value) {
+	            	mProximityFlg = true;
+	            }
+	        });
+		}
 	}
 
 	@Override
@@ -223,6 +250,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		if (PreferenceActivity.isSound(this))
 			mSoundSwitch.stop();
         mShakeListener.onPause();
+        // センサーのリスナーを解放します。
+        mProximityManager.onPause();
 	}
 
 	@Override
@@ -616,5 +645,16 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			// every event in the world must be handled by the update thread.
 			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
 		}
+
+		// 近接センサー
+		if (mProximityFlg) {
+			mProximityFlg = false;
+			int id = (int)(Math.random()*MAX);
+			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
+			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+			// every event in the world must be handled by the update thread.
+			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
+		}
+		
 	}
 }
