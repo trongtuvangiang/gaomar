@@ -58,7 +58,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	private PhysicsWorld world;
 	private float mGravity;
 	private SoundPool sp;
-    int[] seID = new int[15];
+    int[] seID = new int[16];
     int MAX = 0;
     int cnt = 0;
 
@@ -167,8 +167,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
         seID[10] = sp.load( this, R.raw.mouse_gochi, 1 );
         seID[11] = sp.load( this, R.raw.sai, 1 );
         seID[12] = sp.load( this, R.raw.ac, 1 );
-        seID[13] = sp.load( this, R.raw.usagi, 1 );
-        seID[14] = sp.load( this, R.raw.lion, 1 );
+        seID[13] = sp.load( this, R.raw.migeru, 1 );
+        seID[14] = sp.load( this, R.raw.usagi, 1 );
+        seID[15] = sp.load( this, R.raw.lion, 1 );
 
 	}
 
@@ -310,9 +311,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	 */
 	private void getDisp() {
 		if (PreferenceActivity.isDisp(this)) {
-			MAX = 15;
+			MAX = 16;
 		} else {
-			MAX = 13;
+			MAX = 14;
 		}
 	}
 
@@ -498,9 +499,12 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			texture = new AssetTexture("ac.png", this);
 			break;
 		case 13:
+			texture = new AssetTexture("migeru.png", this);
+			break;			
+		case 14:
 			texture = new AssetTexture("greateusagi.png", this);
 			break;
-		case 14:
+		case 15:
 			texture = new AssetTexture("kinglion.png", this);
 			break;
 
