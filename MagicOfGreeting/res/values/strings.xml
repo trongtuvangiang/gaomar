@@ -7,8 +7,8 @@
 	<string name="menu_barcode">バーコード</string>
 	<string name="pref_title">環境設定</string>
 	<string name="pref_sensor_title">センサー設定</string>
-	<string name="pref_check_title">出現設定</string>
-	<string name="pref_check_summary">グレート～キング達を出現させます</string>
+	<string name="pref_disp_title">出現設定</string>
+	<string name="pref_disp_summary">出現させたいキャラを設定します</string>
 	<string name="pref_proximity_check_title">近接センサー</string>
 	<string name="pref_proximity_check_summary">画面を手で隠したり離したりするとキャラが出てきます</string>
 	<string name="pref_sound_check_title">音感センサー</string>
@@ -32,4 +32,21 @@
 
 	<string name="dialog_barcode_title">バーコードインストール</string>
 	<string name="dialog_barcode_message">マーケットからバーコードをインストールしますか？</string>
+	
+	<string name="dialog_disp_1">あいさつ坊や</string>
+	<string name="dialog_disp_2">あいさつガール</string>
+	<string name="dialog_disp_3">こんにちワン</string>
+	<string name="dialog_disp_4">ありがとウサギ</string>
+	<string name="dialog_disp_5">こんばんワニ</string>
+	<string name="dialog_disp_6">さよなライオン</string>
+	<string name="dialog_disp_7">おはよウナギ</string>
+	<string name="dialog_disp_8">いただきマウス</string>
+	<string name="dialog_disp_9">いってきまスカンク</string>
+	<string name="dialog_disp_10">ただいマンボウ</string>
+	<string name="dialog_disp_11">ごちそうさマウス</string>
+	<string name="dialog_disp_12">おやすみなサイ</string>
+	<string name="dialog_disp_13">AC</string>
+	<string name="dialog_disp_14">グレートありがとウサギ</string>
+	<string name="dialog_disp_15">キングさよなライオン</string>
+	<string name="dialog_disp_16">消臭力少年</string>
 </resources>

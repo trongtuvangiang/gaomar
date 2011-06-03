@@ -2,11 +2,9 @@
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
   <PreferenceCategory android:title="@string/pref_title">
-  	<CheckBoxPreference
-  		android:key="chk_disp"
-  		android:title="@string/pref_check_title"
-  		android:summary="@string/pref_check_summary"
-  		/>
+  	<jp.gaomar.magicofgreeting.PrefDispFlg
+  		android:title="@string/pref_disp_title"
+  		android:summary="@string/pref_disp_summary"/>
   	<ListPreference
   		android:key="opt_gravity"
   		android:title="@string/pref_opt_title"

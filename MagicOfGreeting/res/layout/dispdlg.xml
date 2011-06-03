@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  android:gravity="center"
+  android:paddingBottom="5dp">
+	<ScrollView
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<LinearLayout
+			android:orientation="vertical"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content">
+			<CheckBox
+				android:id="@+id/disp_1"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_1" />
+			<CheckBox
+				android:id="@+id/disp_2"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_2" />
+			<CheckBox
+				android:id="@+id/disp_3"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_3" />
+			<CheckBox
+				android:id="@+id/disp_4"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_4" />
+			<CheckBox
+				android:id="@+id/disp_5"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_5" />
+			<CheckBox
+				android:id="@+id/disp_6"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_6" />
+			<CheckBox
+				android:id="@+id/disp_7"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_7" />
+			<CheckBox
+				android:id="@+id/disp_8"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_8" />
+			<CheckBox
+				android:id="@+id/disp_9"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_9" />
+			<CheckBox
+				android:id="@+id/disp_10"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_10" />
+			<CheckBox
+				android:id="@+id/disp_11"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_11" />
+			<CheckBox
+				android:id="@+id/disp_12"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_12" />
+			<CheckBox
+				android:id="@+id/disp_13"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_13" />
+			<CheckBox
+				android:id="@+id/disp_14"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_14" />
+			<CheckBox
+				android:id="@+id/disp_15"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_15" />			
+			<CheckBox
+				android:id="@+id/disp_16"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_16" />			
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>

@@ -46,4 +46,8 @@ public class PreferenceActivity extends android.preference.PreferenceActivity{
     	return ret;
     }
 
+    public static boolean getDispFlg(Context con, int id) {
+    	boolean flg = PreferenceManager.getDefaultSharedPreferences(con).getBoolean(PrefDispFlg.CHK_DISP_KEY + id, true);
+    	return flg;
+    }
 }

@@ -26,7 +26,7 @@ public class LayoutActivity extends MainActivity{
 		this.surfaceView = (RenderSurfaceView)this.findViewById(R.id.layout_po);
 		this.surfaceView.setRenderer(this.engine);
 
-		setAdView();
+//		setAdView();
 	}
 
 	@Override

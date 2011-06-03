@@ -1,6 +1,9 @@
 package jp.gaomar.magicofgreeting;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jp.gaomar.magicofgreeting.ProximityManager.OnProximityListener;
 import jp.gaomar.magicofgreeting.ShakeListener.OnShakeListener;
 import jp.gaomar.magicofgreeting.SoundSwitch.OnReachedVolumeListener;
@@ -58,10 +61,11 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	private PhysicsWorld world;
 	private float mGravity;
 	private SoundPool sp;
-    int[] seID = new int[16];
-    int MAX = 0;
+    int[] seID = new int[PrefDispFlg.DISP_MAX];
     int cnt = 0;
 
+    private List<String> dispFlg = new ArrayList<String>();
+    
 	private ShakeListener mShakeListener;
 	private ProximityManager mProximityManager;
     private boolean mShakeFlg;
@@ -112,7 +116,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		scene.getTopLayer().add(right);
 
 		// every event in the world must be handled by the update thread.
-		postUpdate(new AddShapeImpl(scene, getWidth() / 2, getHeight() / 2, 0));
+		int no = (int)(Math.random()*dispFlg.size());
+		int id = Integer.valueOf(dispFlg.get(no));
+		postUpdate(new AddShapeImpl(scene, getWidth() / 2, getHeight() / 2, id));
 
 		scene.setBackgroundColor(0.94f, 1.00f, 0.94f, 1);
 
@@ -167,10 +173,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
         seID[10] = sp.load( this, R.raw.mouse_gochi, 1 );
         seID[11] = sp.load( this, R.raw.sai, 1 );
         seID[12] = sp.load( this, R.raw.ac, 1 );
-        seID[13] = sp.load( this, R.raw.migeru, 1 );
-        seID[14] = sp.load( this, R.raw.usagi, 1 );
-        seID[15] = sp.load( this, R.raw.lion, 1 );
-
+        seID[13] = sp.load( this, R.raw.usagi, 1 );
+        seID[14] = sp.load( this, R.raw.lion, 1 );
+        seID[15] = sp.load( this, R.raw.migeru, 1 );
 	}
 
 
@@ -310,10 +315,11 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 	 * 出現設定取得
 	 */
 	private void getDisp() {
-		if (PreferenceActivity.isDisp(this)) {
-			MAX = 16;
-		} else {
-			MAX = 14;
+		for (int ii=0; ii<PrefDispFlg.DISP_MAX; ii++) {
+			if (PreferenceActivity.getDispFlg(this, ii+1)) {
+				String flg = Integer.toString(ii);
+				dispFlg.add(flg);
+			}
 		}
 	}
 
@@ -446,7 +452,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			int x = getTouchEventX(scene, motionEvent);
 			int y = getTouchEventY(scene, motionEvent);
 			if (scene.findDrawableAt(x, y) == null) {
-				int id = (int)(Math.random()*MAX);
+				int no = (int)(Math.random()*dispFlg.size());
+				int id = Integer.valueOf(dispFlg.get(no));
 				float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 				// every event in the world must be handled by the update thread.
@@ -499,14 +506,14 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			texture = new AssetTexture("ac.png", this);
 			break;
 		case 13:
-			texture = new AssetTexture("migeru.png", this);
-			break;			
-		case 14:
 			texture = new AssetTexture("greateusagi.png", this);
 			break;
-		case 15:
+		case 14:
 			texture = new AssetTexture("kinglion.png", this);
 			break;
+		case 15:
+			texture = new AssetTexture("migeru.png", this);
+			break;			
 
 
 		}
@@ -632,7 +639,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		if (mShakeFlg) {
 			mShakeFlg = false;
 
-			int id = (int)(Math.random()*MAX);
+			int no = (int)(Math.random()*dispFlg.size());
+			int id = Integer.valueOf(dispFlg.get(no));
 			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			// every event in the world must be handled by the update thread.
@@ -643,7 +651,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		// 音感センサー
 		if (mSoundFlg) {
 			mSoundFlg = false;
-			int id = (int)(Math.random()*MAX);
+			int no = (int)(Math.random()*dispFlg.size());
+			int id = Integer.valueOf(dispFlg.get(no));
 			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			// every event in the world must be handled by the update thread.
@@ -653,7 +662,8 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		// 近接センサー
 		if (mProximityFlg) {
 			mProximityFlg = false;
-			int id = (int)(Math.random()*MAX);
+			int no = (int)(Math.random()*dispFlg.size());
+			int id = Integer.valueOf(dispFlg.get(no));
 			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			// every event in the world must be handled by the update thread.
