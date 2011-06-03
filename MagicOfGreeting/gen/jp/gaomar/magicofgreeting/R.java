@@ -62,43 +62,77 @@ containing a value of this type.
         public static final int icon=0x7f020001;
     }
     public static final class id {
-        public static final int admakerview=0x7f080003;
-        public static final int btn_default=0x7f080000;
-        public static final int earseek=0x7f080001;
-        public static final int layout_po=0x7f080002;
-        public static final int popseek=0x7f080004;
-        public static final int soundseek=0x7f080005;
+        public static final int admakerview=0x7f080013;
+        public static final int btn_default=0x7f080010;
+        public static final int disp_1=0x7f080000;
+        public static final int disp_10=0x7f080009;
+        public static final int disp_11=0x7f08000a;
+        public static final int disp_12=0x7f08000b;
+        public static final int disp_13=0x7f08000c;
+        public static final int disp_14=0x7f08000d;
+        public static final int disp_15=0x7f08000e;
+        public static final int disp_16=0x7f08000f;
+        public static final int disp_2=0x7f080001;
+        public static final int disp_3=0x7f080002;
+        public static final int disp_4=0x7f080003;
+        public static final int disp_5=0x7f080004;
+        public static final int disp_6=0x7f080005;
+        public static final int disp_7=0x7f080006;
+        public static final int disp_8=0x7f080007;
+        public static final int disp_9=0x7f080008;
+        public static final int earseek=0x7f080011;
+        public static final int layout_po=0x7f080012;
+        public static final int popseek=0x7f080014;
+        public static final int soundseek=0x7f080015;
     }
     public static final class layout {
-        public static final int eardlg=0x7f030000;
-        public static final int main=0x7f030001;
-        public static final int popdlg=0x7f030002;
-        public static final int sounddlg=0x7f030003;
+        public static final int dispdlg=0x7f030000;
+        public static final int eardlg=0x7f030001;
+        public static final int main=0x7f030002;
+        public static final int popdlg=0x7f030003;
+        public static final int sounddlg=0x7f030004;
     }
     public static final class raw {
         public static final int ac=0x7f050000;
         public static final int inu=0x7f050001;
         public static final int lion=0x7f050002;
         public static final int manbo=0x7f050003;
-        public static final int mouse=0x7f050004;
-        public static final int mouse_gochi=0x7f050005;
-        public static final int popopopoon=0x7f050006;
-        public static final int sai=0x7f050007;
-        public static final int sukanku=0x7f050008;
-        public static final int unagi=0x7f050009;
-        public static final int usagi=0x7f05000a;
-        public static final int wani=0x7f05000b;
+        public static final int migeru=0x7f050004;
+        public static final int mouse=0x7f050005;
+        public static final int mouse_gochi=0x7f050006;
+        public static final int popopopoon=0x7f050007;
+        public static final int sai=0x7f050008;
+        public static final int sukanku=0x7f050009;
+        public static final int unagi=0x7f05000a;
+        public static final int usagi=0x7f05000b;
+        public static final int wani=0x7f05000c;
     }
     public static final class string {
         public static final int app_name=0x7f070001;
         public static final int dialog_barcode_message=0x7f07001d;
         public static final int dialog_barcode_title=0x7f07001c;
+        public static final int dialog_disp_1=0x7f07001e;
+        public static final int dialog_disp_10=0x7f070027;
+        public static final int dialog_disp_11=0x7f070028;
+        public static final int dialog_disp_12=0x7f070029;
+        public static final int dialog_disp_13=0x7f07002a;
+        public static final int dialog_disp_14=0x7f07002b;
+        public static final int dialog_disp_15=0x7f07002c;
+        public static final int dialog_disp_16=0x7f07002d;
+        public static final int dialog_disp_2=0x7f07001f;
+        public static final int dialog_disp_3=0x7f070020;
+        public static final int dialog_disp_4=0x7f070021;
+        public static final int dialog_disp_5=0x7f070022;
+        public static final int dialog_disp_6=0x7f070023;
+        public static final int dialog_disp_7=0x7f070024;
+        public static final int dialog_disp_8=0x7f070025;
+        public static final int dialog_disp_9=0x7f070026;
         public static final int hello=0x7f070000;
         public static final int menu_barcode=0x7f070004;
         public static final int menu_reset=0x7f070002;
         public static final int menu_setting=0x7f070003;
-        public static final int pref_check_summary=0x7f070008;
-        public static final int pref_check_title=0x7f070007;
+        public static final int pref_disp_summary=0x7f070008;
+        public static final int pref_disp_title=0x7f070007;
         public static final int pref_opt_summary=0x7f070010;
         public static final int pref_opt_title=0x7f07000f;
         public static final int pref_pop_seek_summary=0x7f070014;

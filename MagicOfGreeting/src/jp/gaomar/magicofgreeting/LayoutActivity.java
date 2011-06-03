@@ -2,8 +2,6 @@ package jp.gaomar.magicofgreeting;
 
 import jp.co.nobot.libAdMaker.libAdMaker;
 
-import com.admob.android.ads.AdListener;
-import com.admob.android.ads.AdView;
 import com.e3roid.E3Engine;
 import com.e3roid.opengl.RenderSurfaceView;
 
@@ -11,8 +9,6 @@ public class LayoutActivity extends MainActivity{
 	private final static int WIDTH  = 320;
 	private final static int HEIGHT = 440;
 
-    // AdmobÇÃçLçêópView
-    protected AdView adView;
     // AdMakerÇ≥ÇÒÇ©ÇÁì`Ç¶ÇÁÇÍÇΩURL
     private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/t9hrrx9sv97a.html";
     // AdMakerÇ©ÇÁì`Ç¶ÇÁÇÍÇΩsiteID
@@ -26,7 +22,7 @@ public class LayoutActivity extends MainActivity{
 		this.surfaceView = (RenderSurfaceView)this.findViewById(R.id.layout_po);
 		this.surfaceView.setRenderer(this.engine);
 
-//		setAdView();
+		setAdView();
 	}
 
 	@Override
