@@ -29,6 +29,7 @@ import android.view.WindowManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -60,12 +61,15 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	private PhysicsWorld world;
 	private float mGravity;
-	private SoundPool sp;
+	private SoundPool sp, sp_japanet;
     int[] seID = new int[PrefDispFlg.DISP_MAX];
+    private final int JAPANET_ID = 17;
+    private final int JAPANET_CNT = 28;
+    int[] seID_Japanet = new int[JAPANET_CNT];
     int cnt = 0;
 
     private List<String> dispFlg = new ArrayList<String>();
-    
+
 	private ShakeListener mShakeListener;
 	private ProximityManager mProximityManager;
     private boolean mShakeFlg;
@@ -78,7 +82,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	// 近接センサー反応
 	public boolean mProximityFlg;
-	
+
 	@Override
 	public E3Engine onLoadEngine() {
 		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT);
@@ -98,10 +102,10 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		scene.registerUpdateListener(60, world);
 
 		// create physics box
-		int size = 2;
+		int size = 1;
 		Shape ground = new Shape(0, getHeight() - size, getWidth(), size);
 		Shape roof   = new Shape(0, 0, getWidth(), size);
-		Shape left   = new Shape(0, 0, size, getHeight());
+		Shape left   = new Shape(-1, 0, size, getHeight());
 		Shape right  = new Shape(getWidth() - size, 0, size, getHeight());
 
 		final FixtureDef wallFixtureDef = createFixtureDef(0.0f, 0.0f, 0.5f);
@@ -160,6 +164,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		world = new PhysicsWorld(new Vector2(0, mGravity), false);
         //リソースファイルからSE
         sp = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+        sp_japanet = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
         seID[1] = sp.load( this, R.raw.popopopoon, 1 );
         seID[2] = sp.load( this, R.raw.inu, 1 );
@@ -176,8 +181,57 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
         seID[13] = sp.load( this, R.raw.usagi, 1 );
         seID[14] = sp.load( this, R.raw.lion, 1 );
         seID[15] = sp.load( this, R.raw.migeru, 1 );
+
+        // ジャパネットたかた用
+        seID_Japanet[0] = sp_japanet.load( this, R.raw.bega, 1 );
+        seID_Japanet[1] = sp_japanet.load( this, R.raw.bikkuri, 1 );
+        seID_Japanet[2] = sp_japanet.load( this, R.raw.camera, 1 );
+        seID_Japanet[3] = sp_japanet.load( this, R.raw.dejitaru, 1 );
+        seID_Japanet[4] = sp_japanet.load( this, R.raw.dondon, 1 );
+        seID_Japanet[5] = sp_japanet.load( this, R.raw.douga, 1 );
+        seID_Japanet[6] = sp_japanet.load( this, R.raw.ehehe, 1 );
+        seID_Japanet[7] = sp_japanet.load( this, R.raw.gorira, 1 );
+        seID_Japanet[8] = sp_japanet.load( this, R.raw.hai, 1 );
+        seID_Japanet[9] = sp_japanet.load( this, R.raw.internet, 1 );
+        seID_Japanet[10] = sp_japanet.load( this, R.raw.jet, 1 );
+        seID_Japanet[11] = sp_japanet.load( this, R.raw.jikkuri, 1 );
+        seID_Japanet[12] = sp_japanet.load( this, R.raw.kanarimuri, 1 );
+        seID_Japanet[13] = sp_japanet.load( this, R.raw.kasya, 1 );
+        seID_Japanet[14] = sp_japanet.load( this, R.raw.kinri, 1 );
+        seID_Japanet[15] = sp_japanet.load( this, R.raw.koredemo, 1 );
+        seID_Japanet[16] = sp_japanet.load( this, R.raw.megapix, 1 );
+        seID_Japanet[17] = sp_japanet.load( this, R.raw.ne, 1 );
+        seID_Japanet[18] = sp_japanet.load( this, R.raw.renzu, 1 );
+        seID_Japanet[19] = sp_japanet.load( this, R.raw.saa, 1 );
+        seID_Japanet[20] = sp_japanet.load( this, R.raw.scanmedia, 1 );
+        seID_Japanet[21] = sp_japanet.load( this, R.raw.sdcard, 1 );
+        seID_Japanet[22] = sp_japanet.load( this, R.raw.set, 1 );
+        seID_Japanet[23] = sp_japanet.load( this, R.raw.sony, 1 );
+        seID_Japanet[24] = sp_japanet.load( this, R.raw.tensu, 1 );
+        seID_Japanet[25] = sp_japanet.load( this, R.raw.wakatenai, 1 );
+        seID_Japanet[26] = sp_japanet.load( this, R.raw.yarimasyo, 1 );
+        seID_Japanet[27] = sp_japanet.load( this, R.raw.yumenoyou, 1 );
+
+        //waitSoundSet();
+
 	}
 
+
+	private void waitSoundSet() {
+		  //再生テスト
+		  int streamID = 0;
+		  for (int ii=0; ii<seID_Japanet.length; ii++) {
+			  do {
+			   //少し待ち時間を入れる
+			   try {
+			    Thread.sleep(10);
+			   } catch (InterruptedException e) {
+			   }
+			   //ボリュームをゼロにして再生して戻り値をチェック
+			   streamID = sp_japanet.play(seID_Japanet[ii], 0.0f, 0.0f, 1, 0, 1.0f);
+			  } while(streamID == 0);
+		  }
+	}
 
 	@Override
 	protected void onResume() {
@@ -185,7 +239,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		mShakeListener.onResume();
         // センサーの準備などをします。
 		mProximityManager.onResume();
-        
+
 		if (PreferenceActivity.isSound(this)) {
 			if (mSoundSwitch != null) {
 				mSoundSwitch.stop();
@@ -231,16 +285,16 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		mProximityManager = new ProximityManager(this);
 		if (PreferenceActivity.isProximity(this)) {
 			mProximityManager.setOnProximityListener(new OnProximityListener() {
-	
+
 	            // 近接センサーの値が変わる度に呼び出されます。
 	            public void onSensorChanged(SensorEvent event) {
 	            }
-	
+
 	            // 近接センサーに近づいたら呼び出されます。
 	            public void onNear(float value) {
 	            	mProximityFlg = true;
 	            }
-	
+
 	            // 近接センサーから遠ざかったら呼び出されます。
 	            public void onFar(float value) {
 	            	mProximityFlg = true;
@@ -439,8 +493,13 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 				sp.stop(seID[ii]);
 				sp.unload(seID[ii]);
 			}
+			for (int ii=0; ii < seID_Japanet.length; ii++) {
+				sp_japanet.stop(seID_Japanet[ii]);
+				sp_japanet.unload(seID_Japanet[ii]);
+			}
 		} finally {
 			sp.release();
+			sp_japanet.release();
 			super.onDestroy();
 			finish();
 		}
@@ -455,7 +514,13 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 				int no = (int)(Math.random()*dispFlg.size());
 				int id = Integer.valueOf(dispFlg.get(no));
 				float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
-				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+				if (id == JAPANET_ID - 1) {
+					int japanet_id = (int)(Math.random()*JAPANET_CNT);
+					sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+				} else {
+					sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+				}
+
 				// every event in the world must be handled by the update thread.
 				postUpdate(new AddShapeImpl(scene, x, y, id));
 			}
@@ -513,7 +578,10 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			break;
 		case 15:
 			texture = new AssetTexture("migeru.png", this);
-			break;			
+			break;
+		case 16:
+			texture = new AssetTexture("takata.png", this);
+			break;
 
 
 		}
@@ -531,7 +599,13 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 							pShape.getBody().setLinearVelocity(new Vector2(0, -mGravity * pop));
 							int id = Integer.valueOf(pShape.getBody().getUserData().toString());
 							float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
-							sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+							if (id == JAPANET_ID - 1) {
+								int japanet_id = (int)(Math.random()*JAPANET_CNT);
+								sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+							} else {
+								sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+							}
+
 						}
 					});
 					return true;
@@ -558,7 +632,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 			Sprite sprite = newSprite(x, y, id);
 
-			Body body = createBoxBody(
+			Body body = createCircleBody(
 					world, sprite, BodyType.DynamicBody, objectFixtureDef);
 			PhysicsShape pShape = new PhysicsShape(sprite, body);
 			pShape.getBody().setUserData(id);
@@ -605,6 +679,42 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		return boxBody;
 	}
 
+	private Body createCircleBody(
+            PhysicsWorld physicsWorld,
+            Shape shape,
+            BodyType bodyType,
+            FixtureDef fixtureDef) {
+        float pixelToMeterRatio = PhysicsWorld.PIXEL_TO_METER_RATIO_DEFAULT;
+
+        BodyDef boxBodyDef = new BodyDef();
+        boxBodyDef.type = bodyType;
+
+        // 場所
+        float[] sceneCenterCoordinates = shape.getGlobalCenterCoordinates();
+        boxBodyDef.position.x = sceneCenterCoordinates[0] / (float)pixelToMeterRatio;
+        boxBodyDef.position.y = sceneCenterCoordinates[1] / (float)pixelToMeterRatio;
+
+        Body boxBody = physicsWorld.createBody(boxBodyDef);
+
+        // サイズ
+        CircleShape boxPoly = new CircleShape();
+        // 中心からの指定となるため、1/2(0.5)倍して、変換レートで割る
+        float halfWidth = shape.getWidthScaled()*0.5f / pixelToMeterRatio;
+
+        // 箱を指定
+        boxPoly.setRadius(halfWidth);
+        // 物体の情報を渡す
+        fixtureDef.shape = boxPoly;
+        // 箱の設定を渡す
+        boxBody.createFixture(fixtureDef);
+        boxPoly.dispose();
+
+        // 変化をかける(角度)
+        boxBody.setTransform(boxBody.getWorldCenter(), MathUtil.degToRad(shape.getAngle()));
+
+        return boxBody;
+    }
+
 	@Override
 	public void onUpdateScene(E3Scene scene, long arg1) {
 		if (m_Code.length() > 0) {
@@ -639,36 +749,39 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		if (mShakeFlg) {
 			mShakeFlg = false;
 
-			int no = (int)(Math.random()*dispFlg.size());
-			int id = Integer.valueOf(dispFlg.get(no));
-			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
-			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
-			// every event in the world must be handled by the update thread.
-			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
-
+			setUpdate(scene);
 		}
 
 		// 音感センサー
 		if (mSoundFlg) {
 			mSoundFlg = false;
-			int no = (int)(Math.random()*dispFlg.size());
-			int id = Integer.valueOf(dispFlg.get(no));
-			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
-			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
-			// every event in the world must be handled by the update thread.
-			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
+			setUpdate(scene);
 		}
 
 		// 近接センサー
 		if (mProximityFlg) {
 			mProximityFlg = false;
+			setUpdate(scene);
+		}
+
+	}
+
+	private void setUpdate(E3Scene scene) {
+		try {
 			int no = (int)(Math.random()*dispFlg.size());
 			int id = Integer.valueOf(dispFlg.get(no));
 			float speed = PreferenceActivity.getSoundSpeed(MainActivity.this);
-			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+			if (id == JAPANET_ID - 1) {
+				int japanet_id = (int)(Math.random()*JAPANET_CNT);
+				sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+			} else {
+				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
+			}
 			// every event in the world must be handled by the update thread.
 			postUpdate(new AddShapeImpl(scene, getWidth() / 2, 0, id));
+		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 		}
-		
+
 	}
 }

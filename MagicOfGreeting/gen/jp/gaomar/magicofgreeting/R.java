@@ -62,8 +62,8 @@ containing a value of this type.
         public static final int icon=0x7f020001;
     }
     public static final class id {
-        public static final int admakerview=0x7f080013;
-        public static final int btn_default=0x7f080010;
+        public static final int admakerview=0x7f080014;
+        public static final int btn_default=0x7f080011;
         public static final int disp_1=0x7f080000;
         public static final int disp_10=0x7f080009;
         public static final int disp_11=0x7f08000a;
@@ -72,6 +72,7 @@ containing a value of this type.
         public static final int disp_14=0x7f08000d;
         public static final int disp_15=0x7f08000e;
         public static final int disp_16=0x7f08000f;
+        public static final int disp_17=0x7f080010;
         public static final int disp_2=0x7f080001;
         public static final int disp_3=0x7f080002;
         public static final int disp_4=0x7f080003;
@@ -80,10 +81,10 @@ containing a value of this type.
         public static final int disp_7=0x7f080006;
         public static final int disp_8=0x7f080007;
         public static final int disp_9=0x7f080008;
-        public static final int earseek=0x7f080011;
-        public static final int layout_po=0x7f080012;
-        public static final int popseek=0x7f080014;
-        public static final int soundseek=0x7f080015;
+        public static final int earseek=0x7f080012;
+        public static final int layout_po=0x7f080013;
+        public static final int popseek=0x7f080015;
+        public static final int soundseek=0x7f080016;
     }
     public static final class layout {
         public static final int dispdlg=0x7f030000;
@@ -94,18 +95,46 @@ containing a value of this type.
     }
     public static final class raw {
         public static final int ac=0x7f050000;
-        public static final int inu=0x7f050001;
-        public static final int lion=0x7f050002;
-        public static final int manbo=0x7f050003;
-        public static final int migeru=0x7f050004;
-        public static final int mouse=0x7f050005;
-        public static final int mouse_gochi=0x7f050006;
-        public static final int popopopoon=0x7f050007;
-        public static final int sai=0x7f050008;
-        public static final int sukanku=0x7f050009;
-        public static final int unagi=0x7f05000a;
-        public static final int usagi=0x7f05000b;
-        public static final int wani=0x7f05000c;
+        public static final int bega=0x7f050001;
+        public static final int bikkuri=0x7f050002;
+        public static final int camera=0x7f050003;
+        public static final int dejitaru=0x7f050004;
+        public static final int dondon=0x7f050005;
+        public static final int douga=0x7f050006;
+        public static final int ehehe=0x7f050007;
+        public static final int gorira=0x7f050008;
+        public static final int hai=0x7f050009;
+        public static final int internet=0x7f05000a;
+        public static final int inu=0x7f05000b;
+        public static final int jet=0x7f05000c;
+        public static final int jikkuri=0x7f05000d;
+        public static final int kanarimuri=0x7f05000e;
+        public static final int kasya=0x7f05000f;
+        public static final int kinri=0x7f050010;
+        public static final int koredemo=0x7f050011;
+        public static final int lion=0x7f050012;
+        public static final int manbo=0x7f050013;
+        public static final int megapix=0x7f050014;
+        public static final int migeru=0x7f050015;
+        public static final int mouse=0x7f050016;
+        public static final int mouse_gochi=0x7f050017;
+        public static final int ne=0x7f050018;
+        public static final int popopopoon=0x7f050019;
+        public static final int renzu=0x7f05001a;
+        public static final int saa=0x7f05001b;
+        public static final int sai=0x7f05001c;
+        public static final int scanmedia=0x7f05001d;
+        public static final int sdcard=0x7f05001e;
+        public static final int set=0x7f05001f;
+        public static final int sony=0x7f050020;
+        public static final int sukanku=0x7f050021;
+        public static final int tensu=0x7f050022;
+        public static final int unagi=0x7f050023;
+        public static final int usagi=0x7f050024;
+        public static final int wakatenai=0x7f050025;
+        public static final int wani=0x7f050026;
+        public static final int yarimasyo=0x7f050027;
+        public static final int yumenoyou=0x7f050028;
     }
     public static final class string {
         public static final int app_name=0x7f070001;
@@ -119,6 +148,7 @@ containing a value of this type.
         public static final int dialog_disp_14=0x7f07002b;
         public static final int dialog_disp_15=0x7f07002c;
         public static final int dialog_disp_16=0x7f07002d;
+        public static final int dialog_disp_17=0x7f07002e;
         public static final int dialog_disp_2=0x7f07001f;
         public static final int dialog_disp_3=0x7f070020;
         public static final int dialog_disp_4=0x7f070021;

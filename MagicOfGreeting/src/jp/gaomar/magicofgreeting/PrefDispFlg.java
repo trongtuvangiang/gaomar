@@ -15,12 +15,12 @@ public class PrefDispFlg extends DialogPreference{
 	private static SharedPreferences sp;
 	private Context con;
 	public static final String CHK_DISP_KEY = "disp_";
-	public static final int DISP_MAX = 16;
+	public static final int DISP_MAX = 17;
 	private CheckBox chk_Disp1,chk_Disp2,chk_Disp3,chk_Disp4;
 	private CheckBox chk_Disp5,chk_Disp6,chk_Disp7,chk_Disp8;
 	private CheckBox chk_Disp9,chk_Disp10,chk_Disp11,chk_Disp12;
-	private CheckBox chk_Disp13,chk_Disp14,chk_Disp15,chk_Disp16;
-	
+	private CheckBox chk_Disp13,chk_Disp14,chk_Disp15,chk_Disp16,chk_Disp17;
+
 	public PrefDispFlg(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		con = context;
@@ -32,7 +32,7 @@ public class PrefDispFlg extends DialogPreference{
 	protected void onBindDialogView(View view) {
 		super.onBindDialogView(view);
 		initUi(view);
-	
+
 		// 設定フラグ取得
 		getFlg();
 	}
@@ -63,10 +63,11 @@ public class PrefDispFlg extends DialogPreference{
 			chk_Disp14 = (CheckBox) view.findViewById(R.id.disp_14);
 			chk_Disp15 = (CheckBox) view.findViewById(R.id.disp_15);
 			chk_Disp16 = (CheckBox) view.findViewById(R.id.disp_16);
+			chk_Disp17 = (CheckBox) view.findViewById(R.id.disp_17);
 		} catch (Exception e) {
-		}	
+		}
 	}
-	
+
 	private void setVal(int id, boolean flg) {
 		Editor ed = sp.edit();
 		ed.putBoolean(CHK_DISP_KEY + id, flg);
@@ -95,17 +96,19 @@ public class PrefDispFlg extends DialogPreference{
 			chk_Disp14.setChecked(getVal(14));
 			chk_Disp15.setChecked(getVal(15));
 			chk_Disp16.setChecked(getVal(16));
+			chk_Disp17.setChecked(getVal(17));
 		} catch (Exception e) {
 		}
 
 	}
-	
+
 	private void setFlg() {
 		try {
 			if (chk_Disp1.isChecked() || chk_Disp2.isChecked() || chk_Disp3.isChecked() || chk_Disp4.isChecked()
 			|| chk_Disp5.isChecked() || chk_Disp6.isChecked() || chk_Disp7.isChecked() || chk_Disp8.isChecked()
 			|| chk_Disp9.isChecked() || chk_Disp10.isChecked() || chk_Disp11.isChecked() || chk_Disp12.isChecked()
-			|| chk_Disp13.isChecked() || chk_Disp14.isChecked() || chk_Disp15.isChecked() || chk_Disp16.isChecked()) {
+			|| chk_Disp13.isChecked() || chk_Disp14.isChecked() || chk_Disp15.isChecked() || chk_Disp16.isChecked()
+			|| chk_Disp17.isChecked()) {
 				setVal(1, chk_Disp1.isChecked());
 				setVal(2, chk_Disp2.isChecked());
 				setVal(3, chk_Disp3.isChecked());
@@ -122,6 +125,7 @@ public class PrefDispFlg extends DialogPreference{
 				setVal(14, chk_Disp14.isChecked());
 				setVal(15, chk_Disp15.isChecked());
 				setVal(16, chk_Disp16.isChecked());
+				setVal(17, chk_Disp17.isChecked());
 			} else {
 				Toast.makeText(con, "どれか一つは必ずチェックしてください", Toast.LENGTH_SHORT).show();
 			}
