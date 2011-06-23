@@ -97,6 +97,11 @@
 				android:layout_width="fill_parent"
 				android:layout_height="wrap_content"
 				android:text="@string/dialog_disp_17" />
+			<CheckBox
+				android:id="@+id/disp_18"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:text="@string/dialog_disp_18" />
 
 		</LinearLayout>
 	</ScrollView>

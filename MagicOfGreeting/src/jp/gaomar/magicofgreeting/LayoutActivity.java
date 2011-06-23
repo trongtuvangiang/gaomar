@@ -7,7 +7,7 @@ import com.e3roid.opengl.RenderSurfaceView;
 
 public class LayoutActivity extends MainActivity{
 	private final static int WIDTH  = 320;
-	private final static int HEIGHT = 440;
+	private final static int HEIGHT = 480;
 
     // AdMaker‚³‚ñ‚©‚ç“`‚¦‚ç‚ê‚½URL
     private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/t9hrrx9sv97a.html";
@@ -27,7 +27,7 @@ public class LayoutActivity extends MainActivity{
 
 	@Override
 	public E3Engine onLoadEngine() {
-		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT, E3Engine.RESOLUTION_FIXED_RATIO);
+		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT,  E3Engine.RESOLUTION_STRETCH_SCENE);
 		engine.requestFullScreen();
 		engine.requestPortrait();
 		return engine;
