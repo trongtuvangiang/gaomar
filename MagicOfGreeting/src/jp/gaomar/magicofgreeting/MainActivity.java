@@ -61,11 +61,14 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	private PhysicsWorld world;
 	private float mGravity;
-	private SoundPool sp, sp_japanet;
+	private SoundPool sp, sp_japanet, sp_tokadho;
     int[] seID = new int[PrefDispFlg.DISP_MAX];
     private final int JAPANET_ID = 17;
+    private final int TOKADHO_ID = 18;
     private final int JAPANET_CNT = 28;
+    private final int TOKADHO_CNT = 12;
     int[] seID_Japanet = new int[JAPANET_CNT];
+    int[] seID_Tokadho = new int[TOKADHO_CNT];
     int cnt = 0;
 
     private List<String> dispFlg = new ArrayList<String>();
@@ -85,7 +88,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 
 	@Override
 	public E3Engine onLoadEngine() {
-		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT);
+		E3Engine engine = new E3Engine(this, WIDTH, HEIGHT, E3Engine.RESOLUTION_STRETCH_SCENE);
 		engine.requestFullScreen();
 		engine.requestPortrait();
 		return engine;
@@ -165,6 +168,7 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
         //リソースファイルからSE
         sp = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_japanet = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+        sp_tokadho = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
         seID[1] = sp.load( this, R.raw.popopopoon, 1 );
         seID[2] = sp.load( this, R.raw.inu, 1 );
@@ -211,6 +215,20 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
         seID_Japanet[25] = sp_japanet.load( this, R.raw.wakatenai, 1 );
         seID_Japanet[26] = sp_japanet.load( this, R.raw.yarimasyo, 1 );
         seID_Japanet[27] = sp_japanet.load( this, R.raw.yumenoyou, 1 );
+
+        // トーカ堂用
+        seID_Tokadho[0] = sp_tokadho.load( this, R.raw.girigiri, 1 );
+        seID_Tokadho[1] = sp_tokadho.load( this, R.raw.kakaku_a, 1 );
+        seID_Tokadho[2] = sp_tokadho.load( this, R.raw.kakaku_b, 1 );
+        seID_Tokadho[3] = sp_tokadho.load( this, R.raw.kakaku_c, 1 );
+        seID_Tokadho[4] = sp_tokadho.load( this, R.raw.kazuganai, 1 );
+        seID_Tokadho[5] = sp_tokadho.load( this, R.raw.kita, 1 );
+        seID_Tokadho[6] = sp_tokadho.load( this, R.raw.oyasukusite, 1 );
+        seID_Tokadho[7] = sp_tokadho.load( this, R.raw.set_b, 1 );
+        seID_Tokadho[8] = sp_tokadho.load( this, R.raw.shinjyu, 1 );
+        seID_Tokadho[9] = sp_tokadho.load( this, R.raw.syouhizei, 1 );
+        seID_Tokadho[10] = sp_tokadho.load( this, R.raw.tugihaitu, 1 );
+        seID_Tokadho[11] = sp_tokadho.load( this, R.raw.utidesikakaenai, 1 );
 
         //waitSoundSet();
 
@@ -497,9 +515,15 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 				sp_japanet.stop(seID_Japanet[ii]);
 				sp_japanet.unload(seID_Japanet[ii]);
 			}
+			for (int ii=0; ii < seID_Tokadho.length; ii++) {
+				sp_tokadho.stop(seID_Tokadho[ii]);
+				sp_tokadho.unload(seID_Tokadho[ii]);
+			}
+
 		} finally {
 			sp.release();
 			sp_japanet.release();
+			sp_tokadho.release();
 			super.onDestroy();
 			finish();
 		}
@@ -517,6 +541,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 				if (id == JAPANET_ID - 1) {
 					int japanet_id = (int)(Math.random()*JAPANET_CNT);
 					sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+				} else if (id == TOKADHO_ID - 1){
+					int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
+					sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
 				} else {
 					sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 				}
@@ -582,6 +609,10 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 		case 16:
 			texture = new AssetTexture("takata.png", this);
 			break;
+		case 17:
+			texture = new AssetTexture("kita.png", this);
+			break;
+
 
 
 		}
@@ -602,6 +633,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 							if (id == JAPANET_ID - 1) {
 								int japanet_id = (int)(Math.random()*JAPANET_CNT);
 								sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+							} else if (id == TOKADHO_ID - 1) {
+								int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
+								sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
 							} else {
 								sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 							}
@@ -774,6 +808,9 @@ public class MainActivity extends E3Activity implements SceneUpdateListener {
 			if (id == JAPANET_ID - 1) {
 				int japanet_id = (int)(Math.random()*JAPANET_CNT);
 				sp_japanet.play(seID_Japanet[japanet_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == TOKADHO_ID - 1) {
+				int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
+				sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
