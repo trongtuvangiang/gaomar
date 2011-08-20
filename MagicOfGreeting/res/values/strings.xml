@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+	<string name="pg_char">char</string>
+
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">跳ねるあいさつの魔法</string>
 	<string name="menu_reset">クリア</string>
@@ -21,6 +23,11 @@
 	<string name="pref_seek_summary">音声のスピードを変更出来ます</string>
 	<string name="pref_pop_seek_title">跳ね具合</string>
 	<string name="pref_pop_seek_summary">最大にすればするほどキャラが勢い良く跳ねます</string>
+	<string name="pref_fireworks_title">花火エフェクト</string>
+	<string name="pref_fireworks_summary">キャラ同士が強くぶつかると花火のように消えます</string>
+	<string name="pref_touch_title">タッチ動作切り替え</string>
+	<string name="pref_touch_summary">キャラをタッチすると跳ねさせるか、キャラをタッチするとつかんでグルグル回すかを選べます</string>
+
 
 	<string name="pref_seek_slow">遅い</string>
 	<string name="pref_seek_fast">速い</string>

@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
   xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="@string/pref_touch_title">
+  	<ListPreference
+  		android:key="opt_touch"
+  		android:title="@string/pref_touch_title"
+  		android:summary="@string/pref_touch_summary"
+  		android:dialogTitle="@string/pref_touch_title"
+  		android:entries="@array/list_touch_entries"
+  		android:entryValues="@array/list_touch_entries_values"
+		android:defaultValue="0"
+  		/>
+  </PreferenceCategory>
+
   <PreferenceCategory android:title="@string/pref_title">
   	<jp.gaomar.magicofgreeting.PrefDispFlg
   		android:title="@string/pref_disp_title"
@@ -26,6 +39,13 @@
   		android:title="@string/pref_pop_seek_title"
   		android:summary="@string/pref_pop_seek_summary"
   		android:key="seekpop" />
+  	<CheckBoxPreference
+  		android:key="chk_fireworks"
+  		android:title="@string/pref_fireworks_title"
+  		android:summary="@string/pref_fireworks_summary"
+  		android:disableDependentsState="false"
+  		/>
+
   </PreferenceCategory>
 
   <PreferenceCategory android:title="@string/pref_sensor_title">
@@ -34,7 +54,7 @@
   		android:title="@string/pref_proximity_check_title"
   		android:summary="@string/pref_proximity_check_summary"
   		android:disableDependentsState="false"
-  		/>  
+  		/>
   	<CheckBoxPreference
   		android:key="chk_sound"
   		android:title="@string/pref_sound_check_title"
