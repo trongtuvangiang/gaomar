@@ -50,4 +50,13 @@ public class PreferenceActivity extends android.preference.PreferenceActivity{
     	boolean flg = PreferenceManager.getDefaultSharedPreferences(con).getBoolean(PrefDispFlg.CHK_DISP_KEY + id, true);
     	return flg;
     }
+
+	public static boolean isFireworks(Context con){
+        return PreferenceManager.getDefaultSharedPreferences(con).getBoolean("chk_fireworks", false);
+    }
+
+    public static String getTouch(Context con){
+        return PreferenceManager.getDefaultSharedPreferences(con).getString("opt_touch", "0");
+    }
+
 }
