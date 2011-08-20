@@ -9,36 +9,12 @@ package jp.gaomar.magicofgreeting;
 
 public final class R {
     public static final class array {
-        public static final int list_entries=0x7f060000;
-        public static final int list_entries_values=0x7f060001;
+        public static final int list_entries=0x7f060002;
+        public static final int list_entries_values=0x7f060003;
+        public static final int list_touch_entries=0x7f060000;
+        public static final int list_touch_entries_values=0x7f060001;
     }
     public static final class attr {
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int backgroundColor=0x7f010000;
-        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int keywords=0x7f010003;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-         */
-        public static final int primaryTextColor=0x7f010001;
         /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -46,16 +22,39 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int refreshInterval=0x7f010004;
-        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+        public static final int backgroundColor=0x7f010000;
+        /** <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static final int secondaryTextColor=0x7f010002;
+        public static final int refreshAnimation=0x7f010002;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int requestInterval=0x7f010001;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int testMode=0x7f010004;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int visibility=0x7f010003;
     }
     public static final class drawable {
         public static final int ic_menu_barcode=0x7f020000;
@@ -83,9 +82,9 @@ containing a value of this type.
         public static final int disp_8=0x7f080007;
         public static final int disp_9=0x7f080008;
         public static final int earseek=0x7f080013;
-        public static final int layout_po=0x7f080014;
         public static final int popseek=0x7f080016;
         public static final int soundseek=0x7f080017;
+        public static final int xmllayoutexample_rendersurfaceview=0x7f080014;
     }
     public static final class layout {
         public static final int dispdlg=0x7f030000;
@@ -98,180 +97,142 @@ containing a value of this type.
         public static final int ac=0x7f050000;
         public static final int bega=0x7f050001;
         public static final int bikkuri=0x7f050002;
-        public static final int camera=0x7f050003;
-        public static final int dejitaru=0x7f050004;
-        public static final int dondon=0x7f050005;
-        public static final int douga=0x7f050006;
-        public static final int ehehe=0x7f050007;
-        public static final int girigiri=0x7f050008;
-        public static final int gorira=0x7f050009;
-        public static final int hai=0x7f05000a;
-        public static final int internet=0x7f05000b;
-        public static final int inu=0x7f05000c;
-        public static final int jet=0x7f05000d;
-        public static final int jikkuri=0x7f05000e;
-        public static final int kakaku_a=0x7f05000f;
-        public static final int kakaku_b=0x7f050010;
-        public static final int kakaku_c=0x7f050011;
-        public static final int kanarimuri=0x7f050012;
-        public static final int kasya=0x7f050013;
-        public static final int kazuganai=0x7f050014;
-        public static final int kinri=0x7f050015;
-        public static final int kita=0x7f050016;
-        public static final int koredemo=0x7f050017;
-        public static final int lion=0x7f050018;
-        public static final int manbo=0x7f050019;
-        public static final int megapix=0x7f05001a;
-        public static final int migeru=0x7f05001b;
-        public static final int mouse=0x7f05001c;
-        public static final int mouse_gochi=0x7f05001d;
-        public static final int ne=0x7f05001e;
-        public static final int oyasukusite=0x7f05001f;
-        public static final int popopopoon=0x7f050020;
-        public static final int renzu=0x7f050021;
-        public static final int saa=0x7f050022;
-        public static final int sai=0x7f050023;
-        public static final int scanmedia=0x7f050024;
-        public static final int sdcard=0x7f050025;
-        public static final int set=0x7f050026;
-        public static final int set_b=0x7f050027;
-        public static final int shinjyu=0x7f050028;
-        public static final int sony=0x7f050029;
-        public static final int sukanku=0x7f05002a;
-        public static final int syouhizei=0x7f05002b;
-        public static final int tensu=0x7f05002c;
-        public static final int tugihaitu=0x7f05002d;
-        public static final int unagi=0x7f05002e;
-        public static final int usagi=0x7f05002f;
-        public static final int utidesikakaenai=0x7f050030;
-        public static final int wakatenai=0x7f050031;
-        public static final int wani=0x7f050032;
-        public static final int yarimasyo=0x7f050033;
-        public static final int yumenoyou=0x7f050034;
+        public static final int bon=0x7f050003;
+        public static final int camera=0x7f050004;
+        public static final int dejitaru=0x7f050005;
+        public static final int dondon=0x7f050006;
+        public static final int douga=0x7f050007;
+        public static final int ehehe=0x7f050008;
+        public static final int girigiri=0x7f050009;
+        public static final int gorira=0x7f05000a;
+        public static final int hai=0x7f05000b;
+        public static final int internet=0x7f05000c;
+        public static final int inu=0x7f05000d;
+        public static final int jet=0x7f05000e;
+        public static final int jikkuri=0x7f05000f;
+        public static final int kakaku_a=0x7f050010;
+        public static final int kakaku_b=0x7f050011;
+        public static final int kakaku_c=0x7f050012;
+        public static final int kanarimuri=0x7f050013;
+        public static final int kasya=0x7f050014;
+        public static final int kazuganai=0x7f050015;
+        public static final int kinri=0x7f050016;
+        public static final int kita=0x7f050017;
+        public static final int koredemo=0x7f050018;
+        public static final int lion=0x7f050019;
+        public static final int manbo=0x7f05001a;
+        public static final int megapix=0x7f05001b;
+        public static final int migeru=0x7f05001c;
+        public static final int mouse=0x7f05001d;
+        public static final int mouse_gochi=0x7f05001e;
+        public static final int ne=0x7f05001f;
+        public static final int oyasukusite=0x7f050020;
+        public static final int popopopoon=0x7f050021;
+        public static final int renzu=0x7f050022;
+        public static final int saa=0x7f050023;
+        public static final int sai=0x7f050024;
+        public static final int scanmedia=0x7f050025;
+        public static final int sdcard=0x7f050026;
+        public static final int set=0x7f050027;
+        public static final int set_b=0x7f050028;
+        public static final int shinjyu=0x7f050029;
+        public static final int sony=0x7f05002a;
+        public static final int sukanku=0x7f05002b;
+        public static final int syouhizei=0x7f05002c;
+        public static final int tensu=0x7f05002d;
+        public static final int tugihaitu=0x7f05002e;
+        public static final int unagi=0x7f05002f;
+        public static final int usagi=0x7f050030;
+        public static final int utidesikakaenai=0x7f050031;
+        public static final int wakatenai=0x7f050032;
+        public static final int wani=0x7f050033;
+        public static final int yarimasyo=0x7f050034;
+        public static final int yumenoyou=0x7f050035;
     }
     public static final class string {
-        public static final int app_name=0x7f070001;
-        public static final int dialog_barcode_message=0x7f07001d;
-        public static final int dialog_barcode_title=0x7f07001c;
-        public static final int dialog_disp_1=0x7f07001e;
-        public static final int dialog_disp_10=0x7f070027;
-        public static final int dialog_disp_11=0x7f070028;
-        public static final int dialog_disp_12=0x7f070029;
-        public static final int dialog_disp_13=0x7f07002a;
-        public static final int dialog_disp_14=0x7f07002b;
-        public static final int dialog_disp_15=0x7f07002c;
-        public static final int dialog_disp_16=0x7f07002d;
-        public static final int dialog_disp_17=0x7f07002e;
-        public static final int dialog_disp_18=0x7f07002f;
-        public static final int dialog_disp_2=0x7f07001f;
-        public static final int dialog_disp_3=0x7f070020;
-        public static final int dialog_disp_4=0x7f070021;
-        public static final int dialog_disp_5=0x7f070022;
-        public static final int dialog_disp_6=0x7f070023;
-        public static final int dialog_disp_7=0x7f070024;
-        public static final int dialog_disp_8=0x7f070025;
-        public static final int dialog_disp_9=0x7f070026;
-        public static final int hello=0x7f070000;
-        public static final int menu_barcode=0x7f070004;
-        public static final int menu_reset=0x7f070002;
-        public static final int menu_setting=0x7f070003;
-        public static final int pref_disp_summary=0x7f070008;
-        public static final int pref_disp_title=0x7f070007;
-        public static final int pref_opt_summary=0x7f070010;
-        public static final int pref_opt_title=0x7f07000f;
-        public static final int pref_pop_seek_summary=0x7f070014;
-        public static final int pref_pop_seek_title=0x7f070013;
-        public static final int pref_proximity_check_summary=0x7f07000a;
-        public static final int pref_proximity_check_title=0x7f070009;
-        public static final int pref_seek_default=0x7f07001b;
-        public static final int pref_seek_fast=0x7f070016;
-        public static final int pref_seek_insensitivity=0x7f070019;
-        public static final int pref_seek_max=0x7f070018;
-        public static final int pref_seek_min=0x7f070017;
-        public static final int pref_seek_sensitivity=0x7f07001a;
-        public static final int pref_seek_slow=0x7f070015;
-        public static final int pref_seek_summary=0x7f070012;
-        public static final int pref_seek_title=0x7f070011;
-        public static final int pref_sensor_title=0x7f070006;
-        public static final int pref_sound_check_summary=0x7f07000c;
-        public static final int pref_sound_check_title=0x7f07000b;
-        public static final int pref_sound_seek_summary=0x7f07000e;
-        public static final int pref_sound_seek_title=0x7f07000d;
-        public static final int pref_title=0x7f070005;
+        public static final int app_name=0x7f070002;
+        public static final int dialog_barcode_message=0x7f070022;
+        public static final int dialog_barcode_title=0x7f070021;
+        public static final int dialog_disp_1=0x7f070023;
+        public static final int dialog_disp_10=0x7f07002c;
+        public static final int dialog_disp_11=0x7f07002d;
+        public static final int dialog_disp_12=0x7f07002e;
+        public static final int dialog_disp_13=0x7f07002f;
+        public static final int dialog_disp_14=0x7f070030;
+        public static final int dialog_disp_15=0x7f070031;
+        public static final int dialog_disp_16=0x7f070032;
+        public static final int dialog_disp_17=0x7f070033;
+        public static final int dialog_disp_18=0x7f070034;
+        public static final int dialog_disp_2=0x7f070024;
+        public static final int dialog_disp_3=0x7f070025;
+        public static final int dialog_disp_4=0x7f070026;
+        public static final int dialog_disp_5=0x7f070027;
+        public static final int dialog_disp_6=0x7f070028;
+        public static final int dialog_disp_7=0x7f070029;
+        public static final int dialog_disp_8=0x7f07002a;
+        public static final int dialog_disp_9=0x7f07002b;
+        public static final int hello=0x7f070001;
+        public static final int menu_barcode=0x7f070005;
+        public static final int menu_reset=0x7f070003;
+        public static final int menu_setting=0x7f070004;
+        public static final int pg_char=0x7f070000;
+        public static final int pref_disp_summary=0x7f070009;
+        public static final int pref_disp_title=0x7f070008;
+        public static final int pref_fireworks_summary=0x7f070017;
+        public static final int pref_fireworks_title=0x7f070016;
+        public static final int pref_opt_summary=0x7f070011;
+        public static final int pref_opt_title=0x7f070010;
+        public static final int pref_pop_seek_summary=0x7f070015;
+        public static final int pref_pop_seek_title=0x7f070014;
+        public static final int pref_proximity_check_summary=0x7f07000b;
+        public static final int pref_proximity_check_title=0x7f07000a;
+        public static final int pref_seek_default=0x7f070020;
+        public static final int pref_seek_fast=0x7f07001b;
+        public static final int pref_seek_insensitivity=0x7f07001e;
+        public static final int pref_seek_max=0x7f07001d;
+        public static final int pref_seek_min=0x7f07001c;
+        public static final int pref_seek_sensitivity=0x7f07001f;
+        public static final int pref_seek_slow=0x7f07001a;
+        public static final int pref_seek_summary=0x7f070013;
+        public static final int pref_seek_title=0x7f070012;
+        public static final int pref_sensor_title=0x7f070007;
+        public static final int pref_sound_check_summary=0x7f07000d;
+        public static final int pref_sound_check_title=0x7f07000c;
+        public static final int pref_sound_seek_summary=0x7f07000f;
+        public static final int pref_sound_seek_title=0x7f07000e;
+        public static final int pref_title=0x7f070006;
+        public static final int pref_touch_summary=0x7f070019;
+        public static final int pref_touch_title=0x7f070018;
     }
     public static final class xml {
         public static final int pref=0x7f040000;
     }
     public static final class styleable {
-        /** Attributes that can be used with a com_admob_android_ads_AdView.
+        /** Attributes that can be used with a mediba_ad_sdk_android_MasAdView.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #com_admob_android_ads_AdView_backgroundColor jp.gaomar.magicofgreeting:backgroundColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #com_admob_android_ads_AdView_keywords jp.gaomar.magicofgreeting:keywords}</code></td><td></td></tr>
-           <tr><td><code>{@link #com_admob_android_ads_AdView_primaryTextColor jp.gaomar.magicofgreeting:primaryTextColor}</code></td><td></td></tr>
-           <tr><td><code>{@link #com_admob_android_ads_AdView_refreshInterval jp.gaomar.magicofgreeting:refreshInterval}</code></td><td></td></tr>
-           <tr><td><code>{@link #com_admob_android_ads_AdView_secondaryTextColor jp.gaomar.magicofgreeting:secondaryTextColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #mediba_ad_sdk_android_MasAdView_backgroundColor jp.gaomar.magicofgreeting:backgroundColor}</code></td><td></td></tr>
+           <tr><td><code>{@link #mediba_ad_sdk_android_MasAdView_refreshAnimation jp.gaomar.magicofgreeting:refreshAnimation}</code></td><td></td></tr>
+           <tr><td><code>{@link #mediba_ad_sdk_android_MasAdView_requestInterval jp.gaomar.magicofgreeting:requestInterval}</code></td><td></td></tr>
+           <tr><td><code>{@link #mediba_ad_sdk_android_MasAdView_testMode jp.gaomar.magicofgreeting:testMode}</code></td><td></td></tr>
+           <tr><td><code>{@link #mediba_ad_sdk_android_MasAdView_visibility jp.gaomar.magicofgreeting:visibility}</code></td><td></td></tr>
            </table>
-           @see #com_admob_android_ads_AdView_backgroundColor
-           @see #com_admob_android_ads_AdView_keywords
-           @see #com_admob_android_ads_AdView_primaryTextColor
-           @see #com_admob_android_ads_AdView_refreshInterval
-           @see #com_admob_android_ads_AdView_secondaryTextColor
+           @see #mediba_ad_sdk_android_MasAdView_backgroundColor
+           @see #mediba_ad_sdk_android_MasAdView_refreshAnimation
+           @see #mediba_ad_sdk_android_MasAdView_requestInterval
+           @see #mediba_ad_sdk_android_MasAdView_testMode
+           @see #mediba_ad_sdk_android_MasAdView_visibility
          */
-        public static final int[] com_admob_android_ads_AdView = {
+        public static final int[] mediba_ad_sdk_android_MasAdView = {
             0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
             0x7f010004
         };
         /**
           <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#backgroundColor}
-          attribute's value can be found in the {@link #com_admob_android_ads_AdView} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:backgroundColor
-        */
-        public static final int com_admob_android_ads_AdView_backgroundColor = 0;
-        /**
-          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#keywords}
-          attribute's value can be found in the {@link #com_admob_android_ads_AdView} array.
-
-
-          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:keywords
-        */
-        public static final int com_admob_android_ads_AdView_keywords = 3;
-        /**
-          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#primaryTextColor}
-          attribute's value can be found in the {@link #com_admob_android_ads_AdView} array.
-
-
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
-<p>This may also be a reference to a resource (in the form
-"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
-theme attribute (in the form
-"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
-containing a value of this type.
-          @attr name android:primaryTextColor
-        */
-        public static final int com_admob_android_ads_AdView_primaryTextColor = 1;
-        /**
-          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#refreshInterval}
-          attribute's value can be found in the {@link #com_admob_android_ads_AdView} array.
+          attribute's value can be found in the {@link #mediba_ad_sdk_android_MasAdView} array.
 
 
           <p>Must be an integer value, such as "<code>100</code>".
@@ -280,23 +241,64 @@ containing a value of this type.
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:refreshInterval
+          @attr name android:backgroundColor
         */
-        public static final int com_admob_android_ads_AdView_refreshInterval = 4;
+        public static final int mediba_ad_sdk_android_MasAdView_backgroundColor = 0;
         /**
-          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#secondaryTextColor}
-          attribute's value can be found in the {@link #com_admob_android_ads_AdView} array.
+          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#refreshAnimation}
+          attribute's value can be found in the {@link #mediba_ad_sdk_android_MasAdView} array.
 
 
-          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
-"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>Must be an integer value, such as "<code>100</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
-          @attr name android:secondaryTextColor
+          @attr name android:refreshAnimation
         */
-        public static final int com_admob_android_ads_AdView_secondaryTextColor = 2;
+        public static final int mediba_ad_sdk_android_MasAdView_refreshAnimation = 2;
+        /**
+          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#requestInterval}
+          attribute's value can be found in the {@link #mediba_ad_sdk_android_MasAdView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:requestInterval
+        */
+        public static final int mediba_ad_sdk_android_MasAdView_requestInterval = 1;
+        /**
+          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#testMode}
+          attribute's value can be found in the {@link #mediba_ad_sdk_android_MasAdView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:testMode
+        */
+        public static final int mediba_ad_sdk_android_MasAdView_testMode = 4;
+        /**
+          <p>This symbol is the offset where the {@link jp.gaomar.magicofgreeting.R.attr#visibility}
+          attribute's value can be found in the {@link #mediba_ad_sdk_android_MasAdView} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:visibility
+        */
+        public static final int mediba_ad_sdk_android_MasAdView_visibility = 3;
     };
 }
