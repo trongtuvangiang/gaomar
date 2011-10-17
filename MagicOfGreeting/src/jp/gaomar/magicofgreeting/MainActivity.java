@@ -57,7 +57,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -99,7 +98,7 @@ public class MainActivity extends LayoutGameActivity implements
 	private TextureRegion mBgTextureRegion, mBgNightTextureRegion, mParticleTextureRegion, mParticle_heartTextureRegion, mParticle_starTextureRegion;
 
 	private TextureRegion mTx_ac, mTx_greateusagi, mTx_inu, mTx_kinglion, mTx_kita, mTx_lion, mTx_mama, mTx_manbo;
-	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi, mTx_usagi, mTx_wani;
+	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi, mTx_usagi, mTx_wani, mTx_mukku;
 
 	private final int mID_otoko = 0;
 	private final int mID_onna = 1;
@@ -119,7 +118,7 @@ public class MainActivity extends LayoutGameActivity implements
 	private final int mID_migeru = 15;
 	private final int mID_takata = 16;
 	private final int mID_kita = 17;
-
+	private final int mID_mukku = 18;
 
 	// ===========================================================
 	// Other
@@ -129,14 +128,17 @@ public class MainActivity extends LayoutGameActivity implements
 	private String m_Code = "";
 
 	private float mGravity;
-	private SoundPool sp, sp_japanet, sp_tokadho, sp_b;
+	private SoundPool sp, sp_japanet, sp_tokadho, sp_mukku, sp_b;
     int[] seID = new int[PrefDispFlg.DISP_MAX];
     private final int JAPANET_ID = 17;
     private final int TOKADHO_ID = 18;
+    private final int MUKKU_ID = 19;
     private final int JAPANET_CNT = 28;
     private final int TOKADHO_CNT = 12;
+    private final int MUKKU_CNT = 3;
     int[] seID_Japanet = new int[JAPANET_CNT];
     int[] seID_Tokadho = new int[TOKADHO_CNT];
+    int[] seID_Mukku = new int[MUKKU_CNT];
     int[] seID_B = new int[1];
 
     int cnt = 0;
@@ -266,6 +268,7 @@ public class MainActivity extends LayoutGameActivity implements
 		this.mTx_wani = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "wani.png", 250, 100);
 		this.mTx_greateusagi = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "greateusagi.png", 300, 100);
 		this.mTx_kinglion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "kinglion.png", 400, 100);
+		this.mTx_mukku = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "mukku.png", 0, 200);
 
 
 		this.mParticleTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture_Atlas, this, "particle.png", 0, 0);
@@ -283,6 +286,7 @@ public class MainActivity extends LayoutGameActivity implements
         sp = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_japanet = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_tokadho = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+        sp_mukku = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_b = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
         seID[1] = sp.load( this, R.raw.popopopoon, 1 );
@@ -345,6 +349,11 @@ public class MainActivity extends LayoutGameActivity implements
         seID_Tokadho[10] = sp_tokadho.load( this, R.raw.tugihaitu, 1 );
         seID_Tokadho[11] = sp_tokadho.load( this, R.raw.utidesikakaenai, 1 );
 
+        // ムック
+        seID_Mukku[0] = sp_mukku.load( this, R.raw.onaka, 1 );
+        seID_Mukku[1] = sp_mukku.load( this, R.raw.wasure, 1 );
+        seID_Mukku[2] = sp_mukku.load( this, R.raw.dekita, 1 );
+
         // 花火音
         seID_B[0] = sp_b.load( this, R.raw.bon, 1);
 
@@ -377,6 +386,18 @@ public class MainActivity extends LayoutGameActivity implements
 			   }
 			   //ボリュームをゼロにして再生して戻り値をチェック
 			   streamID = sp_tokadho.play(seID_Tokadho[ii], 0.0f, 0.0f, 1, 0, 1.0f);
+			  } while(streamID == 0);
+		  }
+
+		  for (int ii=0; ii<seID_Mukku.length; ii++) {
+			  do {
+			   //少し待ち時間を入れる
+			   try {
+			    Thread.sleep(10);
+			   } catch (InterruptedException e) {
+			   }
+			   //ボリュームをゼロにして再生して戻り値をチェック
+			   streamID = sp_mukku.play(seID_Mukku[ii], 0.0f, 0.0f, 1, 0, 1.0f);
 			  } while(streamID == 0);
 		  }
 
@@ -650,6 +671,10 @@ public class MainActivity extends LayoutGameActivity implements
 				sp_tokadho.stop(seID_Tokadho[ii]);
 				sp_tokadho.unload(seID_Tokadho[ii]);
 			}
+			for (int ii=0; ii < seID_Mukku.length; ii++) {
+				sp_mukku.stop(seID_Mukku[ii]);
+				sp_mukku.unload(seID_Mukku[ii]);
+			}
 
 		} finally {
 			sp.release();
@@ -674,6 +699,9 @@ public class MainActivity extends LayoutGameActivity implements
 					} else if (id == TOKADHO_ID - 1){
 						int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
 						sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
+					} else if (id == MUKKU_ID - 1){
+						int mukku_id = (int)(Math.random()*MUKKU_CNT);
+						sp_mukku.play(seID_Tokadho[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 					} else {
 						sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 					}
@@ -764,6 +792,10 @@ public class MainActivity extends LayoutGameActivity implements
 		case mID_wani:
 			face = new Sprite(pX, pY, this.mTx_wani);
 			break;
+		case mID_mukku:
+			face = new Sprite(pX, pY, this.mTx_mukku);
+			break;
+
 		}
 		body = PhysicsFactory.createCircleBody(this.mPhysicsWorld, face, BodyType.DynamicBody, FIXTURE_DEF);
 		body.setUserData(new BodyInfo(getString(R.string.pg_char), id, face));
@@ -871,6 +903,9 @@ public class MainActivity extends LayoutGameActivity implements
 			} else if (id == TOKADHO_ID - 1) {
 				int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
 				sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == MUKKU_ID - 1) {
+				int mukku_id = (int)(Math.random()*MUKKU_CNT);
+				sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -942,6 +977,9 @@ public class MainActivity extends LayoutGameActivity implements
 			} else if (id == TOKADHO_ID - 1) {
 				int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
 				sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == MUKKU_ID - 1) {
+				int mukku_id = (int)(Math.random()*MUKKU_CNT);
+				sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -1053,6 +1091,9 @@ public class MainActivity extends LayoutGameActivity implements
 		} else if (id == TOKADHO_ID - 1) {
 			int tokadho_id = (int)(Math.random()*TOKADHO_CNT);
 			sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
+		} else if (id == MUKKU_ID - 1) {
+			int mukku_id = (int)(Math.random()*MUKKU_CNT);
+			sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 		} else {
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 		}

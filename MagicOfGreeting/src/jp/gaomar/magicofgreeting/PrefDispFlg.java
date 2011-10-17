@@ -15,11 +15,11 @@ public class PrefDispFlg extends DialogPreference{
 	private static SharedPreferences sp;
 	private Context con;
 	public static final String CHK_DISP_KEY = "disp_";
-	public static final int DISP_MAX = 18;
+	public static final int DISP_MAX = 19;
 	private CheckBox chk_Disp1,chk_Disp2,chk_Disp3,chk_Disp4;
 	private CheckBox chk_Disp5,chk_Disp6,chk_Disp7,chk_Disp8;
 	private CheckBox chk_Disp9,chk_Disp10,chk_Disp11,chk_Disp12;
-	private CheckBox chk_Disp13,chk_Disp14,chk_Disp15,chk_Disp16,chk_Disp17,chk_Disp18;
+	private CheckBox chk_Disp13,chk_Disp14,chk_Disp15,chk_Disp16,chk_Disp17,chk_Disp18, chk_Disp19;
 
 	public PrefDispFlg(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -65,6 +65,7 @@ public class PrefDispFlg extends DialogPreference{
 			chk_Disp16 = (CheckBox) view.findViewById(R.id.disp_16);
 			chk_Disp17 = (CheckBox) view.findViewById(R.id.disp_17);
 			chk_Disp18 = (CheckBox) view.findViewById(R.id.disp_18);
+			chk_Disp19 = (CheckBox) view.findViewById(R.id.disp_19);
 		} catch (Exception e) {
 		}
 	}
@@ -99,6 +100,7 @@ public class PrefDispFlg extends DialogPreference{
 			chk_Disp16.setChecked(getVal(16));
 			chk_Disp17.setChecked(getVal(17));
 			chk_Disp18.setChecked(getVal(18));
+			chk_Disp19.setChecked(getVal(19));
 		} catch (Exception e) {
 		}
 
@@ -110,7 +112,7 @@ public class PrefDispFlg extends DialogPreference{
 			|| chk_Disp5.isChecked() || chk_Disp6.isChecked() || chk_Disp7.isChecked() || chk_Disp8.isChecked()
 			|| chk_Disp9.isChecked() || chk_Disp10.isChecked() || chk_Disp11.isChecked() || chk_Disp12.isChecked()
 			|| chk_Disp13.isChecked() || chk_Disp14.isChecked() || chk_Disp15.isChecked() || chk_Disp16.isChecked()
-			|| chk_Disp17.isChecked() || chk_Disp18.isChecked()) {
+			|| chk_Disp17.isChecked() || chk_Disp18.isChecked() || chk_Disp19.isChecked()) {
 				setVal(1, chk_Disp1.isChecked());
 				setVal(2, chk_Disp2.isChecked());
 				setVal(3, chk_Disp3.isChecked());
@@ -129,6 +131,7 @@ public class PrefDispFlg extends DialogPreference{
 				setVal(16, chk_Disp16.isChecked());
 				setVal(17, chk_Disp17.isChecked());
 				setVal(18, chk_Disp18.isChecked());
+				setVal(19, chk_Disp19.isChecked());
 			} else {
 				Toast.makeText(con, "どれか一つは必ずチェックしてください", Toast.LENGTH_SHORT).show();
 			}
