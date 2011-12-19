@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">おにぎり100円セールチェッカー</string>
+    <string name="format_notification">%1$s～【%2$s日間限定】</string>
+
+    <string name="lbl_dialog">チェック中...</string>
+        
+    <string name="lbl_sale">おにぎり100円セール中！</string>
+    <string name="lbl_not_sale">セール期間終了しています。</string>
+    
+	<string name="lbl_btn_detail">キャンペーン詳細</string>        
+    <string name="lbl_btn_start">自動チェック\n開始する</string>
+    <string name="lbl_btn_stop">自動チェック\n停止する</string>
+    <string name="lbl_btn_now">今すぐ\nチェック</string>
+
+    <string name="lbl_chk_start">自動チェック開始しました</string>    
+    <string name="lbl_chk_stop">自動チェック停止しました</string>
+    
+    <string name="lbl_chk_start_message">セール期間中になると通知領域に表示されます。</string>
+</resources>
