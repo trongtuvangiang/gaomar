@@ -203,6 +203,7 @@ public class HPCheckTask extends AsyncTask<Void, Void, DOMResult>{
 					Calendar start = Calendar.getInstance();
 					Calendar end = Calendar.getInstance();
 					start.setTimeInMillis(strToDate(m.group(), "yyyy”NMMŒŽdd“ú").getTime());
+					end.setTimeInMillis(strToDate(m.group(), "yyyy”NMMŒŽdd“ú").getTime());
 					int kikan = 0;
 					if (mKikan.find()) {
 						kikan = Integer.parseInt(mKikan.group());

@@ -72,22 +72,22 @@ public class MainActivity extends Activity {
     private void onCheckStart() {
     	// ボタンクリックでレシーバーセット
 		Intent intent = new Intent(this, DoActionReceiver.class);
-		intent.putExtra("checkFlg", 1);
 		PendingIntent sender = PendingIntent.getBroadcast(this, 0, intent, 0);
 
 		// アラームマネージャの用意（初回は現在の0時,そのあとは毎日実行）
 
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.HOUR, 0);
+		cal.add(Calendar.DATE, 1);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
-		cal.set(Calendar.SECOND, 0);
-		cal.set(Calendar.MILLISECOND, 0);		
-	    
+		cal.set(Calendar.SECOND, 1);		
+		
 		long firstTime = cal.getTimeInMillis();
 		
 		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-		am.setRepeating(AlarmManager.RTC_WAKEUP, firstTime, AlarmManager.INTERVAL_DAY, sender);
-
+		am.cancel(sender);
+		am.set(AlarmManager.RTC_WAKEUP, firstTime, sender);
+		
 		// 今すぐチェック
 		HPCheckTask task = new HPCheckTask(this, true, mDetail);
 		task.execute();
