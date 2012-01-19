@@ -132,7 +132,7 @@ public class PrefActivity extends PreferenceActivity{
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
         		Editor e = mPref.edit();
-        		e.putBoolean("mode", (which == 0)? true:false);
+        		e.putInt("mode", which);
         		e.commit();
 
         		// 次回起動登録
@@ -143,14 +143,14 @@ public class PrefActivity extends PreferenceActivity{
 	    		// アラームマネージャの用意（初回は現在の0時,そのあとは毎日実行）
 
 	    		Calendar cal = Calendar.getInstance();
+	    		cal.setTimeInMillis(System.currentTimeMillis());
 	    		cal.add(Calendar.DATE, 1);
 	    		cal.set(Calendar.HOUR_OF_DAY, 0);
 	    		cal.set(Calendar.MINUTE, 0);
 	    		cal.set(Calendar.SECOND, 1);		
 	    			    		
-	    		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-	    		am.cancel(sender);
-	    		am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+	    		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);	    		
+	    		am.set(AlarmManager.RTC, cal.getTimeInMillis(), sender);
 
             	DateCheckTask task = new DateCheckTask(PrefActivity.this);
             	task.execute();        		

@@ -13,7 +13,9 @@
         
     <string-array name="disp_mode">
         <item>月と日を表示する</item>
+        <item>月と日を表示する\n(メテオ曜日有り)</item>
         <item>日だけ表示する</item>
+        <item>日だけ表示する\n(メテオ曜日有り)</item>
     </string-array>        
         
 </resources>

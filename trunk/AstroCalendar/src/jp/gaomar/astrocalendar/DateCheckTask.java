@@ -66,16 +66,26 @@ public class DateCheckTask extends AsyncTask<Void, Void, Calendar>{
 			n2.flags = Notification.FLAG_ONGOING_EVENT;
 			n3.setLatestEventInfo(mCtx.getApplicationContext(), getDayOfTheWeek(now.get(Calendar.DAY_OF_WEEK)), mCtx.getString(R.string.app_name), pend3 );
 			n3.flags = Notification.FLAG_ONGOING_EVENT;
-						
-			if (pref.getBoolean("mode", false)) {
-				mManager.cancel(1); mManager.cancel(2); mManager.cancel(3);
+
+			mManager.cancel(1); mManager.cancel(2); mManager.cancel(3);
+
+			switch (pref.getInt("mode", 0)) {
+			case 0:
 				mManager.notify(1,n1);
 				mManager.notify(2,n2);				
-				if (n3.icon != 0) mManager.notify(3,n3);
-			} else {
-				mManager.cancel(1); mManager.cancel(2);
+				break;
+			case 1:
+				mManager.notify(1,n1);
+				mManager.notify(2,n2);				
+				if (n3.icon != 0) mManager.notify(3,n3);				
+				break;
+			case 2:
+				mManager.notify(1,n2);
+				break;
+			case 3:
 				mManager.notify(1,n2);
 				if (n3.icon != 0) mManager.notify(2,n3);
+				break;				
 			}
 			
 		} catch (Exception e) {
