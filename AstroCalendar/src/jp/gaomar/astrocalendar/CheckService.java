@@ -44,6 +44,7 @@ public class CheckService extends Service{
 	    		// アラームマネージャの用意（翌日の0時,そのあとは毎日実行）
 	    		
 	    		Calendar cal = Calendar.getInstance();
+	    		cal.setTimeInMillis(System.currentTimeMillis());
 	    		cal.add(Calendar.DATE, 1);
 	    		cal.set(Calendar.HOUR_OF_DAY, 0);
 	    		cal.set(Calendar.MINUTE, 0);
@@ -52,10 +53,9 @@ public class CheckService extends Service{
 	    		Calendar now = Calendar.getInstance();
 	    		now.set(Calendar.SECOND, 1);		
 	    		
-	    		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-	    		am.cancel(sender);
-	    		am.set(AlarmManager.RTC_WAKEUP, now.getTimeInMillis(), sender);
-	    		am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+	    		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);	    		
+	    		am.set(AlarmManager.RTC, now.getTimeInMillis(), sender);
+	    		am.set(AlarmManager.RTC, cal.getTimeInMillis(), sender);
 
     		}
             // サービス終了  
