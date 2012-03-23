@@ -58,7 +58,7 @@ public class HPCheckTask extends AsyncTask<Void, Void, DOMResult>{
 	public static final String ONIGIRI_ADDRESS = BASE_ADDRESS + "onigiricmp.html";
 
 	/** 一致パターン*/
-	private final Pattern pDate = Pattern.compile("[0-9]{4}年[0-9]{2}月[0-9]{1,2}日");
+	private final Pattern pDate = Pattern.compile("[0-9]{4}年[0-9]{1,2}月[0-9]{1,2}日");
 	private final Pattern pKikan = Pattern.compile("(?<=【)[0-9]{1,}");
 	
 	/** プログレスダイアログ*/
