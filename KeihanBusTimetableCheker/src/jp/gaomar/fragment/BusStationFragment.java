@@ -1,14 +1,27 @@
 package jp.gaomar.fragment;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import jp.gaomar.keihan.BusDestination;
 import jp.gaomar.keihan.BusStation;
 import jp.gaomar.keihan.BusStationAdapter;
 import jp.gaomar.keihan.R;
+import jp.gaomar.keihan.db.DBAdapter;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,6 +30,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class BusStationFragment extends ListFragment {
+	static DBAdapter dbAdapter;
+	String BaseUrl = "http://www.keihanbus.jp/local/";
+	String BusStationUrl = BaseUrl + "timetable_index2.html";
+	String BusTimeTableUrl = BaseUrl + "timetable.php?stop_cd=";
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -24,6 +41,8 @@ public class BusStationFragment extends ListFragment {
 		android.R.layout.simple_list_item_1);
 		setListAdapter(adapter);
 		super.onActivityCreated(savedInstanceState);
+		dbAdapter = new DBAdapter(getActivity());
+	    
 	}
 	
 	public void getStationList(final ArrayList<BusStation> list) {
@@ -61,7 +80,9 @@ public class BusStationFragment extends ListFragment {
 				if(retList != null) {					
 					BusStationAdapter adapter = new BusStationAdapter(getActivity(), 0, retList);
 					setListAdapter(adapter);
-		
+					getListView().setVerticalFadingEdgeEnabled(false);
+					getListView().setHorizontalFadingEdgeEnabled(false);
+
 					Toast.makeText(getActivity(), R.string.selstation, Toast.LENGTH_SHORT).show();
 				}
 		
@@ -78,9 +99,113 @@ public class BusStationFragment extends ListFragment {
 		BusStation data = (BusStation) l.getAdapter().getItem(position);
 		AutoCompleteTextView txtSearch = (AutoCompleteTextView)getActivity().findViewById(R.id.auto_complete);
 		txtSearch.setText(data.getStationName());
+		
+	    dbAdapter.open();
+	    try {
+			String idNo = dbAdapter.searchID(data.getStationName() );
+
+			if (idNo.length() != 0) {
+				getTimetable(idNo);
+			}
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} finally {
+		    dbAdapter.close();
+		}
 
 		
 	}
 
+	private void getTimetable(final String id) {
+		// HTMLのドキュメントを取得		
+		AsyncTask<Void, Void, Document> task = new AsyncTask<Void, Void, Document>() {
+
+			private static final String ERROR = "can not search";
+			private ProgressDialog progressDialog = null;
+			
+			@Override
+			protected void onPreExecute() {
+				// バックグラウンドの処理前にUIスレッドでダイアログ表示
+		        progressDialog = new ProgressDialog(getActivity());
+		        progressDialog.setMessage(getResources().getText(
+		                        R.string.data_loading));
+		        progressDialog.setIndeterminate(true);
+		        progressDialog.setCancelable(false);
+		        progressDialog.show();
+		        
+				super.onPreExecute();
+			}
+
+			@Override
+			protected Document doInBackground(Void... params) {
+				String url = BusTimeTableUrl + id;
+		
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpGet hg = new HttpGet(url);
+		
+				try {
+					HttpResponse httpResponse = httpClient.execute(hg);
+		
+					if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+						Document document = Jsoup.connect(url).get();
+						hg.abort();
+						return document;
+					} else {
+						hg.abort();
+						return null;
+					}		
+				} catch (NullPointerException e) {
+					return null;
+				} catch (IOException e) {
+					return null;
+				}
+			}
+			
+			@Override
+			protected void onPostExecute(Document document) {			
+				// 処理中ダイアログをクローズ
+		        progressDialog.dismiss();
+
+				try {
+					String title = document.title();
+
+					if (title.indexOf("時刻表：行き先選択") >= 0) {
+						FragmentManager manager = getActivity().getSupportFragmentManager();
+						FragmentTransaction fragmentTransaction = manager.beginTransaction();
+
+						DestinationFragment fragment = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
+						BusStationFragment fragment2 = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
+						fragment.searchDestination(document);
+
+						fragmentTransaction.show(fragment);
+						fragmentTransaction.hide(fragment2);
+						fragmentTransaction.commit();
+
+					} else {
+						FragmentManager manager = getActivity().getSupportFragmentManager();
+						FragmentTransaction fragmentTransaction = manager.beginTransaction();
+
+						DestinationFragment fragment = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
+						BusStationFragment fragment2 = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
+						fragment.searchNoDestination(document);
+						
+						fragmentTransaction.show(fragment);
+						fragmentTransaction.hide(fragment2);
+						fragmentTransaction.commit();
+						
+					}
+				} catch (Exception e) {
+					Toast.makeText(getActivity(), ERROR, Toast.LENGTH_SHORT).show();
+				}
+
+
+				super.onPostExecute(document);
+
+			}
+		};
+		task.execute();
+
+	}
 	
 }

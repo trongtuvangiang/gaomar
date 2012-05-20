@@ -4,7 +4,7 @@
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">京阪バス時刻表チェッカー</string>
 	<string name="data_loading">読み込み中...</string>
-	<string name="data_init">バス停データ取得中...\n1〜2分お待ち下さい。</string>
+	<string name="data_init">バス停データ取得中...</string>
 		
 	<string name="weekday">平 日</string>
 	<string name="saturday">土曜日</string>
