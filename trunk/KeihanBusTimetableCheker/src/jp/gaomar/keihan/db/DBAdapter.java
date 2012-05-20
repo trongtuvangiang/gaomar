@@ -1,14 +1,21 @@
 package jp.gaomar.keihan.db;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import jp.gaomar.keihan.BusStation;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseCorruptException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 
 public class DBAdapter {
 	
@@ -91,7 +98,15 @@ public class DBAdapter {
 		    values.put(NAME, name);
 		    db.insertOrThrow(TABLE, null, values);
 		  }
-		  
+
+		  public ContentValues getContentValues(String id, String name){
+			    ContentValues values = new ContentValues();
+			    values.put(STID, id);
+			    values.put(NAME, name);
+
+			    return values;
+		  }
+
 		  public String searchID(String name) {
 			  String ret = "";
 			  
@@ -125,4 +140,107 @@ public class DBAdapter {
 
 			  return retList;
 		  }
+		  
+		    /** 
+		     * insert a lot of data 
+		     * 
+		     * @param nullColumnHack  
+		     * @param valueList 値のリスト 
+		     * @param conflictAlgorithm コンフリクト発生時の処理 
+		     * @param transaction トランザクション処理を併用するか否か 
+		     * @return Boolean 成功 or 失敗 
+		     */  
+		    public Boolean insertMany(String nullColumnHack, List<ContentValues> valueList, int conflictAlgorithm, Boolean transaction) {  
+		          
+		        if(valueList != null && valueList.size() > 0){  
+		            String[] CONFLICT_VALUES = new String[]{"", " OR ROLLBACK ", " OR ABORT ", " OR FAIL ", " OR IGNORE ", " OR REPLACE "};  
+		      
+		            // At first, create sql statement  
+		            ContentValues initialValues = valueList.get(0);  
+		              
+		            // Measurements show most sql lengths <= 152  
+		            StringBuilder sql_build = new StringBuilder(152);  
+		            sql_build.append("INSERT");  
+		            sql_build.append(CONFLICT_VALUES[conflictAlgorithm]);  
+		            sql_build.append(" INTO ");  
+		            sql_build.append(TABLE);  
+		            // Measurements show most values lengths < 40  
+		            StringBuilder values = new StringBuilder(40);  
+		      
+		            Set<Map.Entry<String, Object>> entrySet = null;  
+		              
+		            if (initialValues != null && initialValues.size() > 0) {  
+		                entrySet = initialValues.valueSet();  
+		                Iterator<Map.Entry<String, Object>> entriesIter = entrySet.iterator();  
+		                sql_build.append('(');  
+		      
+		                boolean needSeparator = false;  
+		                while (entriesIter.hasNext()) {  
+		                    if (needSeparator) {  
+		                        sql_build.append(", ");  
+		                        values.append(", ");  
+		                    }  
+		                    needSeparator = true;  
+		                    Map.Entry<String, Object> entry = entriesIter.next();  
+		                    sql_build.append(entry.getKey());  
+		                    values.append('?');  
+		                }  
+		                sql_build.append(')');  
+		            } else {  
+		                sql_build.append("(" + nullColumnHack + ") ");  
+		                values.append("NULL");  
+		            }  
+		      
+		            sql_build.append(" VALUES(");  
+		            sql_build.append(values);  
+		            sql_build.append(");");  
+		            String sql = sql_build.toString();  
+		              
+		            SQLiteStatement statement = null;  
+		              
+		            // if transaction id true, beginTransaction()  
+		            if(transaction){  
+		                db.beginTransaction();  
+		            }  
+		            try {  
+		                for(int i=0,length=valueList.size(); i<length; i++){  
+		                    statement = db.compileStatement(sql);  
+		                    initialValues = valueList.get(i);  
+		                    entrySet = initialValues.valueSet();  
+		                      
+		                    // Bind the values  
+		                    if (entrySet != null) {  
+		                        int size = entrySet.size();  
+		                        Iterator<Map.Entry<String, Object>> entriesIter = entrySet.iterator();  
+		                        for (int j = 0; j < size; j++) {  
+		                            Map.Entry<String, Object> entry = entriesIter.next();  
+		                            DatabaseUtils.bindObjectToProgram(statement, j + 1, entry.getValue());  
+		                        }  
+		                    }  
+		                    // Run the program and then cleanup  
+		                    statement.execute();  
+		                    statement.close();  
+		                }  
+		                  
+		                // if transaction id true, setTransactionSuccessful()  
+		                if(transaction){  
+		                    db.setTransactionSuccessful();  
+		                    db.endTransaction();  
+		                    transaction = false;  
+		                }  
+		                return true;  
+		            } catch (SQLiteDatabaseCorruptException e) {  
+		                throw e;  
+		            } finally {  
+		                if (statement != null) {  
+		                    statement.close();  
+		                }  
+		                // if transaction id true, endTransaction()  
+		                if(transaction){  
+		                    db.endTransaction();  
+		                }  
+		            }  
+		        }  
+		        return false;  
+		    }  
 }

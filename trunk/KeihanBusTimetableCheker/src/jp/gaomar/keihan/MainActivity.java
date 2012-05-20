@@ -2,6 +2,9 @@ package jp.gaomar.keihan;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import jp.Adlantis.Android.AdlantisView;
 import jp.co.imobile.android.AdRequestResult;
@@ -24,7 +27,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -63,12 +68,38 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	private NendAdView nendAd;
 	MasAdView mad;
 	
+	Toast finToast;
+	// backkeyで使うスレッド用////////////////////
+	Timer bTimer = null;
+	// 動いてるか動いてないかのチェック用
+	boolean bChk = false;
+	//バックを実行するかどうか
+	int bStar = 0;
+	//秒数かうんと
+	int bcount = 0;
+	
+    @Override
+	protected void onResume() {
+		super.onResume();
+		bStar = 0;
+	}
+	
+	protected void onPause() {
+		super.onPause();
+		backCountStop();
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	    setContentView(R.layout.main);
-	    	    
+	    
+	    StringBuffer appTitle = new StringBuffer();
+	    appTitle.append(getString(R.string.app_name)).append(" [v").append(getVersionName(this)).append("]");
+	    this.setTitle(appTitle.toString());
+	    finToast =Toast.makeText(this, "[戻る]をもう一度押すと終了", Toast.LENGTH_SHORT);
+        	    
 	    textView = (AutoCompleteTextView) findViewById(R.id.auto_complete);
 	    
 	    dbAdapter = new DBAdapter(this);
@@ -126,34 +157,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 			      
 				String keyword = textView.getText().toString();
 				if (!TextUtils.isEmpty(keyword)) {
-				    dbAdapter.open();
-				    try {
-						String id = dbAdapter.searchID(textView.getText().toString() );
-
-						if (id.length() != 0) {
-							MainActivity.this.getTimetable(id);
-						} else {
-						   // バス停候補を表示する
-						   ArrayList<BusStation> list = dbAdapter.getBusStationList(textView.getText().toString());
-						   
-							FragmentManager manager = getSupportFragmentManager();
-							FragmentTransaction fragmentTransaction = manager.beginTransaction();
-							BusStationFragment fragment = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
-							DestinationFragment fragment2 = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
-							fragment.getStationList(list);
-							
-							fragmentTransaction.show(fragment);
-							fragmentTransaction.hide(fragment2);
-							fragmentTransaction.commit();
-
-						}
-					} catch (Exception e) {
-						// TODO 自動生成された catch ブロック
-						e.printStackTrace();
-					} finally {
-					    dbAdapter.close();
-					}
-
+					MainActivity.this.searchTimeTable();
 				}
 
 				return true;
@@ -165,6 +169,37 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 
 	}
     
+	private void searchTimeTable() {
+	    dbAdapter.open();
+	    try {
+			String id = dbAdapter.searchID(textView.getText().toString() );
+
+			if (id.length() != 0) {
+				MainActivity.this.getTimetable(id);
+			} else {
+			   // バス停候補を表示する
+			   ArrayList<BusStation> list = dbAdapter.getBusStationList(textView.getText().toString());
+			   
+				FragmentManager manager = getSupportFragmentManager();
+				FragmentTransaction fragmentTransaction = manager.beginTransaction();
+				BusStationFragment fragment = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
+				DestinationFragment fragment2 = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
+				fragment.getStationList(list);
+				
+				fragmentTransaction.show(fragment);
+				fragmentTransaction.hide(fragment2);
+				fragmentTransaction.commit();
+
+			}
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} finally {
+		    dbAdapter.close();
+		}
+
+	}
+	
 	/**
 	 * 広告初期化
 	 */
@@ -317,19 +352,22 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 							Element content = document.getElementById("local");
 							Elements options = content.getElementsByTag("option");  
 					        ArrayList<BusStation> list = new ArrayList<BusStation>();
-
+					        List<ContentValues> valueList = new ArrayList<ContentValues>();
 							for (Element option : options) {  
 							  String optionLabel = option.attr("label");  
 							  String optionId = option.attr("value");
 							  
 							  if (!"".equals(optionLabel) && !"".equals(optionId)) {
-								  dbAdapter.saveNote(optionId, optionLabel);
+								  //dbAdapter.saveNote(optionId, optionLabel);
 								  BusStation tr = new BusStation(optionId, optionLabel);
+								  ContentValues cv = dbAdapter.getContentValues(optionId, optionLabel);
 								  list.add(tr);
-
+								  valueList.add(cv);
+								  
 							  }
 							}
-							
+							// 一気にInsert
+							dbAdapter.insertMany("", valueList, 1, true);
 
 							return list;
 						} else {
@@ -463,6 +501,67 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 		
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		// なんのkeydownかを判断　今回はバックキー
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			if(bStar == 0){
+				finToast.show();
+				bStar = 1;
+				backCountStart();
+			}else {
+				backCountStop();
+				finToast.cancel();
+				finish();
+			}
+	
+		}
+		return false;
+	}
+
+	// //////////////////////タイマー/////////////
+	public void backCountStart() {
+		// 動いてたらそのまま
+		if (bChk) {
+			// 止まってたら起動
+		} else {
+			bTimer = new Timer(true);
+			bTimer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					if(bcount == 2){
+						bStar =0;
+						bcount = 0;
+						backCountStop();
+					}
+					bcount++;
+				}
+			}, 1000, 1000); // 初回起動の遅延と周期指定。単位はms
+			bChk = true;
+		}
+	}
+
+	public void backCountStop() {
+	// 動いてたら入る、止まってたらスルー
+		if (bChk) {
+			if (bTimer != null) {
+				bTimer.cancel();
+				bTimer = null;
+			}
+			bChk = false;
+		}
+	}
+
+	private String getVersionName( Context context ) {
+	    String ver;
+	    try {
+	        ver = context.getPackageManager().getPackageInfo( context.getPackageName(), 1 ).versionName;
+	    } catch (NameNotFoundException e) {
+	        ver = "";
+	    }
+	    return ver;
+	}
+
 //    @Override
 //    public void onResume(){
 //    	super.onResume();

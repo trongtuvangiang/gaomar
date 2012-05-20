@@ -1,6 +1,7 @@
 package jp.gaomar.fragment;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,6 +26,8 @@ public class TimetableFragment extends ListFragment {
 	/** 一致パターン*/
 	private final Pattern pHour = Pattern.compile("[0-9]{1,2}");
 
+	/** バス停名*/
+	private String busStationName = "";
 //	
 //	@Override
 //	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,8 +81,8 @@ public class TimetableFragment extends ListFragment {
 				ArrayList<BusTimeTable> retList = new ArrayList<BusTimeTable>();
 				
 				Element contentTimetable = document.getElementById("timetable");
-				String title = contentTimetable.getElementsByTag("h4").get(0).text();
-				getActivity().setTitle(title);
+				busStationName = contentTimetable.getElementsByTag("h4").get(0).text() ;
+
 				Element content = document.getElementById("weekday");
 				Element contentST = document.getElementById("saturday");
 				Element contentSU = document.getElementById("sunday");
@@ -171,7 +174,24 @@ public class TimetableFragment extends ListFragment {
 				if(result != null) {					
 					TimetableAdapter adapter = new TimetableAdapter(getActivity(), 0, result);
 					setListAdapter(adapter);
-		
+
+					// バス停名をタイトルバーに表記する
+					getActivity().setTitle(busStationName);
+
+					// 取得した時刻にカーソルを移動させる
+					final Calendar calendar = Calendar.getInstance();
+					final int hour = calendar.get(Calendar.HOUR_OF_DAY);
+					int wk = 0;
+					getListView().setVerticalFadingEdgeEnabled(false);
+					getListView().setHorizontalFadingEdgeEnabled(false);
+					
+					for (BusTimeTable table : result) {
+						if (hour == Integer.parseInt(table.getwHour())) {
+							getListView().setSelection(wk);
+							break;
+						}
+						wk++;
+					}
 				} else {
 					Toast.makeText(getActivity(), ERROR, Toast.LENGTH_SHORT).show();
 				}

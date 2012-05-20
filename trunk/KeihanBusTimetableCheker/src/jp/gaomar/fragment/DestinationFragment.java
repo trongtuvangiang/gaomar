@@ -126,6 +126,8 @@ public class DestinationFragment extends ListFragment {
 					
 					DestinationAdapter adapter = new DestinationAdapter(getActivity(), 0, result);
 					setListAdapter(adapter);
+					getListView().setVerticalFadingEdgeEnabled(false);
+					getListView().setHorizontalFadingEdgeEnabled(false);
 
 					Toast.makeText(getActivity(), R.string.destination, Toast.LENGTH_SHORT).show();
 				} else {
@@ -208,7 +210,9 @@ public class DestinationFragment extends ListFragment {
 					
 					DestinationAdapter adapter = new DestinationAdapter(getActivity(), 0, result);
 					setListAdapter(adapter);
-		
+					getListView().setVerticalFadingEdgeEnabled(false);
+					getListView().setHorizontalFadingEdgeEnabled(false);
+
 					Toast.makeText(getActivity(), R.string.destination, Toast.LENGTH_SHORT).show();
 
 				} else {
@@ -321,7 +325,9 @@ public class DestinationFragment extends ListFragment {
 					
 					DestinationAdapter adapter = new DestinationAdapter(getActivity(), 0, result);
 					setListAdapter(adapter);
-		
+					getListView().setVerticalFadingEdgeEnabled(false);
+					getListView().setHorizontalFadingEdgeEnabled(false);
+
 				} else {
 					Toast.makeText(getActivity(), ERROR, Toast.LENGTH_SHORT).show();
 				}
