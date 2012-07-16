@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="jp.gaomar.osakacitybus"
+    package="jp.gaomar.kyotocitybus"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -21,8 +21,8 @@
         <activity android:name=".TimetableActivity" android:screenOrientation="portrait" />
         <activity android:name="mediba.ad.sdk.android.openx.MasAdClickWebview" />	
         
-        <meta-data android:name="Adlantis_Publisher_ID" android:value="MTgwNTA%3D%0A" />
-        <meta-data android:value="1915c87bc0b840c6856f9b50f043decd" android:name="ADWHIRL_KEY"/>	
+        <meta-data android:name="Adlantis_Publisher_ID" android:value="MTgwOTQ%3D%0A" />
+        <meta-data android:value="d47e9128dbdc420089eef1d998527f88" android:name="ADWHIRL_KEY"/>	
         <meta-data android:name="i-mobile_Publisher_ID" android:value="11116" />
         
     </application>
