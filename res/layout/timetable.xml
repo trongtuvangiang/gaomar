@@ -43,7 +43,7 @@
 		android:layout_width="fill_parent"
 		android:layout_height="0dip"
 		android:layout_weight="1"
-		android:name="jp.gaomar.osakacitybus.fragment.TimetableFragment" />
+		android:name="jp.gaomar.kyotocitybus.fragment.TimetableFragment" />
 	<LinearLayout 
 	    android:orientation="vertical"
 	    android:layout_width="fill_parent"
