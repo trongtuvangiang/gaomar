@@ -1,0 +1,21 @@
+						HttpClient httpClient = new DefaultHttpClient();
+						StringBuffer url = new StringBuffer();
+						url.append("http://kensaku.kotsu.city.osaka.jp/bus/dia/gojhuon/gojhuon_i.html");
+						HttpGet hg = new HttpGet(url.toString());
+						HttpResponse httpResponse = httpClient.execute(hg);
+			
+						if (httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+							Document document = Jsoup.connect(url.toString()).get();
+							hg.abort();
+							
+							Element content = document.getElementById("list_table");
+							Elements options = content.getElementsByTag("td");
+							for (Element option : options) { 
+								String optionId = option.getElementsByTag("b").get(0).text();
+								String href = option.getElementsByTag("a").get(0).attr("href");
+								System.out.println(optionId);
+								System.out.println(href);
+							}
+						} else {
+							hg.abort();
+						}
