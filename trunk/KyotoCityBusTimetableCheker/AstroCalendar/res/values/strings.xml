@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">アストロカレンダー</string>
+    
+    <string name="lbl_start">開始する</string>
+    <string name="lbl_stop">停止する</string>
+    <string name="lbl_debug">デバッグ</string>
+
+    <string name="pref_service">chk_service</string>
+    <string name="pref_mode">chk_mode</string>
+    <string name="pref_service_title">カレンダー常駐設定</string>
+	<string name="pref_service_summary">チェックを入れるとステータスバーに表示されます</string>
+        
+    <string-array name="disp_mode">
+        <item>月と日を表示する</item>
+        <item>月と日を表示する\n(メテオ曜日有り)</item>
+        <item>日だけ表示する</item>
+        <item>日だけ表示する\n(メテオ曜日有り)</item>
+    </string-array>        
+        
+</resources>

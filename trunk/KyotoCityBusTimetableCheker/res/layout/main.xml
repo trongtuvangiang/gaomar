@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+	    <AutoCompleteTextView android:id="@+id/auto_complete"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:inputType="text"
+	        android:hint="@string/hint"
+	        android:imeOptions="actionSearch" />
+	    <ImageButton 
+	        android:id="@+id/btnSearch"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@android:drawable/ic_search_category_default" />
+    </LinearLayout>
+    
+    <fragment
+		android:id="@+id/busStation_fragment"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"
+		android:name="jp.gaomar.kyotocitybus.fragment.BusStationFragment" />
+    <fragment
+		android:id="@+id/result_fragment"
+		android:layout_width="fill_parent"
+		android:layout_height="0dip"
+		android:layout_weight="1"
+		android:name="jp.gaomar.kyotocitybus.fragment.DestinationFragment" />
+	<LinearLayout android:id="@+id/ad_layout" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="vertical" />
+
+    
+    
+</LinearLayout>
