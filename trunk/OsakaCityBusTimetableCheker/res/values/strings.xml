@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">大阪市営バス時刻表チェッカー</string>
+	<string name="data_loading">読み込み中...</string>
+	<string name="data_init">バス停データ取得中...\n1〜２分お待ち下さい</string>
+		
+	<string name="weekday">平 日</string>
+	<string name="saturday">土曜日</string>
+	<string name="sunday">日祝日</string>
+	
+	<string name="hint">バス停検索</string>
+
+	<string name="datadone">データ取得完了</string>	
+	<string name="destination">行き先を選択してください</string>
+	<string name="selstation">バス停を選択してください</string>
+	<string name="gojhuon">a,iu,e,o,ka,ki,ku,ke,ko,sa,shi,su,se,so,ta,chi,tsu,te,to,na,ni,nu,ne,no,ha,hi,fu,he,ho,ma,mi,mu,me,mo,ya,yu,yo,ra,ri,ru,re,ro,wa,nn</string>
+</resources>
