@@ -20,6 +20,11 @@
 	        android:hint="@string/hint"
 	        android:imeOptions="actionSearch" />
 	    <ImageButton 
+	        android:id="@+id/btnDelete"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:src="@android:drawable/ic_delete" />
+	    <ImageButton 
 	        android:id="@+id/btnSearch"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"

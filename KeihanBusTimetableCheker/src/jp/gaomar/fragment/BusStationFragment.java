@@ -106,6 +106,8 @@ public class BusStationFragment extends ListFragment {
 
 			if (idNo.length() != 0) {
 				getTimetable(idNo);
+		    	dbAdapter.saveHistory(data.getStationName());
+
 			}
 		} catch (Exception e) {
 			// TODO ©“®¶¬‚³‚ê‚½ catch ƒuƒƒbƒN

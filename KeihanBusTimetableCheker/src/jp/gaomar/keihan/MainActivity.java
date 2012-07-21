@@ -106,6 +106,26 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	    
 	    updateTags();
 	    
+	    ImageButton btnDel = (ImageButton) findViewById(R.id.btnDelete);
+	    btnDel.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				textView.setText("");
+				
+				dbAdapter.open();
+				try {
+					dispHistory();
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				} finally {
+					dbAdapter.close();
+				}
+				
+			}
+		});
+	    
 	    ImageButton btn = (ImageButton) findViewById(R.id.btnSearch);
 	    btn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -123,6 +143,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 					    if (id.length() != 0) {
 					    	// 行き先を表示する
 					    	MainActivity.this.getTimetable(id);
+					    	dbAdapter.saveHistory(textView.getText().toString());
 					    } else {
 						   // バス停候補を表示する
 						   ArrayList<BusStation> list = dbAdapter.getBusStationList(textView.getText().toString());
@@ -158,6 +179,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 				String keyword = textView.getText().toString();
 				if (!TextUtils.isEmpty(keyword)) {
 					MainActivity.this.searchTimeTable();
+
 				}
 
 				return true;
@@ -169,6 +191,22 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 
 	}
     
+	private void dispHistory() {
+	    // バス停履歴を表示する
+	    ArrayList<BusStation> list = dbAdapter.getHistoryList();
+	   
+	    if (list.size() > 0) {
+			FragmentManager manager = getSupportFragmentManager();
+			FragmentTransaction fragmentTransaction = manager.beginTransaction();
+			BusStationFragment fragment = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
+			DestinationFragment fragment2 = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
+			fragment.getStationList(list);
+			
+			fragmentTransaction.show(fragment);
+			fragmentTransaction.hide(fragment2);
+			fragmentTransaction.commit();
+	    }
+	}
 	private void searchTimeTable() {
 	    dbAdapter.open();
 	    try {
@@ -176,6 +214,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 
 			if (id.length() != 0) {
 				MainActivity.this.getTimetable(id);
+				dbAdapter.saveHistory(textView.getText().toString());
 			} else {
 			   // バス停候補を表示する
 			   ArrayList<BusStation> list = dbAdapter.getBusStationList(textView.getText().toString());
@@ -292,7 +331,10 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 			    }
 			} else {
 				this.initBusStation();
+				
 			}
+		    dispHistory();
+
 		} catch (Exception e) {
 		} finally {
 		    c.close();
