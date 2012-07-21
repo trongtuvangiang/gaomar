@@ -1,12 +1,15 @@
 package jp.gaomar.osakacitybus.db;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import jp.gaomar.osakacitybus.BusStation;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -21,13 +24,21 @@ public class DBAdapter {
 	  private static final String ROWID = "_id";
 	  private static final String STID = "station_id";
 	  private static final String NAME = "staion_name";
+	  private static final String DATE = "date";	  
 	  private static final String DB_NAME = "KeihanBus.db";
-	  private static final String TABLE = "Station";
-	  private static final int DB_VERSION = 1;
-	  private static final String CREATE_TABLE_STMT = "create table " + TABLE
+	  private static final String TABLE_STATION = "Station";
+	  private static final String TABLE_HISTORY = "History";
+	  
+	  private static final int DB_VERSION = 2;
+	  
+	  private static final String CREATE_TABLE_STMT = "create table " + TABLE_STATION
 	          + " (" + ROWID + " integer primary key autoincrement, " + STID
 	          + " text, " + NAME + " text ); ";
-	 
+
+	  private static final String CREATE_TABLE_HISTORY_STMT = "create table " + TABLE_HISTORY
+	          + " (" + ROWID + " integer primary key autoincrement, " + NAME + " text, "
+	          + DATE + " integer  ); ";
+
 	  protected final Context context;
 	  protected DatabaseHelper dbHelper;
 	  private SQLiteDatabase db;
@@ -46,6 +57,7 @@ public class DBAdapter {
 		    @Override
 		    public void onCreate(SQLiteDatabase db) {
 		      db.execSQL(CREATE_TABLE_STMT);
+		      db.execSQL(CREATE_TABLE_HISTORY_STMT);
 		    }
 
 		    @Override
@@ -53,8 +65,51 @@ public class DBAdapter {
 		      SQLiteDatabase db,
 		      int oldVersion,
 		      int newVersion) {
-		      db.execSQL("DROP TABLE IF EXISTS " + TABLE);
-		      onCreate(db);
+				if( oldVersion == 1 && newVersion == 2 ){
+					// 更新対象のテーブル
+					List<String> targetList = new ArrayList<String>();
+					List<List<String>> old_ColumnsList = new ArrayList<List<String>>();			
+					db.beginTransaction();
+					try {
+						targetList.add(TABLE_STATION);
+						
+						final int num = targetList.size();
+						// データベースバックアップ
+						for (int ii=0; ii<num; ii++) {
+							// 元カラム一覧
+							old_ColumnsList.add(getColumns(db, targetList.get(ii)));
+							
+							// 退避
+							db.execSQL("ALTER TABLE " + targetList.get(ii) + " RENAME TO temp_"
+							+ targetList.get(ii));
+												
+						}
+						
+						// 新しいデータベース作成
+						this.onCreate(db);
+						
+						// 新しいデータベースへ書き込む
+						for (int ii=0; ii<num; ii++) {
+							List<String> columns = old_ColumnsList.get(ii);
+							List<String> newColumns = getColumns(db, targetList.get(ii));
+							
+							// 変化しないカラムのみ抽出
+							columns.retainAll(newColumns);
+							
+							String cols = join(columns, ",");
+							db.execSQL(String.format(
+									"INSERT INTO %s (%s) SELECT %s from temp_%s", targetList.get(ii),
+									cols, cols, targetList.get(ii)));
+							// 終了処理
+							db.execSQL("DROP TABLE temp_" + targetList.get(ii));
+							
+						}
+						db.setTransactionSuccessful();
+					} finally {
+						db.endTransaction();
+					}
+				}
+				
 		    }
 		    
 		  }
@@ -80,22 +135,76 @@ public class DBAdapter {
 		  
 		  
 		  public boolean deleteAllNotes(){
-		    return db.delete(TABLE, null, null) > 0;
+		    return db.delete(TABLE_STATION, null, null) > 0;
 		  }
 		  
 		  public boolean deleteNote(int id){
-		    return db.delete(TABLE, ROWID + "=" + id, null) > 0;
+		    return db.delete(TABLE_STATION, ROWID + "=" + id, null) > 0;
 		  }
 		  
 		  public Cursor getAllNotes(){
-			    return db.query(TABLE, null, null, null, null, null, null);
+			    return db.query(TABLE_STATION, null, null, null, null, null, null);
 		  }
-		  
+
+		  public Cursor getAllHistory(){
+			    return db.query(TABLE_HISTORY, new String[] { ROWID, NAME }, null, null, null, null, DATE + " DESC");
+		  }
+
+		  public Cursor getOldHistory(){
+			    return db.query(TABLE_HISTORY, new String[] { ROWID }, null, null, null, null, DATE + " ASC", "1");
+		  }
+
 		  public void saveNote(String id, String name){
 		    ContentValues values = new ContentValues();
 		    values.put(STID, id);
 		    values.put(NAME, name);
-		    db.insertOrThrow(TABLE, null, values);
+		    db.insertOrThrow(TABLE_STATION, null, values);
+		  }
+
+		  public void saveHistory(String name) {
+			  // データ数取得
+			  int id = searchROWID(name);
+			  Cursor c = getAllHistory();
+			  Calendar now = Calendar.getInstance();
+			  //SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+			  // 10以上は上書き更新
+			  if (c.getCount() < 10) {
+				  if (id < 0) {
+				  	// 新規登録				  	
+				    ContentValues values = new ContentValues();
+				    values.put(NAME, name);
+				    values.put(DATE, now.getTimeInMillis());
+				    db.insertOrThrow(TABLE_HISTORY, null, values);
+				  } else {
+					// 既存上書き更新  
+					  ContentValues values = new ContentValues();
+					  values.put(DATE, now.getTimeInMillis());
+					  db.update(TABLE_HISTORY, values, ROWID + " = ?", new String[]{ String.valueOf(id) });
+				  }
+			  } else {
+				  // 既に登録された名前かどうか
+				  if (id < 0) {
+					  // 一番古いデータに上書き
+					  c = getOldHistory();
+					  if (c.moveToFirst()) {
+						  int wkid = c.getInt(0);
+						  
+						  ContentValues values = new ContentValues();
+						  values.put(NAME, name);
+						  values.put(DATE, now.getTimeInMillis());
+						  db.update(TABLE_HISTORY, values, ROWID + " = ?", new String[]{ String.valueOf(wkid) });
+						  
+					  }
+				  } else {
+						// 既存上書き更新  
+					  ContentValues values = new ContentValues();
+					  values.put(DATE, now.getTimeInMillis());
+					  db.update(TABLE_HISTORY, values, ROWID + " = ?", new String[]{ String.valueOf(id) });
+					  
+				  }
+			  }
+			  c.close();
+			    
 		  }
 
 		  public ContentValues getContentValues(String id, String name){
@@ -112,7 +221,7 @@ public class DBAdapter {
 			  final String[] columns = new String[]{STID};
 			  String where = NAME + " like ?";
 			  
-			  Cursor c = db.query(TABLE, columns, where, new String[]{name}, null, null, null);
+			  Cursor c = db.query(TABLE_STATION, columns, where, new String[]{name}, null, null, null);
 			  if (c.moveToFirst()) {
 				  ret = c.getString(0);
 			  }
@@ -120,11 +229,26 @@ public class DBAdapter {
 			  
 			  return ret;
 		  }
-		  
+
+		  public int searchROWID(String name) {
+			  int ret = -1;
+			  
+			  final String[] columns = new String[]{ROWID};
+			  String where = NAME + " like ?";
+			  
+			  Cursor c = db.query(TABLE_HISTORY, columns, where, new String[]{name}, null, null, null);
+			  if (c.moveToFirst()) {
+				  ret = c.getInt(0);
+			  }
+			  c.close();
+			  
+			  return ret;
+		  }
+
 		  public ArrayList<BusStation> getBusStationList(String name) {
 			  ArrayList<BusStation> retList = new ArrayList<BusStation>();
 			  			  
-			  String sql = "SELECT " + STID + "," + NAME + " FROM " + TABLE + " WHERE " + NAME + " LIKE '%" + name + "%' ";
+			  String sql = "SELECT " + STID + "," + NAME + " FROM " + TABLE_STATION + " WHERE " + NAME + " LIKE '%" + name + "%' ";
 			  Cursor c = db.rawQuery(sql, null);
 			  if (c.moveToFirst()) {
 				  for (int ii = 0; ii < c.getCount(); ii++) {
@@ -140,6 +264,24 @@ public class DBAdapter {
 			  return retList;
 		  }
 		  
+		  public ArrayList<BusStation> getHistoryList() {
+			  ArrayList<BusStation> retList = new ArrayList<BusStation>();
+			  			  
+			  Cursor c = getAllHistory();
+			  if (c.moveToFirst()) {
+				  for (int ii = 0; ii < c.getCount(); ii++) {
+					  String stationId = c.getString(0);
+					  String stationName = c.getString(1);
+					  BusStation data = new BusStation(stationId, stationName);
+					  retList.add(data);
+					  c.moveToNext();
+				  }
+			  }
+			  c.close();
+
+			  return retList;
+		  }
+
 		    /** 
 		     * insert a lot of data 
 		     * 
@@ -162,7 +304,7 @@ public class DBAdapter {
 		            sql_build.append("INSERT");  
 		            sql_build.append(CONFLICT_VALUES[conflictAlgorithm]);  
 		            sql_build.append(" INTO ");  
-		            sql_build.append(TABLE);  
+		            sql_build.append(TABLE_STATION);  
 		            // Measurements show most values lengths < 40  
 		            StringBuilder values = new StringBuilder(40);  
 		      
@@ -242,4 +384,45 @@ public class DBAdapter {
 		        }  
 		        return false;  
 		    }  
+		    
+			/**
+			 * 指定テーブルのカラム名リストを取得する
+			 * @param db
+			 * @param tableName
+			 * @return カラム名リスト
+			 */
+			private static List<String> getColumns(SQLiteDatabase db, String tableName) {
+				List<String> ar = null;
+				Cursor c = null;
+				try {
+					c = db.rawQuery("SELECT * FROM " + tableName + " LIMIT 1", null);
+					if (c != null) {
+						ar = new ArrayList<String>(Arrays.asList(c.getColumnNames()));
+					}
+				} finally {
+					if (c != null) {
+						c.close();
+					}
+				}
+				return ar;
+			}
+			
+			/**
+			 * 文字列を任意の区切り文字で連結する
+			 * @param list
+			 * @param delim 区切り文字
+			 * @return 連結後の文字列
+			 */
+			private static String join(List<String> list, String delim) {
+				final StringBuilder buf = new StringBuilder();
+				final int num = list.size();
+				for (int ii = 0; ii < num; ii++) {
+					if (ii != 0) {
+						buf.append(delim);
+					}
+					buf.append((String) list.get(ii));
+				}
+				return buf.toString();
+			}
+			
 }
