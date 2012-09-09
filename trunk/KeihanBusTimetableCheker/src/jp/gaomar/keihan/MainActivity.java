@@ -7,6 +7,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import jp.Adlantis.Android.AdlantisView;
+import jp.co.cayto.appc.sdk.android.FloatContents;
+import jp.co.cayto.appc.sdk.android.FloatView;
 import jp.co.imobile.android.AdRequestResult;
 import jp.co.imobile.android.AdView;
 import jp.co.imobile.android.AdViewRequestListener;
@@ -29,6 +31,7 @@ import org.jsoup.select.Elements;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.os.AsyncTask;
@@ -38,6 +41,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -59,6 +64,9 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	String BaseUrl = "http://www.keihanbus.jp/local/";
 	String BusStationUrl = BaseUrl + "timetable_index2.html";
 	String BusTimeTableUrl = BaseUrl + "timetable.php?stop_cd=";
+
+	private static final int MENU_ID_MENU1 = (Menu.FIRST + 1);
+	private static final int MENU_ID_MENU2 = (Menu.FIRST + 2);
 
 	static DBAdapter dbAdapter;
 	
@@ -111,17 +119,8 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 			
 			@Override
 			public void onClick(View v) {
-				textView.setText("");
-				
-				dbAdapter.open();
-				try {
-					dispHistory();
-				} catch (Exception e) {
-					// TODO 自動生成された catch ブロック
-					e.printStackTrace();
-				} finally {
-					dbAdapter.close();
-				}
+				textView.setText("");				
+				dispHistory();
 				
 			}
 		});
@@ -192,21 +191,31 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	}
     
 	private void dispHistory() {
-	    // バス停履歴を表示する
-	    ArrayList<BusStation> list = dbAdapter.getHistoryList();
-	   
-	    if (list.size() > 0) {
-			FragmentManager manager = getSupportFragmentManager();
-			FragmentTransaction fragmentTransaction = manager.beginTransaction();
-			BusStationFragment fragment = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
-			DestinationFragment fragment2 = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
-			fragment.getStationList(list);
-			
-			fragmentTransaction.show(fragment);
-			fragmentTransaction.hide(fragment2);
-			fragmentTransaction.commit();
-	    }
+	    dbAdapter.open();
+
+	    try {
+			// バス停履歴を表示する
+			ArrayList<BusStation> list = dbAdapter.getHistoryList();
+   
+			if (list.size() > 0) {
+				FragmentManager manager = getSupportFragmentManager();
+				FragmentTransaction fragmentTransaction = manager.beginTransaction();
+				BusStationFragment fragment = (BusStationFragment)manager.findFragmentById(R.id.busStation_fragment);
+				DestinationFragment fragment2 = (DestinationFragment)manager.findFragmentById(R.id.result_fragment);
+				fragment.getStationList(list);
+				
+				fragmentTransaction.show(fragment);
+				fragmentTransaction.hide(fragment2);
+				fragmentTransaction.commit();
+			}
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} finally {
+			dbAdapter.close();
+		}
 	}
+	
 	private void searchTimeTable() {
 	    dbAdapter.open();
 	    try {
@@ -328,12 +337,14 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 			    	BusStation tr = new BusStation(c.getString(1), c.getString(2));
 			    	list.add(tr);
 			    	c.moveToNext();
-			    }
+			    }			    
+			    
+			    dispHistory();
+
 			} else {
 				this.initBusStation();
 				
 			}
-		    dispHistory();
 
 		} catch (Exception e) {
 		} finally {
@@ -430,10 +441,14 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 					// 処理中ダイアログをクローズ
 			        progressDialog.dismiss();
 
+			        
 				    String tags[] = getAllString(list);
 				    updateTags(tags);// auto complete候補リストの更新
 
 				    Toast.makeText(MainActivity.this, R.string.datadone, Toast.LENGTH_SHORT).show();
+				    
+				    dispHistory();
+
 				}
 			};
 			task.execute();
@@ -604,6 +619,50 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	    return ver;
 	}
 
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(Menu.NONE, MENU_ID_MENU1 , Menu.NONE , getString(R.string.menu_station));
+		menu.add(Menu.NONE, MENU_ID_MENU2 , Menu.NONE , getString(R.string.menu_app));
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        boolean ret = true;
+        Intent intent = new Intent();
+        
+        switch (item.getItemId()) {
+        default:
+            ret = super.onOptionsItemSelected(item);
+            break;
+        case MENU_ID_MENU1:
+        	busStationDelete();
+    		intent = new Intent(this, MainActivity.class);
+        	startActivity(intent);
+        	finish();
+            ret = true;
+            break;
+        case MENU_ID_MENU2:
+        	intent = new Intent(this, FloatContents.class);
+        	startActivity(intent);
+            ret = true;
+            break;
+        }
+        return ret;
+	}
+
+	private void busStationDelete() {
+	    dbAdapter.open();
+	    try {
+			dbAdapter.deleteAllNotes();
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		} finally {
+		    dbAdapter.close();			
+		}
+	}
+	
 //    @Override
 //    public void onResume(){
 //    	super.onResume();
