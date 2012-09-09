@@ -15,4 +15,7 @@
 	<string name="datadone">データ取得完了</string>	
 	<string name="destination">行き先を選択してください</string>
 	<string name="selstation">バス停を選択してください</string>
+	
+	<string name="menu_station">バス停リスト更新</string>
+	<string name="menu_app">おすすめアプリ</string>
 </resources>
