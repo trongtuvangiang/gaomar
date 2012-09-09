@@ -52,6 +52,8 @@ public final class R {
         public static final int gojhuon=0x7f05000b;
         public static final int hello=0x7f050000;
         public static final int hint=0x7f050007;
+        public static final int menu_app=0x7f05000d;
+        public static final int menu_station=0x7f05000c;
         public static final int saturday=0x7f050005;
         public static final int selstation=0x7f05000a;
         public static final int sunday=0x7f050006;
