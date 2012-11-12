@@ -12,9 +12,10 @@
 	        android:id="@+id/txtStation"
 	        android:choiceMode="singleChoice"
 	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
+	        android:layout_height="50dip"
 	        android:layout_marginTop="5dp"
 	        android:layout_marginBottom="5dp"
+	        
 	        />
 	    
     </LinearLayout>

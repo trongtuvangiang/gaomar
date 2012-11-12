@@ -7,6 +7,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import jp.Adlantis.Android.AdlantisView;
+import jp.beyond.bead.Bead;
+import jp.beyond.bead.Bead.ContentsOrientation;
 import jp.co.cayto.appc.sdk.android.FloatContents;
 import jp.co.cayto.appc.sdk.android.FloatView;
 import jp.co.imobile.android.AdRequestResult;
@@ -86,6 +88,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	//秒数かうんと
 	int bcount = 0;
 	
+	
     @Override
 	protected void onResume() {
 		super.onResume();
@@ -112,6 +115,20 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	    
 	    dbAdapter = new DBAdapter(this);
 	    
+		Bead.setSid("5b04fdc9b0f4923316cc9bde8b7d55d3c709aec2286b4acb");
+		Bead.setContentsOrientation(ContentsOrientation.Portrait);
+		Bead.requestAd(this);
+		Bead.setOnFinishClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Bead.endAd();
+				
+				finish();
+//		        android.os.Process.killProcess(android.os.Process.myPid());
+			}
+		});
+
 	    updateTags();
 	    
 	    ImageButton btnDel = (ImageButton) findViewById(R.id.btnDelete);
@@ -562,6 +579,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// なんのkeydownかを判断　今回はバックキー
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
+/*
 			if(bStar == 0){
 				finToast.show();
 				bStar = 1;
@@ -571,7 +589,8 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 				finToast.cancel();
 				finish();
 			}
-	
+*/
+			Bead.showAd(this);
 		}
 		return false;
 	}

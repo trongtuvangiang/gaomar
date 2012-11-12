@@ -2,13 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 <!-- 
     <mediba.ad.sdk.android.openx.MasAdView
 	    android:id="@+id/adview"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"/> 
 -->
+
     <LinearLayout android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -28,7 +30,7 @@
 	        android:id="@+id/btnSearch"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:src="@android:drawable/ic_search_category_default" />
+	        android:src="@drawable/ic_btn_search" />
     </LinearLayout>
     
     <fragment
@@ -43,8 +45,8 @@
 		android:layout_height="0dip"
 		android:layout_weight="1"
 		android:name="jp.gaomar.fragment.DestinationFragment" />
-	<LinearLayout android:id="@+id/ad_layout" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="vertical" />
 
+    <LinearLayout android:id="@+id/ad_layout" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="vertical" />
     
     
 </LinearLayout>

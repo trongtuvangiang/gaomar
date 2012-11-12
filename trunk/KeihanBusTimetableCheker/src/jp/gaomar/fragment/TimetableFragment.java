@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class TimetableFragment extends ListFragment {
@@ -43,6 +44,8 @@ public class TimetableFragment extends ListFragment {
 		ArrayAdapter<BusDestination> adapter = new ArrayAdapter<BusDestination>(getActivity(),
 		android.R.layout.simple_list_item_1);
 		setListAdapter(adapter);
+		ListView mListView = getListView();
+		mListView.setScrollingCacheEnabled(false);
 		super.onActivityCreated(savedInstanceState);
 	}
 	
