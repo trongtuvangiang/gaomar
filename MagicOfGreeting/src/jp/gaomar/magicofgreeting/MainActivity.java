@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import jp.co.nobot.libAdMaker.libAdMaker;
 import jp.gaomar.magicofgreeting.ProximityManager.OnProximityListener;
 import jp.gaomar.magicofgreeting.ShakeListener.OnShakeListener;
 import jp.gaomar.magicofgreeting.SoundSwitch.OnReachedVolumeListener;
@@ -44,8 +43,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
@@ -53,16 +52,19 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.joints.MouseJoint;
 import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 
@@ -80,15 +82,14 @@ public class MainActivity extends LayoutGameActivity implements
 	private final static int CAMERA_WIDTH  = 320;
 	private final static int CAMERA_HEIGHT = 480;
 
+    // ジャストのサイズにする
+    private final int FP = LinearLayout.LayoutParams.FILL_PARENT;
+
 	private static final FixtureDef FIXTURE_DEF = PhysicsFactory.createFixtureDef(1, 0f, 0.5f);
 
 	private PhysicsWorld mPhysicsWorld;
 	private Body mGroundBody;
 	private MouseJoint mMouseJointActive;
-
-    private static final String ADMAKER_URL = "http://images.ad-maker.info/apps/t9hrrx9sv97a.html";
-    private static final String ADMAKER_SITEID = "881";
-    private static final String ADMAKER_ZONEID = "1835";
 
 	// ===========================================================
 	// Texture
@@ -98,7 +99,7 @@ public class MainActivity extends LayoutGameActivity implements
 	private TextureRegion mBgTextureRegion, mBgNightTextureRegion, mParticleTextureRegion, mParticle_heartTextureRegion, mParticle_starTextureRegion;
 
 	private TextureRegion mTx_ac, mTx_greateusagi, mTx_inu, mTx_kinglion, mTx_kita, mTx_lion, mTx_mama, mTx_manbo;
-	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi, mTx_usagi, mTx_wani, mTx_mukku;
+	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi, mTx_usagi, mTx_wani, mTx_mukku, mTx_syuzou;
 
 	private final int mID_otoko = 0;
 	private final int mID_onna = 1;
@@ -119,6 +120,7 @@ public class MainActivity extends LayoutGameActivity implements
 	private final int mID_takata = 16;
 	private final int mID_kita = 17;
 	private final int mID_mukku = 18;
+	private final int mID_syuzou = 19;
 
 	// ===========================================================
 	// Other
@@ -128,17 +130,20 @@ public class MainActivity extends LayoutGameActivity implements
 	private String m_Code = "";
 
 	private float mGravity;
-	private SoundPool sp, sp_japanet, sp_tokadho, sp_mukku, sp_b;
+	private SoundPool sp, sp_japanet, sp_tokadho, sp_mukku, sp_syuzou, sp_b;
     int[] seID = new int[PrefDispFlg.DISP_MAX];
     private final int JAPANET_ID = 17;
     private final int TOKADHO_ID = 18;
     private final int MUKKU_ID = 19;
+    private final int SYUZOU_ID = 20;
     private final int JAPANET_CNT = 28;
     private final int TOKADHO_CNT = 12;
     private final int MUKKU_CNT = 3;
+    private final int SYUZOU_CNT = 12;
     int[] seID_Japanet = new int[JAPANET_CNT];
     int[] seID_Tokadho = new int[TOKADHO_CNT];
     int[] seID_Mukku = new int[MUKKU_CNT];
+    int[] seID_Syuzou = new int[SYUZOU_CNT];
     int[] seID_B = new int[1];
 
     int cnt = 0;
@@ -244,7 +249,7 @@ public class MainActivity extends LayoutGameActivity implements
         getDisp();
 
 		/* Textures. */
-		this.mTexture = new BitmapTextureAtlas(512, 256, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		this.mTexture = new BitmapTextureAtlas(512, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		this.mBgTexture = new BitmapTextureAtlas(1024, 512, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		this.mTexture_Atlas = new BitmapTextureAtlas(128, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
@@ -269,6 +274,7 @@ public class MainActivity extends LayoutGameActivity implements
 		this.mTx_greateusagi = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "greateusagi.png", 300, 100);
 		this.mTx_kinglion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "kinglion.png", 400, 100);
 		this.mTx_mukku = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "mukku.png", 0, 200);
+		this.mTx_syuzou = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "syuzou.png", 50, 200);
 
 
 		this.mParticleTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture_Atlas, this, "particle.png", 0, 0);
@@ -287,6 +293,7 @@ public class MainActivity extends LayoutGameActivity implements
         sp_japanet = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_tokadho = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_mukku = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+        sp_syuzou = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_b = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
         seID[1] = sp.load( this, R.raw.popopopoon, 1 );
@@ -354,6 +361,20 @@ public class MainActivity extends LayoutGameActivity implements
         seID_Mukku[1] = sp_mukku.load( this, R.raw.wasure, 1 );
         seID_Mukku[2] = sp_mukku.load( this, R.raw.dekita, 1 );
 
+        // 松岡修造
+        seID_Syuzou[0] = sp_syuzou.load( this, R.raw.syuzou_0, 1 );
+        seID_Syuzou[1] = sp_syuzou.load( this, R.raw.syuzou_1, 1 );
+        seID_Syuzou[2] = sp_syuzou.load( this, R.raw.syuzou_2, 1 );
+        seID_Syuzou[3] = sp_syuzou.load( this, R.raw.syuzou_3, 1 );
+        seID_Syuzou[4] = sp_syuzou.load( this, R.raw.syuzou_4, 1 );
+        seID_Syuzou[5] = sp_syuzou.load( this, R.raw.syuzou_5, 1 );
+        seID_Syuzou[6] = sp_syuzou.load( this, R.raw.syuzou_6, 1 );
+        seID_Syuzou[7] = sp_syuzou.load( this, R.raw.syuzou_7, 1 );
+        seID_Syuzou[8] = sp_syuzou.load( this, R.raw.syuzou_8, 1 );
+        seID_Syuzou[9] = sp_syuzou.load( this, R.raw.syuzou_9, 1 );
+        seID_Syuzou[10] = sp_syuzou.load( this, R.raw.syuzou_10, 1 );
+        seID_Syuzou[11] = sp_syuzou.load( this, R.raw.syuzou_11, 1 );
+
         // 花火音
         seID_B[0] = sp_b.load( this, R.raw.bon, 1);
 
@@ -389,6 +410,18 @@ public class MainActivity extends LayoutGameActivity implements
 			  } while(streamID == 0);
 		  }
 
+		  for (int ii=0; ii<seID_Syuzou.length; ii++) {
+			  do {
+			   //少し待ち時間を入れる
+			   try {
+			    Thread.sleep(10);
+			   } catch (InterruptedException e) {
+			   }
+			   //ボリュームをゼロにして再生して戻り値をチェック
+			   streamID = sp_tokadho.play(seID_Syuzou[ii], 0.0f, 0.0f, 1, 0, 1.0f);
+			  } while(streamID == 0);
+		  }
+		  
 		  for (int ii=0; ii<seID_Mukku.length; ii++) {
 			  do {
 			   //少し待ち時間を入れる
@@ -676,10 +709,17 @@ public class MainActivity extends LayoutGameActivity implements
 				sp_mukku.unload(seID_Mukku[ii]);
 			}
 
+			for (int ii=0; ii < seID_Syuzou.length; ii++) {
+				sp_syuzou.stop(seID_Syuzou[ii]);
+				sp_syuzou.unload(seID_Syuzou[ii]);
+			}
+
 		} finally {
 			sp.release();
 			sp_japanet.release();
 			sp_tokadho.release();
+			sp_mukku.release();
+			sp_syuzou.release();
 			super.onDestroy();
 			finish();
 		}
@@ -702,6 +742,10 @@ public class MainActivity extends LayoutGameActivity implements
 					} else if (id == MUKKU_ID - 1){
 						int mukku_id = (int)(Math.random()*MUKKU_CNT);
 						sp_mukku.play(seID_Tokadho[mukku_id], 1.0F, 1.0F, 0, 0, speed);
+					} else if (id == SYUZOU_ID -1) {
+						int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
+						sp_syuzou.play(seID_Tokadho[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+						
 					} else {
 						sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 					}
@@ -795,7 +839,10 @@ public class MainActivity extends LayoutGameActivity implements
 		case mID_mukku:
 			face = new Sprite(pX, pY, this.mTx_mukku);
 			break;
-
+		case mID_syuzou:
+			face = new Sprite(pX, pY, this.mTx_syuzou);
+			break;
+		
 		}
 		body = PhysicsFactory.createCircleBody(this.mPhysicsWorld, face, BodyType.DynamicBody, FIXTURE_DEF);
 		body.setUserData(new BodyInfo(getString(R.string.pg_char), id, face));
@@ -906,6 +953,9 @@ public class MainActivity extends LayoutGameActivity implements
 			} else if (id == MUKKU_ID - 1) {
 				int mukku_id = (int)(Math.random()*MUKKU_CNT);
 				sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == SYUZOU_ID - 1) {
+				int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
+				sp_syuzou.play(seID_Mukku[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -980,6 +1030,9 @@ public class MainActivity extends LayoutGameActivity implements
 			} else if (id == MUKKU_ID - 1) {
 				int mukku_id = (int)(Math.random()*MUKKU_CNT);
 				sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == SYUZOU_ID - 1) {
+				int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
+				sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -1094,6 +1147,9 @@ public class MainActivity extends LayoutGameActivity implements
 		} else if (id == MUKKU_ID - 1) {
 			int mukku_id = (int)(Math.random()*MUKKU_CNT);
 			sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
+		} else if (id == SYUZOU_ID - 1) {
+			int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
+			sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
 		} else {
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 		}
@@ -1126,12 +1182,23 @@ public class MainActivity extends LayoutGameActivity implements
 	}
 
 	private void setAdView() {
-        libAdMaker ad = (libAdMaker)findViewById(R.id.admakerview);
-        ad.setActivity(MainActivity.this);
-        ad.siteId = ADMAKER_SITEID;
-        ad.zoneId = ADMAKER_ZONEID;
-        ad.setUrl(ADMAKER_URL);
-        ad.start();
+		final LinearLayout adView = new LinearLayout(this);
+		RelativeLayout.LayoutParams layoutParams = 
+	              new RelativeLayout.LayoutParams(FP, (int)(50 * getResources().getDisplayMetrics().density));
+
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+		adView.setGravity(Gravity.CENTER_HORIZONTAL);
+		adView.setLayoutParams(layoutParams);
+
+		this.runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+		        new Ads(MainActivity.this, adView);
+			}
+		});
+
+	    LinearLayout parentLayout = (LinearLayout) findViewById(R.id.ad_layout); //広告を表示するLinearLayoutを取得
+	    parentLayout.addView(adView);
 
 	}
 }
