@@ -111,7 +111,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	    
 	    dbAdapter = new DBAdapter(this);
 	    
-		Bead.setSid("6be7853b31cb96b6ff56a6a8479cca1aa71e1129f3a69eb7");
+		Bead.setSid("6be7853b31cb96b61a3ce32d91efa1a929bcc38028f83f01");
 		Bead.setContentsOrientation(ContentsOrientation.Portrait);
 		Bead.requestAd(this);
 		Bead.setOnFinishClickListener(new OnClickListener() {
@@ -463,12 +463,17 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 					// 処理中ダイアログをクローズ
 			        progressDialog.dismiss();
 
-				    String tags[] = getAllString(list);
-				    updateTags(tags);// auto complete候補リストの更新
+				    try {
+						String tags[] = getAllString(list);
+						updateTags(tags);// auto complete候補リストの更新
 
-				    Toast.makeText(MainActivity.this, R.string.datadone, Toast.LENGTH_SHORT).show();
-				    
-				    dispHistory();
+						Toast.makeText(MainActivity.this, R.string.datadone, Toast.LENGTH_SHORT).show();
+						
+						dispHistory();
+					} catch (NullPointerException e) {
+						Toast.makeText(MainActivity.this, R.string.nullData, Toast.LENGTH_SHORT).show();
+						
+					}
 					
 				}
 			};
