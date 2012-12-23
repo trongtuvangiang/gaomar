@@ -400,15 +400,22 @@ public class DestinationFragment extends ListFragment {
 		        progressDialog.dismiss();
 		
 		        
-				BusTimeTable timetable = new BusTimeTable(document.html());
-				Intent intent = new Intent(getActivity(), TimetableActivity.class);
-				intent.putExtra("timetable", timetable);
-				intent.putExtra("route", data.getRoute());
-				intent.putExtra("dest", data.getDestination());
-				intent.putExtra("routeNo", getRouteNo());
-				startActivity(intent);
+				try {
+					BusTimeTable timetable = new BusTimeTable(document.html());
+					Intent intent = new Intent(getActivity(), TimetableActivity.class);
+					intent.putExtra("timetable", timetable);
+					intent.putExtra("route", data.getRoute());
+					intent.putExtra("dest", data.getDestination());
+					intent.putExtra("routeNo", getRouteNo());
+					startActivity(intent);
 
-				super.onPostExecute(document);
+					super.onPostExecute(document);
+				} catch (NullPointerException e) {
+					Toast.makeText(getActivity(), R.string.nullData, Toast.LENGTH_SHORT).show();
+				} catch (Exception e) {
+					// TODO é©ìÆê∂ê¨Ç≥ÇÍÇΩ catch ÉuÉçÉbÉN
+					e.printStackTrace();
+				}
 
 			}
 			
