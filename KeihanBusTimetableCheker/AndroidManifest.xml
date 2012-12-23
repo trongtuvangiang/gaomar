@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.gaomar.keihan"
-    android:versionCode="6"
-    android:versionName="1.0.5" >
+    android:versionCode="7"
+    android:versionName="1.0.6" >
 
     <uses-sdk android:minSdkVersion="4" />
 
@@ -25,22 +25,36 @@
         <meta-data android:name="Adlantis_Publisher_ID" android:value="MTY5OTQ%3D%0A" />
         <meta-data android:value="b0d3e62a53c2491aa5d9003837e4bfc5" android:name="ADWHIRL_KEY"/>	
         <meta-data android:name="i-mobile_Publisher_ID" android:value="11116" />
-        
-        <!-- appC 基本設定 開始 -->
+ 
+        <!-- appC 基本設定開始  -->
 		<meta-data android:name="appc_media_key" android:value="dcca2a7a73740dc97e8678451b1f61e4d81e6843" />
-		<activity android:name="jp.co.cayto.appc.sdk.android.AgreementStarter" android:label="@string/app_name" android:noHistory="true"> </activity>
-		<activity android:name="jp.co.cayto.appc.sdk.android.FloatContents" android:label="appCContents"></activity>
-		<receiver android:name="jp.co.cayto.appc.sdk.android.background.BgAppReceiver"> <intent-filter>
-		<action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.search" /> <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.set" /> <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.remove" /> </intent-filter>
-		</receiver>
-		<service android:name="jp.co.cayto.appc.sdk.android.background.IDService" android:process=":outerProcessX" />
-		<receiver android:name="jp.co.cayto.appc.sdk.android.background.BootStrap" android:enabled="true" android:exported="false" android:label="BootStrap">
-		<intent-filter>
-		<action android:name="android.intent.action.BOOT_COMPLETED" />
-		</intent-filter> <intent-filter>
-		<action android:name="android.intent.action.PACKAGE_ADDED" /> <action android:name="android.intent.action.PACKAGE_REMOVED" /> <action android:name="android.intent.action.PACKAGE_REPLACED"/> <data android:scheme="package"></data>
-		</intent-filter> </receiver>
-		<!-- appC 基本設定 終了 -->
+		<!-- 利用規約画面: 旧バージョンとのコンパチブル用-->
+        <activity android:name="jp.co.cayto.appc.sdk.android.AgreementStarter" android:label="@string/app_name"  android:noHistory="true" />
+		<activity android:name="jp.co.cayto.appc.sdk.android.WebViewActivity" android:label="appc" />
+        <receiver android:name="jp.co.cayto.appc.sdk.android.background.BgAppReceiver">
+            <intent-filter>
+                <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.search" />
+                <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.set" />
+                <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.remove" />
+            </intent-filter>
+       	</receiver>
+		<service
+				android:name="jp.co.cayto.appc.sdk.android.background.IDService"
+				android:process=":outerProcessX" />
+        <receiver  android:name="jp.co.cayto.appc.sdk.android.background.BootStrap"
+                android:enabled="true"
+                android:exported="false"
+                android:label="BootStrap">
+            <intent-filter><action android:name="android.intent.action.BOOT_COMPLETED" /></intent-filter>
+	        <intent-filter>
+            	<action android:name="android.intent.action.PACKAGE_ADDED" />
+            	<action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package"></data>
+            </intent-filter>
+            
+       </receiver>
+       <!-- appC 基本設定 終了 -->
 
     </application>
 

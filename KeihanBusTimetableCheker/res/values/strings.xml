@@ -12,7 +12,8 @@
 	
 	<string name="hint">バス停検索</string>
 
-	<string name="datadone">データ取得完了</string>	
+	<string name="datadone">データ取得完了</string>
+	<string name="nullData">データ取得失敗しました</string>			
 	<string name="destination">行き先を選択してください</string>
 	<string name="selstation">バス停を選択してください</string>
 	

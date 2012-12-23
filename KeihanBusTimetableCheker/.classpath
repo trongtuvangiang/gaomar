@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="libs/nendSDK.jar"/>
 	<classpathentry kind="lib" path="libs/adlantis.jar"/>
 	<classpathentry kind="lib" path="libs/i-mobileSDK.jar"/>
-	<classpathentry kind="lib" path="libs/appc_sdk_2.0.0.jar"/>
 	<classpathentry kind="lib" path="libs/beadsdk-v1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/appc_sdk_2.1.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

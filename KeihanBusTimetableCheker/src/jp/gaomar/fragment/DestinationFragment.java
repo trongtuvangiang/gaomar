@@ -410,15 +410,22 @@ public class DestinationFragment extends ListFragment {
 				// 処理中ダイアログをクローズ
 		        progressDialog.dismiss();
 		
-				BusTimeTable timetable = new BusTimeTable(document.html());
-				Intent intent = new Intent(getActivity(), TimetableActivity.class);
-				intent.putExtra("timetable", timetable);
-				intent.putExtra("route", data.getRoute());
-				intent.putExtra("dest", data.getDestination());
-				intent.putExtra("routeNo", data.getRouteNo());
-				startActivity(intent);
+				try {
+					BusTimeTable timetable = new BusTimeTable(document.html());
+					Intent intent = new Intent(getActivity(), TimetableActivity.class);
+					intent.putExtra("timetable", timetable);
+					intent.putExtra("route", data.getRoute());
+					intent.putExtra("dest", data.getDestination());
+					intent.putExtra("routeNo", data.getRouteNo());
+					startActivity(intent);
 
-				super.onPostExecute(document);
+					super.onPostExecute(document);
+				} catch (NullPointerException e) {
+					Toast.makeText(getActivity(), R.string.nullData, Toast.LENGTH_SHORT).show();
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
 
 			}
 		};
