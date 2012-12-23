@@ -9,7 +9,7 @@ import java.util.TimerTask;
 import jp.Adlantis.Android.AdlantisView;
 import jp.beyond.bead.Bead;
 import jp.beyond.bead.Bead.ContentsOrientation;
-import jp.co.cayto.appc.sdk.android.FloatContents;
+import jp.co.cayto.appc.sdk.android.WebViewActivity;
 import jp.co.imobile.android.AdRequestResult;
 import jp.co.imobile.android.AdView;
 import jp.co.imobile.android.AdViewRequestListener;
@@ -111,7 +111,7 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 	    
 	    dbAdapter = new DBAdapter(this);
 	    
-		Bead.setSid("5b04fdc9b0f492336eaa54a463c0559e31b2c6d22dc2257c");
+		Bead.setSid("6be7853b31cb96b6aabe8d36524a51611fb31ebc76e22198");
 		Bead.setContentsOrientation(ContentsOrientation.Portrait);
 		Bead.requestAd(this);
 		Bead.setOnFinishClickListener(new OnClickListener() {
@@ -465,12 +465,17 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
 					// 処理中ダイアログをクローズ
 			        progressDialog.dismiss();
 
-				    String tags[] = getAllString(list);
-				    updateTags(tags);// auto complete候補リストの更新
+				    try {
+						String tags[] = getAllString(list);
+						updateTags(tags);// auto complete候補リストの更新
 
-				    Toast.makeText(MainActivity.this, R.string.datadone, Toast.LENGTH_SHORT).show();
-				    
-					dispHistory();
+						Toast.makeText(MainActivity.this, R.string.datadone, Toast.LENGTH_SHORT).show();
+						
+						dispHistory();
+					} catch (NullPointerException e) {
+						Toast.makeText(MainActivity.this, R.string.nullData, Toast.LENGTH_SHORT).show();
+
+					}
 
 				}
 			};
@@ -667,7 +672,8 @@ public class MainActivity extends FragmentActivity implements AdWhirlInterface{
             ret = true;
             break;
         case MENU_ID_MENU2:
-    		intent = new Intent(this, FloatContents.class);
+    		intent = new Intent(this, WebViewActivity.class);
+			intent.putExtra("type", "pr_list");    		
         	startActivity(intent);
             ret = true;
             break;
