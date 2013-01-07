@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">神戸市バス時刻表チェッカー</string>
+	<string name="data_loading">読み込み中...</string>
+	<string name="data_init">バス停データ取得中...\n1〜２分お待ち下さい</string>
+		
+	<string name="weekday">平 日</string>
+	<string name="saturday">土曜日</string>
+	<string name="sunday">日祝日</string>
+	
+	<string name="hint">バス停検索</string>
+
+	<string name="datadone">データ取得完了</string>
+	<string name="nullData">データ取得失敗しました</string>		
+	<string name="destination">行き先を選択してください</string>
+	<string name="selstation">バス停を選択してください</string>	
+	<string name="menu_station">バス停リスト更新</string>
+	<string name="menu_app">おすすめアプリ</string>
+	
+</resources>
