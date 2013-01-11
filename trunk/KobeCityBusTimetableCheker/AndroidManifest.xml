@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="jp.gaomar.kobecitybus"
-    android:versionCode="1"
-    android:versionName="1.0.0">
+    android:versionCode="2"
+    android:versionName="1.0.1">
 
     <uses-sdk android:minSdkVersion="4"/>
 
@@ -27,7 +27,7 @@
 		<meta-data android:name="appc_media_key" android:value="f1d2005c4690893f2d19cb8d68a31f3e92851450" />
 		<!-- 利用規約画面: 旧バージョンとのコンパチブル用-->
         <activity android:name="jp.co.cayto.appc.sdk.android.AgreementStarter" android:label="@string/app_name"  android:noHistory="true" />
-		<activity android:name="jp.co.cayto.appc.sdk.android.WebViewActivity" android:label="appc" />
+		<activity android:name="jp.co.cayto.appc.sdk.android.WebViewActivity" android:label="@string/app_name" />
         <receiver android:name="jp.co.cayto.appc.sdk.android.background.BgAppReceiver">
             <intent-filter>
                 <action android:name="jp.co.cayto.appc.sdk.android.remote.command.gid.search" />
