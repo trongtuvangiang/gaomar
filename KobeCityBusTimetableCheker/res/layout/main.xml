@@ -37,7 +37,7 @@
 		android:layout_height="0dip"
 		android:layout_weight="1"
 		android:name="jp.gaomar.kobecitybus.fragment.DestinationFragment" />
-	<LinearLayout android:id="@+id/ad_layout" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="vertical" />
+	<LinearLayout android:id="@+id/ad_layout" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="vertical" android:gravity="center_vertical"/>
 
     
     

@@ -119,6 +119,7 @@ public class DBAdapter {
 		  
 		  public DBAdapter open() {
 		    db = dbHelper.getWritableDatabase();
+		    db.acquireReference();
 		    return this;
 		  }
 		  
