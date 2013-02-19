@@ -1,7 +1,6 @@
 package jp.gaomar.magicofgreeting;
 
 
-import jp.Adlantis.Android.AdlantisView;
 import jp.co.imobile.android.AdRequestResult;
 import jp.co.imobile.android.AdView;
 import jp.co.imobile.android.AdViewRequestListener;
@@ -18,8 +17,6 @@ public class Ads implements AdWhirlInterface{
 	
 	private AdWhirlLayout adWhirlLayout;
 	private jp.co.imobile.android.AdView imobileAd;
-	private AdlantisView adlantisAd;
-	private NendAdView nendAd;
 	
 	private final int nendSpot_id = 24647;
 	private final String nendApiKey = "1b6391c8f4f5bf2a6d35815b660667b94c7f3d2e";
@@ -38,8 +35,6 @@ public class Ads implements AdWhirlInterface{
 	 */
 	private void adInit() {
 		imobileAd = AdView.createForAdWhirl(mActivity, iMobileMediaID, iMobileSpotID);
-	    nendAd = new NendAdView(mActivity, nendSpot_id, nendApiKey);	    
-//	    adlantisAd = new AdlantisView(mActivity); //AdLantisのビューを作成
 	    if (Util.isDebuggable(mActivity)) {
 	    	adWhirlLayout = new AdWhirlLayout(mActivity, adWhirlTestID);
 	    } else {
@@ -51,10 +46,16 @@ public class Ads implements AdWhirlInterface{
 	    
 	}
 	
+	public void mediba() {
+		adWhirlLayout.adWhirlManager.resetRollover();
+		adWhirlLayout.removeAllViews();
+		adWhirlLayout.rotateThreadedDelayed();
+	}
+
 	public void nend() {
 		adWhirlLayout.adWhirlManager.resetRollover();
 		adWhirlLayout.removeAllViews();
-		adWhirlLayout.addView(nendAd);
+		adWhirlLayout.addView(new NendAdView(mActivity, nendSpot_id, nendApiKey));
 		adWhirlLayout.rotateThreadedDelayed();
 	}
 
@@ -74,14 +75,6 @@ public class Ads implements AdWhirlInterface{
 		});
 		// 広告取得開始
 		imobileAd.start();
-	}
-
-	public void adLantis() {
-		adlantisAd.showNextAd();
-		adWhirlLayout.adWhirlManager.resetRollover();
-		adWhirlLayout.removeAllViews();
-		adWhirlLayout.addView(adlantisAd);
-		adWhirlLayout.rotateThreadedDelayed();
 	}
 
 	@Override

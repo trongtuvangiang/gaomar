@@ -99,7 +99,8 @@ public class MainActivity extends LayoutGameActivity implements
 	private TextureRegion mBgTextureRegion, mBgNightTextureRegion, mParticleTextureRegion, mParticle_heartTextureRegion, mParticle_starTextureRegion;
 
 	private TextureRegion mTx_ac, mTx_greateusagi, mTx_inu, mTx_kinglion, mTx_kita, mTx_lion, mTx_mama, mTx_manbo;
-	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi, mTx_usagi, mTx_wani, mTx_mukku, mTx_syuzou;
+	private TextureRegion mTx_migeru, mTx_nezumi, mTx_onna, mTx_otoko, mTx_sai, mTx_sukanku, mTx_takata, mTx_unagi;
+	private TextureRegion mTx_usagi, mTx_wani, mTx_mukku, mTx_syuzou, mTx_hayashi;
 
 	private final int mID_otoko = 0;
 	private final int mID_onna = 1;
@@ -121,6 +122,7 @@ public class MainActivity extends LayoutGameActivity implements
 	private final int mID_kita = 17;
 	private final int mID_mukku = 18;
 	private final int mID_syuzou = 19;
+	private final int mID_hayashi = 20;
 
 	// ===========================================================
 	// Other
@@ -130,20 +132,23 @@ public class MainActivity extends LayoutGameActivity implements
 	private String m_Code = "";
 
 	private float mGravity;
-	private SoundPool sp, sp_japanet, sp_tokadho, sp_mukku, sp_syuzou, sp_b;
+	private SoundPool sp, sp_japanet, sp_tokadho, sp_mukku, sp_syuzou, sp_hayashi, sp_b;
     int[] seID = new int[PrefDispFlg.DISP_MAX];
     private final int JAPANET_ID = 17;
     private final int TOKADHO_ID = 18;
     private final int MUKKU_ID = 19;
     private final int SYUZOU_ID = 20;
+    private final int HAYASHI_ID = 21;    
     private final int JAPANET_CNT = 28;
     private final int TOKADHO_CNT = 12;
     private final int MUKKU_CNT = 3;
     private final int SYUZOU_CNT = 12;
+    private final int HAYASHI_CNT = 3;
     int[] seID_Japanet = new int[JAPANET_CNT];
     int[] seID_Tokadho = new int[TOKADHO_CNT];
     int[] seID_Mukku = new int[MUKKU_CNT];
     int[] seID_Syuzou = new int[SYUZOU_CNT];
+    int[] seID_Hayashi = new int[HAYASHI_CNT];
     int[] seID_B = new int[1];
 
     int cnt = 0;
@@ -275,6 +280,7 @@ public class MainActivity extends LayoutGameActivity implements
 		this.mTx_kinglion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "kinglion.png", 400, 100);
 		this.mTx_mukku = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "mukku.png", 0, 200);
 		this.mTx_syuzou = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "syuzou.png", 50, 200);
+		this.mTx_hayashi = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture, this, "hayashi.png", 100, 200);
 
 
 		this.mParticleTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(this.mTexture_Atlas, this, "particle.png", 0, 0);
@@ -294,6 +300,7 @@ public class MainActivity extends LayoutGameActivity implements
         sp_tokadho = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_mukku = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_syuzou = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
+        sp_hayashi = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         sp_b = new SoundPool( 5, AudioManager.STREAM_MUSIC, 0 );
         seID[0] = sp.load( this, R.raw.popopopoon, 1 );
         seID[1] = sp.load( this, R.raw.popopopoon, 1 );
@@ -375,6 +382,11 @@ public class MainActivity extends LayoutGameActivity implements
         seID_Syuzou[10] = sp_syuzou.load( this, R.raw.syuzou_10, 1 );
         seID_Syuzou[11] = sp_syuzou.load( this, R.raw.syuzou_11, 1 );
 
+        // 林修
+        seID_Hayashi[0] = sp_hayashi.load( this, R.raw.se_20_00, 1);
+        seID_Hayashi[1] = sp_hayashi.load( this, R.raw.se_20_01, 1);
+        seID_Hayashi[2] = sp_hayashi.load( this, R.raw.se_20_02, 1);
+        
         // 花火音
         seID_B[0] = sp_b.load( this, R.raw.bon, 1);
 
@@ -414,11 +426,11 @@ public class MainActivity extends LayoutGameActivity implements
 			  do {
 			   //少し待ち時間を入れる
 			   try {
-			    Thread.sleep(10);
+			    Thread.sleep(20);
 			   } catch (InterruptedException e) {
 			   }
 			   //ボリュームをゼロにして再生して戻り値をチェック
-			   streamID = sp_tokadho.play(seID_Syuzou[ii], 0.0f, 0.0f, 1, 0, 1.0f);
+			   streamID = sp_syuzou.play(seID_Syuzou[ii], 0.0f, 0.0f, 1, 0, 1.0f);
 			  } while(streamID == 0);
 		  }
 		  
@@ -431,6 +443,18 @@ public class MainActivity extends LayoutGameActivity implements
 			   }
 			   //ボリュームをゼロにして再生して戻り値をチェック
 			   streamID = sp_mukku.play(seID_Mukku[ii], 0.0f, 0.0f, 1, 0, 1.0f);
+			  } while(streamID == 0);
+		  }
+
+		  for (int ii=0; ii<seID_Hayashi.length; ii++) {
+			  do {
+			   //少し待ち時間を入れる
+			   try {
+			    Thread.sleep(10);
+			   } catch (InterruptedException e) {
+			   }
+			   //ボリュームをゼロにして再生して戻り値をチェック
+			   streamID = sp_hayashi.play(seID_Hayashi[ii], 0.0f, 0.0f, 1, 0, 1.0f);
 			  } while(streamID == 0);
 		  }
 
@@ -714,12 +738,18 @@ public class MainActivity extends LayoutGameActivity implements
 				sp_syuzou.unload(seID_Syuzou[ii]);
 			}
 
+			for (int ii=0; ii < seID_Hayashi.length; ii++) {
+				sp_hayashi.stop(seID_Hayashi[ii]);
+				sp_hayashi.unload(seID_Hayashi[ii]);
+			}
+
 		} finally {
 			sp.release();
 			sp_japanet.release();
 			sp_tokadho.release();
 			sp_mukku.release();
 			sp_syuzou.release();
+			sp_hayashi.release();
 			super.onDestroy();
 			finish();
 		}
@@ -741,10 +771,13 @@ public class MainActivity extends LayoutGameActivity implements
 						sp_tokadho.play(seID_Tokadho[tokadho_id], 1.0F, 1.0F, 0, 0, speed);
 					} else if (id == MUKKU_ID - 1){
 						int mukku_id = (int)(Math.random()*MUKKU_CNT);
-						sp_mukku.play(seID_Tokadho[mukku_id], 1.0F, 1.0F, 0, 0, speed);
+						sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 					} else if (id == SYUZOU_ID -1) {
 						int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
-						sp_syuzou.play(seID_Tokadho[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+						sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+					} else if (id == HAYASHI_ID -1) {
+						int hayashi_id = (int)(Math.random()*HAYASHI_CNT);
+						sp_hayashi.play(seID_Hayashi[hayashi_id], 1.0F, 1.0F, 0, 0, speed);
 						
 					} else {
 						sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
@@ -841,6 +874,9 @@ public class MainActivity extends LayoutGameActivity implements
 			break;
 		case mID_syuzou:
 			face = new Sprite(pX, pY, this.mTx_syuzou);
+			break;
+		case mID_hayashi:
+			face = new Sprite(pX, pY, this.mTx_hayashi);
 			break;
 		
 		}
@@ -955,7 +991,10 @@ public class MainActivity extends LayoutGameActivity implements
 				sp_mukku.play(seID_Mukku[mukku_id], 1.0F, 1.0F, 0, 0, speed);
 			} else if (id == SYUZOU_ID - 1) {
 				int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
-				sp_syuzou.play(seID_Mukku[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+				sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == HAYASHI_ID - 1) {
+				int hayashi_id = (int)(Math.random()*HAYASHI_CNT);
+				sp_hayashi.play(seID_Hayashi[hayashi_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -1033,6 +1072,9 @@ public class MainActivity extends LayoutGameActivity implements
 			} else if (id == SYUZOU_ID - 1) {
 				int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
 				sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+			} else if (id == HAYASHI_ID - 1) {
+				int hayashi_id = (int)(Math.random()*HAYASHI_CNT);
+				sp_hayashi.play(seID_Hayashi[hayashi_id], 1.0F, 1.0F, 0, 0, speed);
 			} else {
 				sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 			}
@@ -1150,6 +1192,9 @@ public class MainActivity extends LayoutGameActivity implements
 		} else if (id == SYUZOU_ID - 1) {
 			int syuzou_id = (int)(Math.random()*SYUZOU_CNT);
 			sp_syuzou.play(seID_Syuzou[syuzou_id], 1.0F, 1.0F, 0, 0, speed);
+		} else if (id == HAYASHI_ID - 1) {
+			int hayashi_id = (int)(Math.random()*HAYASHI_CNT);
+			sp_hayashi.play(seID_Hayashi[hayashi_id], 1.0F, 1.0F, 0, 0, speed);
 		} else {
 			sp.play(seID[id], 1.0F, 1.0F, 0, 0, speed);
 		}
